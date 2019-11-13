@@ -25,6 +25,8 @@ jest.mock('@capacitor/core', () => {
             }
           });
         },
+        clearWatch: ({ id }: { id: string }) => {
+        },
         watchPosition: async (options: GeolocationOptions, cb: (pos: GeolocationPosition, err: any) => void) => {
           watchListener = cb;
           watchListener({
@@ -35,6 +37,8 @@ jest.mock('@capacitor/core', () => {
               accuracy: 1
             }
           });
+
+          return 'testid';
         },
       }
     }
