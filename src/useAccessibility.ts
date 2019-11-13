@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Plugins } from '@capacitor/core';
 
@@ -13,7 +13,7 @@ export function useAccessibility() {
       setScreenReaderEnabled(isEnabled.value);
     }
     checkScreenReader();
-  }, [setScreenReaderEnabled]);
+  }, [ Accessibility, setScreenReaderEnabled ]);
 
   useEffect(() => {
     const listener = Accessibility.addListener('accessibilityScreenReaderStateChange', async () => {
@@ -23,7 +23,7 @@ export function useAccessibility() {
     });
 
     return () => listener.remove();
-  }, [setScreenReaderEnabled]);
+  }, [ Accessibility, setScreenReaderEnabled ]);
 
   return isScreenReaderEnabled;
 }

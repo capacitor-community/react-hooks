@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Plugins, NetworkStatus } from '@capacitor/core';
 
@@ -13,7 +13,7 @@ export function useNetwork() {
       setStatus(s);
     }
     getStatus();
-  }, [setStatus]);
+  }, [ Network, setStatus ]);
 
   useEffect(() => {
     const listener = Network.addListener('networkStatusChange', (status: NetworkStatus) => {
@@ -21,7 +21,7 @@ export function useNetwork() {
     });
 
     return () => listener.remove()
-  }, [setStatus]);
+  }, [ Network, setStatus ]);
 
   return networkStatus;
 }

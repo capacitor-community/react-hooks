@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
-import { Plugins, GeolocationPosition, GeolocationOptions, GeolocationWatchCallback } from '@capacitor/core';
+import { Plugins, GeolocationPosition, GeolocationOptions } from '@capacitor/core';
 
 export function useGeolocation(options?: GeolocationOptions) {
   const { Geolocation } = Plugins;
@@ -13,7 +13,7 @@ export function useGeolocation(options?: GeolocationOptions) {
     });
 
     return () => { Geolocation.clearWatch({ id: watchId }) };
-  }, [setCurrentPosition]);
+  }, [ Geolocation, setCurrentPosition, options ]);
 
   return currentPosition;
 }

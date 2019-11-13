@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Plugins, CameraOptions, DeviceInfo, DeviceLanguageCodeResult } from '@capacitor/core';
+import { Plugins, DeviceInfo } from '@capacitor/core';
 
 export function useDevice() {
   const { Device } = Plugins;
@@ -14,7 +14,7 @@ export function useDevice() {
       setInfo(data);
     }
     getInfo();
-  }, [setInfo]);
+  }, [ Device, setInfo ]);
 
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export function useDevice() {
       setLanguageCode(data.value);
     }
     getLanguageCode();
-  }, [setLanguageCode]);
+  }, [ Device, setLanguageCode ]);
 
   return [ info, languageCode ];
 }

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { Plugins } from '@capacitor/core';
 
 export function useBrowser() {

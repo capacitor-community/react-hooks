@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import { Plugins, CameraOptions } from '@capacitor/core';
 
 export function useCamera() {

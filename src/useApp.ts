@@ -13,7 +13,7 @@ export function useAppState() {
     });
 
     return () => listener.remove();
-  }, [setAppState]);
+  }, [ App, setAppState ]);
 
   return state;
 }
@@ -35,7 +35,7 @@ export function useAppLaunchUrl() {
       setValue(ret.url);
     }
     getAppLaunchUrl();
-  }, [ setValue ]);
+  }, [ App, setValue ]);
 
   return value;
 }
@@ -51,7 +51,7 @@ export function useAppUrlOpen() {
     });
 
     return () => listener.remove();
-  }, [setAppUrl]);
+  }, [ App, setAppUrl ]);
 
   return url;
 }

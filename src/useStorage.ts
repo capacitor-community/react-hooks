@@ -1,5 +1,5 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Plugins } from '@capacitor/core';
 
@@ -48,7 +48,7 @@ export function useStorageItem(key: string, initialValue: string) {
       }
     }
     loadValue();
-  }, [setStoredValue]);
+  }, [ Storage, setStoredValue, initialValue, key ]);
 
   const setValue = async (value: any) => {
     try {
