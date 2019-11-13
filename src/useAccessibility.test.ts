@@ -33,7 +33,7 @@ it('Gets screen reader status', async () => {
   await act(async function() {
     const result = r.result;
 
-    let [ isScreenReaderEnabled ] = result.current as any;
+    let isScreenReaderEnabled = result.current as any;
 
     expect(isScreenReaderEnabled).toBe(false);
 
@@ -41,7 +41,7 @@ it('Gets screen reader status', async () => {
   });
 
   await act(async function() {
-    const [ isScreenReaderEnabled ] = r.result.current as any;
+    const isScreenReaderEnabled = r.result.current as any;
 
     expect(isScreenReaderEnabled).toBe(true);
   });

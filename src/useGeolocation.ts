@@ -15,5 +15,5 @@ export function useGeolocation(options?: GeolocationOptions) {
     return () => { Geolocation.clearWatch({ id: watchId }) };
   }, [setCurrentPosition]);
 
-  return [ currentPosition ];
+  return currentPosition;
 }

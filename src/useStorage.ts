@@ -30,7 +30,7 @@ export function useStorage() {
     return Storage.clear();
   }
 
-  return [ get, set, remove, keys, clear ];
+  return { get, set, remove, keys, clear };
 }
 
 export function useStorageItem(key: string, initialValue: string) {

@@ -65,22 +65,22 @@ it('Gets current geolocation position', async () => {
   }
 
   await act(async function() {
-    const [ currentPosition ] = r.result.current as any;
+    const currentPosition = r.result.current as any;
     match(currentPosition, geoMock.positions[0]);
     (Plugins.Geolocation as any).__updatePosition();
   });
   await act(async function() {
-    const [ currentPosition ] = r.result.current as any;
+    const currentPosition = r.result.current as any;
     match(currentPosition, geoMock.positions[1]);
     (Plugins.Geolocation as any).__updatePosition();
   });
   await act(async function() {
-    const [ currentPosition ] = r.result.current as any;
+    const currentPosition = r.result.current as any;
     match(currentPosition, geoMock.positions[2]);
     (Plugins.Geolocation as any).__updatePosition();
   });
   await act(async function() {
-    const [ currentPosition ] = r.result.current as any;
+    const currentPosition = r.result.current as any;
     match(currentPosition, geoMock.positions[3]);
     (Plugins.Geolocation as any).__updatePosition();
   });

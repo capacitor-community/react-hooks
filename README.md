@@ -1,44 +1,148 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ionic React Hooks
 
-## Available Scripts
+A set of hooks to help Ionic React developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
 
-In the project directory, you can run:
+This is a new project and we'd love your feedback! Is there a hook that we don't have in here you'd like to see? Or maybe a hook that should function differently than it does today? Let us know by filing an issue!
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To start using Ionic React Hooks in your app, install the hooks library:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+npm install @ionic/react-hooks
+```
 
-### `npm test`
+## Hook Usage
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `useAccessibility`
 
-### `npm run build`
+`useAccessibility` provides access to detecting and responding to a screen reading device or OS setting being enabled:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```jsx
+const isScreenReaderEnabled = useAccessibility();
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### `useAppState`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`useAppState` provides access to App status information, such as whether the app is active or inactive. This value will update
+dynamically.
 
-### `npm run eject`
+```jsx
+const isActive = useAppState();
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `useAppLaunchUrl`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`useAppLaunchUrl` provides the URL the app was initially launched with. If you'd like to track future inbound URL events, use `useAppUrlOpen` below instead.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```jsx
+const launchUrl = useAppLaunchUrl();
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `useAppUrlOpen`
 
-## Learn More
+`useAppUrlOpen` provides the most recent URL used to activate the app. For example, if the user followed a link in another app that opened your app.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+const urlOpen = useAppUrlOpen();
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `useBrowser`
+
+`useBrowser` provides a way to launch, prefetch, and close an in-app browser for external content:
+
+```jsx
+const [open, close, prefetch] = useBrowser();
+useEffect(() => {
+  await prefetch(['http://ionicframework.com']);
+  await open('http://ionicframework.com');
+  await close();
+}, [open, close, prefetch]);
+```
+
+### `useCamera`
+
+`useCamera` provides a way to take a photo:
+
+```jsx
+const getPhoto = useCamera();
+const triggerCamera = useCallback(async () => {
+  const photo = await getPhoto(options);
+}, [getPhoto]);
+```
+
+See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacitor API for the options expected.
+
+### `useClipboard`
+
+`useClipboard` reads and writes clipboard data:
+
+```jsx
+const [data, setValue] = useClipboard();
+
+const paste = useCallback(async () => {
+  await setValue('http://ionicframework.com/);
+}, [setValue]);
+```
+
+### `useDevice`
+
+`useDevice` accesses device information and device language settings:
+
+```jsx
+const [info, languageCode] = useDevice();
+```
+
+See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
+
+### `useGeolocation`
+
+`useGeolocation` tracks a geolocation position using the `watchPosition` in the Geolocation API in Capacitor.
+
+```jsx
+const currentPosition = useGeolocation(options);
+```
+
+See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
+
+### `useNetwork`
+
+`useNetwork` monitors network status and information:
+
+```jsx
+const status = useNetwork();
+```
+
+See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
+
+### `useStorage`
+
+`useStorage` provides access to Capacitor's storage engine. There is also a helper called `useStorageItem` which makes managing a single item easy if you don't need to access the full Storage API (see below)
+
+```jsx
+const { get, set, remove, keys, clear } = useStorage();
+useEffect(() => {
+  async function example() {
+    const value = await get('name');
+    await set('name', 'Max');
+    await remove('name');
+    const allKeys = await keys();
+    await clear();
+  }
+}, [ get, set, remove, keys, clear ]);
+```
+
+### `useStorageItem`
+
+`useStorageItem` tracks a single item and provides a nice way to read and write that item:
+
+```jsx
+const [ name , setName ] = useStorageItem('name', 'Max');
+
+// Example:
+const updateName = useCallback((n) => {
+  setName(n);
+}, [ setName ]);
+```
+
+`useStorageItem` will use the initial value already in storage, or the one provided if there is no existing value.

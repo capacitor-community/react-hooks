@@ -25,5 +25,5 @@ export function useAccessibility() {
     return () => listener.remove();
   }, [setScreenReaderEnabled]);
 
-  return [ isScreenReaderEnabled ];
+  return isScreenReaderEnabled;
 }

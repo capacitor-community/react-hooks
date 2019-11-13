@@ -40,7 +40,7 @@ it('Gets and sets storage values', async () => {
   await act(async () => {
     const result = r.result.current;
 
-    const [ get, set, remove, keys, clear ] = result;
+    const { get, set, remove, keys, clear } = result;
 
     await set('name', 'Max');
 
