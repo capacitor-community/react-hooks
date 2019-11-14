@@ -1,3 +1,7 @@
+import { useClipboard } from './useClipboard';
+
+import { renderHook, act } from '@testing-library/react-hooks'
+
 jest.mock('@capacitor/core', () => {
   let text = 'fake';
 
@@ -16,10 +20,6 @@ jest.mock('@capacitor/core', () => {
     }
   }
 });
-
-import { useClipboard } from './useClipboard';
-
-import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Reads clipboard data', async () => {
   const { result } = renderHook(() => useClipboard());
