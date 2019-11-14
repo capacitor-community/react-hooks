@@ -4,6 +4,12 @@ A set of hooks to help Ionic React developers use native [Capacitor APIs](http:/
 
 This is a new project and we'd love your feedback! Is there a hook that we don't have in here you'd like to see? Or maybe a hook that should function differently than it does today? Let us know by filing an issue!
 
+## Support Status
+
+This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please reach out to [@maxlynch](http://twitter.com/maxlynch) on Twitter.
+
+This also means the core Ionic React team won't be making regular updates to this repo, but rather encouraging the community to do so.
+
 ## Getting Started
 
 To start using Ionic React Hooks in your app, install the hooks library:
