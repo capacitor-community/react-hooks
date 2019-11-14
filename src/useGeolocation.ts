@@ -8,7 +8,7 @@ export function useGeolocation(options?: GeolocationOptions) {
   const [ currentPosition, setCurrentPosition ] = useState<GeolocationPosition | null>(null);
 
   useEffect(() => {
-    const watchId = Geolocation.watchPosition(options || {}, (pos: GeolocationPosition, err: any) => {
+    const watchId = Geolocation.watchPosition(options || {}, (pos: GeolocationPosition) => {
       setCurrentPosition(pos);
     });
 

@@ -15,7 +15,7 @@ export function useBrowser() {
     });
   }
 
-  async function close(url: string) {
+  async function close() {
     return Browser.close();
   }
 
