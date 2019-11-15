@@ -1,4 +1,6 @@
-<img src="./ionic-react-hooks.png" alt="Ionic React Hooks" height="250" />
+<div style="text-align: center">
+  <img src="./ionic-react-hooks.png" alt="Ionic React Hooks" height="250" />
+</div>
 
 # Ionic React Hooks
 
