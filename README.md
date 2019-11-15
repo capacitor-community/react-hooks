@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./ionic-react-hooks.png" alt="Ionic React Hooks" height="225" />
-</p>
+![Ionic React Hooks](./ionic-react-hooks-gh.png)
 
 # Ionic React Hooks
 
