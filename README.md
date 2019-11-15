@@ -1,4 +1,4 @@
-<img src="./ionic-react-hooks-gh.png" height="225" />
+<img src="./ionic-react-hooks-gh.png" height="156" />
 
 # Ionic React Hooks
 
