@@ -1,3 +1,5 @@
+![Ionic React Hooks](./ionic-react-hooks.png)
+
 # Ionic React Hooks
 
 A set of hooks to help Ionic React developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
