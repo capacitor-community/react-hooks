@@ -17,22 +17,27 @@ jest.mock('@capacitor/core', () => {
           return {}
         }
       }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
     }
   }
 });
 
 it('Reads clipboard data', async () => {
-  const { result } = renderHook(() => useClipboard());
+  const r = renderHook(() => useClipboard());
 
   await act(async () => {
-    const [data, getValue, setValue] = result.current as any;
-    await getValue();
+    const result = r.result;
+    const { getClipboardData, isAvailable } = result.current;
+    expect(isAvailable).toBe(true);
+    await getClipboardData!();
   });
 
   await act(async () => {
-    const [data, getValue, setValue] = result.current as any;
-
-    expect(data).toBe('fake');
+    const result = r.result;
+    expect(result.current.data).toBe('fake');
   });
 });
 
@@ -40,18 +45,18 @@ it('Writes clipboard data', async () => {
   const { result } = renderHook(() => useClipboard());
 
   await act(async () => {
-    const [data, getValue, setValue] = result.current as any;
-    await setValue('testing');
+    const { setClipboardData, isAvailable } = result.current;
+    expect(isAvailable).toBe(true);
+    await setClipboardData!('testing');
   });
 
   await act(async () => {
-    const [data, getValue, setValue] = result.current as any;
-    await getValue();
+    const { getClipboardData } = result.current;
+    await getClipboardData!();
   });
 
   await act(async () => {
-    const [data, getValue, setValue] = result.current as any;
-
+    const {data} = result.current;
     expect(data).toBe('testing');
   });
 });

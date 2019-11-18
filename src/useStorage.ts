@@ -2,8 +2,23 @@
 import { useState, useEffect } from 'react';
 
 import { Plugins } from '@capacitor/core';
+import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable } from './util/feature-check';
 
-export function useStorage() {
+interface StorageResult extends AvailableResult {
+  get?: (key: string) => Promise<string | null>;
+  set?: (key: string, value: string) => Promise<void>;
+  remove?: (key: string) => void;
+  keys?: () => Promise<{keys: string[];}>
+  clear?: () => Promise<void>;
+}
+
+export function useStorage(): StorageResult {
+
+  if(!isFeatureAvailable('Storage', 'useStorage')) {
+    return notAvailable;
+  }
+
   const { Storage } = Plugins;
 
   async function get(key: string) {
@@ -30,13 +45,24 @@ export function useStorage() {
     return Storage.clear();
   }
 
-  return { get, set, remove, keys, clear };
+  return { get, set, remove, keys, clear, isAvailable: true };
 }
 
-export function useStorageItem(key: string, initialValue: string) {
+type StorageItemResult<T> = [
+  T | null | undefined,
+  ((value: T) => Promise<void>) | undefined,
+  boolean | undefined
+]
+
+export function useStorageItem<T>(key: string, initialValue: T): StorageItemResult<T> {
+
+  if(!isFeatureAvailable('Storage', 'useStorage')) {
+    return [undefined, undefined, false];
+  }
+
   const { Storage } = Plugins;
 
-  const [storedValue, setStoredValue] = useState<string | null>(null);
+  const [storedValue, setStoredValue] = useState<T | null>(null);
 
   useEffect(() => {
     async function loadValue() {
@@ -50,7 +76,7 @@ export function useStorageItem(key: string, initialValue: string) {
     loadValue();
   }, [ Storage, setStoredValue, initialValue, key ]);
 
-  const setValue = async (value: any) => {
+  const setValue = async (value: T) => {
     try {
       setStoredValue(value);
 
@@ -60,5 +86,9 @@ export function useStorageItem(key: string, initialValue: string) {
     }
   }
 
-  return [ storedValue, setValue ];
+  return [
+    storedValue,
+    setValue,
+    true
+  ];
 }

@@ -25,23 +25,30 @@ jest.mock('@capacitor/core', () => {
           }
         }
       }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
     }
   }
 });
 
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useDevice } from './useDevice';
+import { useDeviceGetInfo, useDeviceGetLanguageCode } from './useDevice';
 
 it('Gets device info and language code', async () => {
-  let r: any;
-  await act(async () => {
-    r = renderHook(() => useDevice());
-  });
+  const r = renderHook(() => useDeviceGetInfo());
 
   await act(async () => {
     const result = r.result;
-    console.log('Got result', result.current);
-    const [ info, languageCode ] = result.current as any;
+    const {isAvailable} = result.current;
+    expect(isAvailable).toBe(true);
+  });
+  
+  await act(async () => {
+    const result = r.result;
+    const {info} = result.current;
+
     expect(info).toMatchObject({
       "diskFree": 12228108288,
       "appVersion": "1.0.2",
@@ -55,7 +62,21 @@ it('Gets device info and language code', async () => {
       "uuid": "84AE7AA1-7000-4696-8A74-4FD588A4A5C7",
       "isVirtual":true
     });
+  });
+});
 
+it('Gets device language code', async () => {
+  const r = renderHook(() => useDeviceGetLanguageCode());
+
+  await act(async () => {
+    const result = r.result;
+    const {isAvailable} = result.current;
+    expect(isAvailable).toBe(true);
+  });
+  
+  await act(async () => {
+    const result = r.result;
+    const {languageCode} = result.current;
     expect(languageCode).toBe('en');
   });
 });

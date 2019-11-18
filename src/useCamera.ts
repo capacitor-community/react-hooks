@@ -1,11 +1,18 @@
 import { Plugins, CameraOptions } from '@capacitor/core';
+import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable } from './util/feature-check';
 
-export function useCamera() {
+interface CameraResult extends AvailableResult { getPhoto?: typeof Plugins.Camera.getPhoto };
+
+export function useCameraGetPhoto(): CameraResult {
+
+  if(!isFeatureAvailable('Camera', 'getPhoto')) {
+    return notAvailable;
+  }
   const { Camera } = Plugins;
 
-  async function getPhoto(options: CameraOptions) {
-    return Camera.getPhoto(options);
-  }
-
-  return getPhoto;
+  return {
+    getPhoto: Camera.getPhoto,
+    isAvailable: true
+  };
 }

@@ -3,7 +3,6 @@ jest.mock('@capacitor/core', () => {
     Plugins: {
       Camera: {
         getPhoto: async (options: CameraOptions) => {
-          console.log('Getting photo', options);
           return {
             base64String: 'fake',
             dataUrl: 'fake',
@@ -14,23 +13,31 @@ jest.mock('@capacitor/core', () => {
           }
         }
       }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
     }
   }
 });
 
-import { useCamera } from './useCamera';
+import { useCameraGetPhoto } from './useCamera';
 
 import { renderHook, act } from '@testing-library/react-hooks'
-import { CameraOptions, CameraResultType } from '@capacitor/core';
+import { CameraOptions } from '@capacitor/core';
 
 it('Gets photo', async () => {
-  const { result } = renderHook(() => useCamera());
+  const { result } = renderHook(() => useCameraGetPhoto());
 
   await act(async () => {
-    const getPhoto = result.current as any;
-    const photo = await getPhoto({
+    const {getPhoto, isAvailable} = result.current;
+
+    expect(isAvailable).toBe(true);
+
+    const photo = await getPhoto!({
       quality: 90,
-      allowEditing: true
+      allowEditing: true,
+      resultType: 'base64' as any
     });
 
     expect(photo).toMatchObject({

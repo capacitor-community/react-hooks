@@ -26,25 +26,26 @@ jest.mock('@capacitor/core', () => {
           return { url: 'my-app://awesome' }
         }
       }
-    }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
+    }  
   }
 });
 
+import { useAppGetLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
+import { renderHook, act } from '@testing-library/react-hooks'
 import { Plugins } from '@capacitor/core';
 
-import { useAppLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
-
-import { renderHook, act } from '@testing-library/react-hooks'
-
 it('Gets app launch URL', async () => {
-  let result: any;
-  await act(async () => {
-    result = renderHook(() => useAppLaunchUrl()).result;
-  });
-
+  const r = renderHook(() => useAppGetLaunchUrl());
   await act(async() => {
-    const launchUrl = result.current as any;
-    expect(launchUrl).toBe('my-app://awesome');
+    const result = r.result;    
+    const {isAvailable} = result.current;
+    expect(isAvailable).toBe(true);
+    await r.waitForNextUpdate();
+    expect(r.result.current.url).toBe('my-app://awesome');
   });
 });
 
@@ -52,30 +53,30 @@ it('Gets app open URL', async () => {
   const r = renderHook(() => useAppUrlOpen());
 
   await act(async() => {
-    const urlOpen = r.result.current as any;
-    expect(urlOpen).toBe(null);
+    const {url} = r.result.current;
+    expect(url).toBeUndefined();
 
     (Plugins.App as any).__updateAppUrlOpen();
   });
 
   await act(async() => {
-    const urlOpen = r.result.current as any;
-    expect(urlOpen).toBe('my-app://very-legal-very-cool');
+    const {url} = r.result.current;
+    expect(url).toBe('my-app://very-legal-very-cool');
   });
 });
 
 it('Gets app state', async () => {
   const r = renderHook(() => useAppState());
   await act(async () => {
-    const result = r.result as any;
+    const result = r.result;
 
-    expect(result.current).toBe(true);
+    expect(result.current.state).toBe(true);
 
     (Plugins.App as any).__updateAppState();
   });
 
   await act(async() => {
-    const state = r.result.current as any;
-    expect(state).toBe(false);
+    const state = r.result.current;
+    expect(state.state).toBe(false);
   });
 });

@@ -24,6 +24,10 @@ jest.mock('@capacitor/core', () => {
           data = {};
         }
       }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
     }
   }
 });
@@ -32,9 +36,12 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import { useStorage, useStorageItem } from './useStorage';
 
 it('Gets and sets storage values', async () => {
-  let r: any;
+  const r = renderHook(() => useStorage());
+
   await act(async () => {
-    r = renderHook(() => useStorage());
+    const result = r.result.current;
+    const { isAvailable } = result;
+    expect(isAvailable).toBe(true);
   });
 
   await act(async () => {
@@ -42,21 +49,21 @@ it('Gets and sets storage values', async () => {
 
     const { get, set, remove, keys, clear } = result;
 
-    await set('name', 'Max');
+    await set!('name', 'Max');
 
-    let name = await get('name');
+    let name = await get!('name');
     expect(name).toEqual('Max');
 
-    await remove('name');
-    name = await get('name');
+    await remove!('name');
+    name = await get!('name');
     expect(name).toEqual(undefined);
 
-    await set('name', 'Max');
-    const knownKeys = await keys();
+    await set!('name', 'Max');
+    const knownKeys = await keys!();
     expect(knownKeys).toStrictEqual(['name']);
 
-    await clear();
-    name = await get('name');
+    await clear!();
+    name = await get!('name');
     expect(name).toEqual(undefined);
   });
 });

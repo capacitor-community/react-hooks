@@ -1,29 +1,67 @@
 import { useState, useEffect } from 'react';
-
 import { Plugins } from '@capacitor/core';
+import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable } from './util/models';
 
-export function useAccessibility() {
+
+interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean };
+
+export function useAccessibilityIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
+  
+  if (!isFeatureAvailable('Accessibility', 'isScreenReaderAvailable')) {
+    return notAvailable;
+  }
+
   const { Accessibility } = Plugins;
 
-  const [ isScreenReaderEnabled, setScreenReaderEnabled ] = useState(false);
+  const [state, setState] = useState<IsScreenReaderEnabledResult>({ isScreenReaderEnabled: undefined, isAvailable: undefined });
 
   useEffect(() => {
     async function checkScreenReader() {
-      const isEnabled = await Accessibility.isScreenReaderEnabled();
-      setScreenReaderEnabled(isEnabled.value);
+      try {
+        const isEnabled = await Accessibility.isScreenReaderEnabled();
+        setState({
+          isScreenReaderEnabled: isEnabled.value,
+          isAvailable: true
+        });
+      } catch {
+        setState({
+          isAvailable: false
+        });
+      }
     }
     checkScreenReader();
-  }, [ Accessibility, setScreenReaderEnabled ]);
+  }, [Accessibility, setState]);
 
   useEffect(() => {
     const listener = Accessibility.addListener('accessibilityScreenReaderStateChange', async () => {
       const isEnabled = await Accessibility.isScreenReaderEnabled();
-      console.log('Got enabled', isEnabled);
-      setScreenReaderEnabled(isEnabled.value);
+      setState({
+        isScreenReaderEnabled: isEnabled.value,
+        isAvailable: state.isAvailable
+      })
     });
 
     return () => listener.remove();
-  }, [ Accessibility, setScreenReaderEnabled ]);
+  }, [Accessibility, setState]);
 
-  return isScreenReaderEnabled;
+  return state;
+
+}
+
+interface SpeakResult extends AvailableResult { speak?: typeof Plugins.Accessibility.speak };
+
+export function useAccessibilitySpeak(): SpeakResult {
+
+  if (!isFeatureAvailable('Accessibility', 'speak')) {
+    return notAvailable;
+  }
+
+  const { Accessibility } = Plugins;
+
+  return {
+    speak: Accessibility.speak,
+    isAvailable: true
+  };
+
 }

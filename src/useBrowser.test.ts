@@ -1,33 +1,56 @@
-jest.mock('@capacitor/core', () => {
-  let text = 'fake';
-
-  return {
-    Plugins: {
-      Browser: {
-        text: 'fake',
-        open: async ({ url }: { url: string }) => {
-          console.log('Opening url', url);
-        },
-        prefetch: async ({ urls }: { urls: string[] }) => {
-          console.log('Prefetching urls', urls);
-        },
-        close: async () => {}
-      }
+let text = 'fake';
+const mock = {
+  Plugins: {
+    Browser: {
+      text: 'fake',
+      open: jest.fn(),
+      prefetch: jest.fn(),
+      close: jest.fn()
     }
+  },
+  Capacitor: {
+    isPluginAvailable: () => true,
+    platform: 'ios'
   }
-});
+}
 
-import { useBrowser } from './useBrowser';
+jest.mock('@capacitor/core', () => mock);
+
+import { useBrowserOpen, useBrowserClose, useBrowserPrefetch } from './useBrowser';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
-it('Opens url, closes, and prefetches', async () => {
-  const { result } = renderHook(() => useBrowser());
+it('Opens url', async () => {
+  const { result } = renderHook(() => useBrowserOpen());
 
   await act(async () => {
-    const [open, close, prefetch] = result.current as any;
-    await prefetch(['http://ionicframework.com']);
-    await open('http://ionicframework.com');
-    await close();
+    const { open, isAvailable } = result.current;
+    expect(isAvailable).toBe(true);
+    await open!({ url: 'http://ionicframework.com' });
+    expect(mock.Plugins.Browser.open).toHaveBeenCalledWith({ url: 'http://ionicframework.com' })
+  });
+  jest.resetAllMocks();
+});
+
+it('Closes url', async () => {
+  const { result } = renderHook(() => useBrowserClose());
+
+  await act(async () => {
+    const { close, isAvailable } = result.current;
+    expect(isAvailable).toBe(true);
+    await close!();
+    expect(mock.Plugins.Browser.close).toHaveBeenCalledTimes(1);
+  });
+  jest.resetAllMocks();
+});
+
+it('Prefetches url', async () => {
+  const { result } = renderHook(() => useBrowserPrefetch());
+
+  await act(async () => {
+    const { prefetch, isAvailable } = result.current;
+    expect(isAvailable).toBe(true);
+    await prefetch!({ urls: ['http://ionicframework.com']});
+    expect(mock.Plugins.Browser.prefetch).toHaveBeenCalledWith({ urls: ['http://ionicframework.com']})
   });
 });

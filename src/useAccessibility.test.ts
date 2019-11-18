@@ -1,6 +1,6 @@
 jest.mock('@capacitor/core', () => {
   let listener: any;
-  let value = false;
+  let value = true;
   return {
     Plugins: {
       Accessibility: {
@@ -12,37 +12,37 @@ jest.mock('@capacitor/core', () => {
         isScreenReaderEnabled: async () => {
           return { value }
         },
-        addListener(eventName: string, cb: ({ value }: { value: boolean }) => void) {
+        addListener(_eventName: string, cb: ({ value }: { value: boolean }) => void) {
           listener = cb;
           return { remove: () => {} };
         }
       }
-    }
+    },
+    Capacitor: {
+      isPluginAvailable: jest.fn(() => true),
+      platform: 'ios'
+    }    
   }
 });
 
-import { Plugins } from '@capacitor/core';
-
-import { useAccessibility } from './useAccessibility';
+import { useAccessibilityIsScreenReaderEnabled } from './useAccessibility';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Gets screen reader status', async () => {
-  const r = renderHook(() => useAccessibility());
+  const r = renderHook(() => useAccessibilityIsScreenReaderEnabled());
 
   await act(async function() {
     const result = r.result;
 
-    let isScreenReaderEnabled = result.current as any;
+    let {isScreenReaderEnabled, isAvailable} = result.current;
 
-    expect(isScreenReaderEnabled).toBe(false);
+    expect(isScreenReaderEnabled).toBeUndefined();
+    expect(isAvailable).toBeUndefined();    
+    await r.waitForNextUpdate();
 
-    (Plugins.Accessibility as any).__updateStatus();
+    expect(r.result.current.isScreenReaderEnabled).toBeTruthy();
+    expect(r.result.current.isAvailable).toBeTruthy();       
   });
 
-  await act(async function() {
-    const isScreenReaderEnabled = r.result.current as any;
-
-    expect(isScreenReaderEnabled).toBe(true);
-  });
 });

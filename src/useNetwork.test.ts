@@ -13,33 +13,39 @@ jest.mock('@capacitor/core', () => {
         },
         addListener: (eventName: string, cb: (status: NetworkStatus) => void) => {
           listener = cb;
-          return { remove: () => {} }
+          return { remove: () => { } }
         },
         getStatus: async () => {
           return status;
         },
       }
+    },
+    Capacitor: {
+      isPluginAvailable: () => true,
+      platform: 'ios'
     }
   }
 });
 
-import { Plugins, GeolocationOptions, GeolocationPosition, NetworkStatus } from '@capacitor/core';
+import { Plugins, NetworkStatus } from '@capacitor/core';
 
 import { useNetwork } from './useNetwork';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Gets current network status', async () => {
-  let r: any;
-  await act(async () => {
-    r = renderHook(() => useNetwork());
-  })
+  const r = renderHook(() => useNetwork());
+
   const networkMock = (Plugins.Network as any);
 
-  await act(async function() {
-    const status = r.result.current;
+  await act(async function () {
+    const { isAvailable } = r.result.current;
+    expect(isAvailable).toBe(true);
+  });
 
-    expect(status).toMatchObject({
+  await act(async function () {
+    const { networkStatus } = r.result.current;
+    expect(networkStatus).toMatchObject({
       "connected": true,
       "connectionType": "wifi"
     });
@@ -47,10 +53,10 @@ it('Gets current network status', async () => {
     networkMock.__updateStatus();
   });
 
-  await act(async function() {
-    const status = r.result.current as any;
+  await act(async function () {
+    const {networkStatus} = r.result.current;
 
-    expect(status).toMatchObject({
+    expect(networkStatus).toMatchObject({
       "connected": false,
       "connectionType": "wifi"
     });
