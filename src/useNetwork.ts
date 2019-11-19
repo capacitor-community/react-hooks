@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react';
-
 import { Plugins, NetworkStatus } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
+const { Network } = Plugins;
 
 interface NetworkStatusResult extends AvailableResult { networkStatus?: NetworkStatus }
 
-export function useNetwork(): NetworkStatusResult {
+const availableFeatures = {
+  getStatus: isFeatureAvailable('Network', 'getStatus')
+};
 
-  if(!isFeatureAvailable('Network', 'getStatus')) {
+function useStatus(): NetworkStatusResult {
+  if(!availableFeatures.getStatus) {
     return notAvailable;
   }
 
-  const { Network } = Plugins;
   const [ networkStatus, setStatus ] = useState<NetworkStatus>();
 
   useEffect(() => {
     async function getStatus() {
-      const s = await Network.getStatus();
-      setStatus(s);
+      const status = await Network.getStatus();
+      setStatus(status);
     }
     getStatus();
   }, [ Network, setStatus ]);
@@ -35,4 +37,9 @@ export function useNetwork(): NetworkStatusResult {
     networkStatus,
     isAvailable: true
   }
+}
+
+export const NetworkHooks = {
+  useStatus,
+  availableFeatures
 }

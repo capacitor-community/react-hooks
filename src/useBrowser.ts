@@ -1,54 +1,63 @@
 import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable } from './util/models';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
+const { Browser } = Plugins;
 
-interface OpenResult extends AvailableResult { open?: typeof Plugins.Browser.open }
+interface CloseResult extends AvailableResult { close: typeof Plugins.Browser.close }
+interface OpenResult extends AvailableResult { open: typeof Plugins.Browser.open }
+interface PrefetchResult extends AvailableResult { prefetch: typeof Plugins.Browser.prefetch }
 
-export function useBrowserOpen(): OpenResult {
-
-  if(!isFeatureAvailable('Browser', 'open')) {
-    return notAvailable;
-  }
-
-  const { Browser } = Plugins;
-
-  return {
-    open: Browser.open,
-    isAvailable: true
-  };
-
+const availableFeatures = {
+  close: isFeatureAvailable('Browser', 'close'),
+  open: isFeatureAvailable('Browser', 'open'),
+  prefetch: isFeatureAvailable('Browser', 'prefetch')
 }
 
-interface PrefetchResult extends AvailableResult { prefetch?: typeof Plugins.Browser.prefetch }
-
-export function useBrowserPrefetch(): PrefetchResult {
-
-  if(!isFeatureAvailable('Browser', 'prefetch')) {
-    return notAvailable;
-  }
-
-  const { Browser } = Plugins;
-
-  return {
-    prefetch: Browser.prefetch,
-    isAvailable: true
-  };
-
-}
-
-interface CloseResult extends AvailableResult { close?: typeof Plugins.Browser.close }
-
-export function useBrowserClose(): CloseResult {
-
-  if(!isFeatureAvailable('Browser', 'close')) {
-    return notAvailable;
-  }
-
-  const { Browser } = Plugins;
+function useClose(): CloseResult {
+  if (!availableFeatures.open) {
+    return {
+      close: () => { throw new FeatureNotAvailableError() },
+      ...notAvailable
+    }
+  } 
 
   return {
     close: Browser.close,
     isAvailable: true
   }
+}
 
+function useOpen(): OpenResult {
+  if (!availableFeatures.open) {
+    return {
+      open: () => { throw new FeatureNotAvailableError() },
+      ...notAvailable
+    }
+  }
+
+  return {
+    open: Browser.open,
+    isAvailable: true
+  };
+}
+
+function usePrefetch(): PrefetchResult {
+  if (!availableFeatures.prefetch) {
+    return {
+      prefetch: () => { throw new FeatureNotAvailableError() },
+      ...notAvailable
+    }
+  }
+
+  return {
+    prefetch: Browser.prefetch,
+    isAvailable: true
+  };
+}
+
+export const BrowserHooks = {
+  useClose,
+  useOpen,
+  usePrefetch,
+  availableFeatures
 }

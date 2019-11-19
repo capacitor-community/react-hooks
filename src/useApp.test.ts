@@ -34,39 +34,39 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { useAppGetLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
+import { AppHooks } from './useApp';
 import { renderHook, act } from '@testing-library/react-hooks'
 import { Plugins } from '@capacitor/core';
 
 it('Gets app launch URL', async () => {
-  const r = renderHook(() => useAppGetLaunchUrl());
+  const r = renderHook(() => AppHooks.useLaunchUrl());
   await act(async() => {
     const result = r.result;    
     const {isAvailable} = result.current;
     expect(isAvailable).toBe(true);
     await r.waitForNextUpdate();
-    expect(r.result.current.url).toBe('my-app://awesome');
+    expect(r.result.current.launchUrl).toBe('my-app://awesome');
   });
 });
 
 it('Gets app open URL', async () => {
-  const r = renderHook(() => useAppUrlOpen());
+  const r = renderHook(() => AppHooks.useAppUrlOpen());
 
   await act(async() => {
-    const {url} = r.result.current;
-    expect(url).toBeUndefined();
+    const {appUrlOpen} = r.result.current;
+    expect(appUrlOpen).toBeUndefined();
 
     (Plugins.App as any).__updateAppUrlOpen();
   });
 
   await act(async() => {
-    const {url} = r.result.current;
-    expect(url).toBe('my-app://very-legal-very-cool');
+    const {appUrlOpen} = r.result.current;
+    expect(appUrlOpen).toBe('my-app://very-legal-very-cool');
   });
 });
 
 it('Gets app state', async () => {
-  const r = renderHook(() => useAppState());
+  const r = renderHook(() => AppHooks.useAppState());
   await act(async () => {
     const result = r.result;
 

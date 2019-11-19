@@ -1,4 +1,5 @@
-import { useClipboard } from './useClipboard';
+import { ClipboardHooks } from './useClipboard';
+const { useClipboard } = ClipboardHooks;
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
@@ -32,7 +33,7 @@ it('Reads clipboard data', async () => {
     const result = r.result;
     const { getClipboardData, isAvailable } = result.current;
     expect(isAvailable).toBe(true);
-    await getClipboardData!();
+    await getClipboardData();
   });
 
   await act(async () => {
@@ -47,12 +48,12 @@ it('Writes clipboard data', async () => {
   await act(async () => {
     const { setClipboardData, isAvailable } = result.current;
     expect(isAvailable).toBe(true);
-    await setClipboardData!('testing');
+    await setClipboardData('testing');
   });
 
   await act(async () => {
     const { getClipboardData } = result.current;
-    await getClipboardData!();
+    await getClipboardData();
   });
 
   await act(async () => {

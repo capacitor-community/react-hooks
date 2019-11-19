@@ -1,61 +1,93 @@
 import { useState, useEffect } from 'react';
-
 import { Plugins, GeolocationPosition, GeolocationOptions } from '@capacitor/core';
-import { AvailableResult, notAvailable } from './util/models';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
+const { Geolocation } = Plugins;
 
-interface GetCurrentPositionResult extends AvailableResult { currentPosition?: GeolocationPosition };
+interface GetCurrentPositionResult extends AvailableResult { error?: any, currentPosition?: GeolocationPosition };
+interface GeoWatchPositionResult extends AvailableResult {
+  error?: any;
+  currentPosition?: GeolocationPosition;
+  startWatch: (options?: GeolocationOptions) => void;
+  clearWatch: () => void;
+};
 
-export function useGeoCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
-  if (!isFeatureAvailable('Geolocation', 'getCurrentPosition')) {
+const availableFeatures = {
+  getCurrentPosition: isFeatureAvailable('Geolocation', 'getCurrentPosition'),
+  watchPosition: isFeatureAvailable('Geolocation', 'watchPosition')
+}
+
+function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
+  if (!availableFeatures.getCurrentPosition) {
     return notAvailable;
   }
 
-  const { Geolocation } = Plugins;
   const [currentPosition, setCurrentPosition] = useState<GeolocationPosition>();
+  const [error, setError] = useState();
 
   useEffect(() => {
 
     (async () => {
-      const position = await Geolocation.getCurrentPosition(options || {});
-      setCurrentPosition(position);
+      try {
+        const position = await Geolocation.getCurrentPosition(options || {});
+        setCurrentPosition(position);
+      } catch (err) {
+        setError(err);
+      }
     })();
 
   }, [Geolocation, setCurrentPosition, options]);
 
   return {
+    error,
     currentPosition,
     isAvailable: true
   }
-
 }
 
-interface GeoWatchPositionResult extends AvailableResult {
-  currentPosition?: GeolocationPosition;
-  clearWatch?: () => void;
-};
-
-export function useGeoWatchPosition(options?: GeolocationOptions): GeoWatchPositionResult {
-
-  if (!isFeatureAvailable('Geolocation', 'watchPosition')) {
-    return notAvailable;
+function useWatchPosition(): GeoWatchPositionResult {
+  if (!availableFeatures.watchPosition) {
+    return {
+      clearWatch: () => { throw new FeatureNotAvailableError() },
+      startWatch: () => { throw new FeatureNotAvailableError() },
+      ...notAvailable
+    };
   }
 
-  const { Geolocation } = Plugins;
   const [currentPosition, setCurrentPosition] = useState<GeolocationPosition>();
-  const [clearWatch, setClearWatch] = useState<() => void>();
+  const [watchId, setWatchId] = useState('');
+  const [error, setError] = useState();
 
-  useEffect(() => {
-    const watchId = Geolocation.watchPosition(options || {}, (pos: GeolocationPosition) => {
-      setCurrentPosition(pos);
-    });
-    setClearWatch(() => Geolocation.clearWatch({ id: watchId }));
-    return () => { clearWatch && clearWatch() };
-  }, [Geolocation, setCurrentPosition, options]);
+  const clearWatch = () => {
+    if (watchId) {
+      Geolocation.clearWatch({ id: watchId });
+      setWatchId('');
+    }
+  }
+
+  const startWatch = (options?: GeolocationOptions) => {
+    if (!watchId) {
+      const id = Geolocation.watchPosition(options || {}, (pos: GeolocationPosition, err) => {
+        if (err) {
+          setError(err);
+        }
+        setCurrentPosition(pos);
+      });
+      setWatchId(id);
+    }
+  }
 
   return {
+    error,
     currentPosition,
     clearWatch,
+    startWatch,
     isAvailable: true
   };
+}
+
+export const GeolocationHooks = {
+  useCurrentPosition,
+  useWatchPosition,
+  availableFeatures
 }

@@ -2,16 +2,24 @@ import { useState, useEffect } from 'react';
 import { Plugins, AppState, AppUrlOpen } from '@capacitor/core';
 import { isFeatureAvailable } from './util/feature-check';
 import { AvailableResult, notAvailable } from './util/models';
+const { App } = Plugins;
 
+interface AppUrlOpenResult extends AvailableResult { appUrlOpen?: string; };
 interface AppStateResult extends AvailableResult { state?: boolean; };
+interface LaunchUrlResult extends AvailableResult { launchUrl?: string; };
 
-export function useAppState(): AppStateResult {
+const availableFeatures = {
+  appState: isFeatureAvailable('App', 'state'),
+  getLaunchUrl: isFeatureAvailable('App', 'getLaunchUrl'),
+  appUrlOpen: isFeatureAvailable('App', 'appUrlOpen')
+}
 
-  if (!isFeatureAvailable('App', 'state')) {
+function useAppState(): AppStateResult {
+
+  if (!availableFeatures.appState) {
     return notAvailable
   }
 
-  const { App } = Plugins;
   const [state, setAppState] = useState(true);
 
   useEffect(() => {
@@ -28,46 +36,41 @@ export function useAppState(): AppStateResult {
   };
 }
 
-interface AppGetLaunchUrlResult extends AvailableResult { url?: string; };
-
 /**
  * Get the URL the app was originally launched with. Note: if
  * you want to detect future app opens, use `useAppUrlOpen` instead,
  * which will stay updated.
  */
-export function useAppGetLaunchUrl(): AppGetLaunchUrlResult {
+function useLaunchUrl(): LaunchUrlResult {
 
-  if (!isFeatureAvailable('App', 'getLaunchUrl')) {
+  if (!availableFeatures.getLaunchUrl) {
     return notAvailable;
   }
 
-  const { App } = Plugins;
-  const [value, setValue] = useState();
+  const [launchUrl, setUrl] = useState();
 
   useEffect(() => {
     async function getAppLaunchUrl() {
       const ret = await App.getLaunchUrl();
-      setValue(ret.url);
+      setUrl(ret.url);
     }
     getAppLaunchUrl();
-  }, [App, setValue]);
+  }, [App, setUrl]);
 
   return {
-    url: value,
+    launchUrl,
     isAvailable: true
   }
 }
 
-interface AppUrlOpenResult extends AvailableResult { url?: string; };
+function useAppUrlOpen(): AppUrlOpenResult {
 
-export function useAppUrlOpen(): AppUrlOpenResult {
-
-  if(!isFeatureAvailable('App', 'appUrlOpen')) {
+  if (!isFeatureAvailable('App', 'appUrlOpen')) {
     return notAvailable
   }
 
   const { App } = Plugins;
-  const [url, setAppUrl] = useState<string | undefined>();
+  const [appUrlOpen, setAppUrl] = useState<string>();
 
   useEffect(() => {
     const listener = App.addListener('appUrlOpen', async (state: AppUrlOpen) => {
@@ -77,7 +80,14 @@ export function useAppUrlOpen(): AppUrlOpenResult {
   }, [App, setAppUrl]);
 
   return {
-    url,
+    appUrlOpen,
     isAvailable: true
   };
+}
+
+export const AppHooks = {
+  useAppState,
+  useLaunchUrl,
+  useAppUrlOpen,
+  availableFeatures
 }

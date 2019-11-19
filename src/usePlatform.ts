@@ -1,9 +1,9 @@
 import { Capacitor } from '@capacitor/core';
 import { AvailableResult } from './util/models';
 
-interface GetPlatformResult extends AvailableResult { platform: string };
+interface PlatformResult extends AvailableResult { platform: string };
 
-export function useGetPlatform(): GetPlatformResult {
+export function usePlatform(): PlatformResult {
 
   return {
     platform: Capacitor.getPlatform(),

@@ -7,7 +7,7 @@
     "start": "node scripts/start.js",
     "build": "npm run clean && npm run transpile && npm run rollup",
     "rollup": "rollup --config rollup.config.js",
-    "transpile": "tsc --module ES2015 --target ES5 --outDir dist/esm",
+    "transpile": "tsc --module ES2015 --target es2017 --outDir dist/esm",
     "clean": "rimraf dist",
     "build-old": "node scripts/build.js",
     "test": "jest"
@@ -32,7 +32,6 @@
     "@capacitor/core": "^1.3.0"
   },
   "devDependencies": {
-    "react": "^16.11.0",
     "@capacitor/core": "^1.3.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.23",
@@ -40,6 +39,7 @@
     "conventional-changelog": "^3.1.4",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
+    "react": "^16.11.0",
     "react-app-polyfill": "^1.0.4",
     "react-test-renderer": "^16.11.0",
     "replace": "^1.1.0",
@@ -47,11 +47,12 @@
     "rollup": "^1.27.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
     "ts-jest": "^24.1.0",
     "tslint": "^5.6.0",
     "tslint-ionic-rules": "0.0.8",
     "typedoc": "^0.14.2",
-    "typescript": "^3.7.2",
+    "typescript": "^3.6.3",
     "uglify-js": "^3.2.0"
   },
   "jest": {

@@ -21,24 +21,29 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { useCameraGetPhoto } from './useCamera';
+import { CameraHooks } from './useCamera';
+const { useCamera } = CameraHooks;
 
 import { renderHook, act } from '@testing-library/react-hooks'
 import { CameraOptions } from '@capacitor/core';
 
 it('Gets photo', async () => {
-  const { result } = renderHook(() => useCameraGetPhoto());
+  const { result } = renderHook(() => useCamera());
 
   await act(async () => {
-    const {getPhoto, isAvailable} = result.current;
+    const {getPhoto, photo, isAvailable} = result.current;
 
     expect(isAvailable).toBe(true);
 
-    const photo = await getPhoto!({
+    getPhoto({
       quality: 90,
       allowEditing: true,
       resultType: 'base64' as any
     });
+  });
+
+  await act(async () => {
+    const {photo} = result.current;
 
     expect(photo).toMatchObject({
       base64String: 'fake',

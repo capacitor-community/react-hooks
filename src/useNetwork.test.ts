@@ -29,12 +29,13 @@ jest.mock('@capacitor/core', () => {
 
 import { Plugins, NetworkStatus } from '@capacitor/core';
 
-import { useNetwork } from './useNetwork';
+import { NetworkHooks } from './useNetwork';
+const { useStatus } = NetworkHooks
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Gets current network status', async () => {
-  const r = renderHook(() => useNetwork());
+  const r = renderHook(() => useStatus());
 
   const networkMock = (Plugins.Network as any);
 

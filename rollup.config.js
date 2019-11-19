@@ -1,27 +1,28 @@
-import nodeResolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import react from 'react';
+import resolve from 'rollup-plugin-node-resolve';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 export default {
   input: 'dist/esm/index.js',
-  output: {
-    file: 'dist/ionic-react-hooks.js',
-    format: 'iife',
-    name: 'ionicReactHooks',
-    sourcemap: true,
-    banner: '/*! Ionic React Hooks: https://ionicframework.com/ - MIT Licensed */',
-    globals: {
-      'react': 'React'
+  output: [
+    {
+      name: 'ionicReactHooks',
+      banner: '/*! Ionic React Hooks: https://ionicframework.com/ - MIT Licensed */',
+      file: 'dist/index.esm.js',
+      format: 'es',
+      sourcemap: true
+    },
+    {
+      name: 'ionicReactHooks',
+      banner: '/*! Ionic React Hooks: https://ionicframework.com/ - MIT Licensed */',
+      file: 'dist/index.js',
+      format: 'commonjs',
+      preferConst: true,
+      sourcemap: true
     }
-  },
-  external: id => /^react|styled-jsx/.test(id),
+  ],
+  external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
-    nodeResolve(),
-    commonjs({
-      include: 'node_modules/**',
-      namedExports: {
-        react: Object.keys(react)
-      }
-    })
+    resolve(),
+    sourcemaps()
   ]
 };

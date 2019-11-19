@@ -57,11 +57,12 @@ jest.mock('@capacitor/core', () => {
 });
 
 import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
-import { useGeoWatchPosition, useGeoCurrentPosition } from './useGeolocation';
+import { GeolocationHooks } from './useGeolocation';
 import { renderHook, act } from '@testing-library/react-hooks'
+const { useWatchPosition, useCurrentPosition } = GeolocationHooks;
 
 it('Gets current geolocation watch position', async () => {
-  const r = renderHook(() => useGeoWatchPosition());
+  const r = renderHook(() => useWatchPosition());
   const geoMock = (Plugins.Geolocation as any);
 
   function match(pos: GeolocationPosition, coords: [number, number]) {
@@ -74,33 +75,37 @@ it('Gets current geolocation watch position', async () => {
   }
 
   await act(async function () {
+    r.result.current.startWatch();
+  });
+
+  await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[0]);
     (Plugins.Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
-    const {currentPosition} = r.result.current;
+    const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[1]);
     (Plugins.Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
-    const {currentPosition} = r.result.current;
+    const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[2]);
     (Plugins.Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
-    const {currentPosition} = r.result.current;
+    const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[3]);
     (Plugins.Geolocation as any).__updatePosition();
   });
-  
+
 });
 
 it('Gets current geolocation position', async () => {
-  const r = renderHook(() => useGeoCurrentPosition());
+  const r = renderHook(() => useCurrentPosition());
   const geoMock = (Plugins.Geolocation as any);
 
   function match(pos: GeolocationPosition, coords: [number, number]) {
@@ -120,5 +125,5 @@ it('Gets current geolocation position', async () => {
   await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[0]);
-  });  
+  });
 });

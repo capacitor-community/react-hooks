@@ -1,67 +1,57 @@
 import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
 import { isFeatureAvailable } from './util/feature-check';
-import { AvailableResult, notAvailable } from './util/models';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
+const { Accessibility } = Plugins;
 
+interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean; }
+interface SpeakResult extends AvailableResult { speak: typeof Plugins.Accessibility.speak; }
 
-interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean };
+const availableFeatures = {
+  isScreenReaderAvailable: isFeatureAvailable('Accessibility', 'isScreenReaderAvailable'),
+  speak: isFeatureAvailable('Accessibility', 'speak')
+}
 
-export function useAccessibilityIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
-  
-  if (!isFeatureAvailable('Accessibility', 'isScreenReaderAvailable')) {
+function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
+
+  if(!availableFeatures.isScreenReaderAvailable) {
     return notAvailable;
   }
 
-  const { Accessibility } = Plugins;
-
-  const [state, setState] = useState<IsScreenReaderEnabledResult>({ isScreenReaderEnabled: undefined, isAvailable: undefined });
+  const [isScreenReaderEnabled, setIsScreenReaderAvailable] = useState<boolean>();
 
   useEffect(() => {
     async function checkScreenReader() {
-      try {
-        const isEnabled = await Accessibility.isScreenReaderEnabled();
-        setState({
-          isScreenReaderEnabled: isEnabled.value,
-          isAvailable: true
-        });
-      } catch {
-        setState({
-          isAvailable: false
-        });
-      }
-    }
-    checkScreenReader();
-  }, [Accessibility, setState]);
-
-  useEffect(() => {
-    const listener = Accessibility.addListener('accessibilityScreenReaderStateChange', async () => {
       const isEnabled = await Accessibility.isScreenReaderEnabled();
-      setState({
-        isScreenReaderEnabled: isEnabled.value,
-        isAvailable: state.isAvailable
-      })
-    });
+      setIsScreenReaderAvailable(isEnabled.value);
+    }
+    if (availableFeatures.isScreenReaderAvailable) {
+    checkScreenReader();
+    }
+  }, [Accessibility, setIsScreenReaderAvailable]);
 
-    return () => listener.remove();
-  }, [Accessibility, setState]);
-
-  return state;
-
+  return {
+    isScreenReaderEnabled,
+    isAvailable: true
+  }
 }
 
-interface SpeakResult extends AvailableResult { speak?: typeof Plugins.Accessibility.speak };
-
-export function useAccessibilitySpeak(): SpeakResult {
-
-  if (!isFeatureAvailable('Accessibility', 'speak')) {
-    return notAvailable;
+function useSpeak(): SpeakResult {
+  if(!availableFeatures.speak) {
+    return {
+      speak: () => {throw new FeatureNotAvailableError()},
+      ...notAvailable
+    }
   }
-
-  const { Accessibility } = Plugins;
 
   return {
     speak: Accessibility.speak,
     isAvailable: true
   };
+}
 
+export const AccessibilityHooks = {
+  useIsScreenReaderEnabled,
+  useSpeak,
+  availableFeatures
 }

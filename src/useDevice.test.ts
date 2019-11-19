@@ -34,10 +34,11 @@ jest.mock('@capacitor/core', () => {
 });
 
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useDeviceGetInfo, useDeviceGetLanguageCode } from './useDevice';
+import { DeviceHooks } from './useDevice';
+const { useGetInfo, useGetLanguageCode } = DeviceHooks;
 
 it('Gets device info and language code', async () => {
-  const r = renderHook(() => useDeviceGetInfo());
+  const r = renderHook(() => useGetInfo());
 
   await act(async () => {
     const result = r.result;
@@ -66,7 +67,7 @@ it('Gets device info and language code', async () => {
 });
 
 it('Gets device language code', async () => {
-  const r = renderHook(() => useDeviceGetLanguageCode());
+  const r = renderHook(() => useGetLanguageCode());
 
   await act(async () => {
     const result = r.result;

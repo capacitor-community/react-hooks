@@ -2,16 +2,21 @@ import { useState, useEffect } from 'react';
 import { Plugins, DeviceInfo } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
+const { Device } = Plugins;
 
 interface GetInfoResult extends AvailableResult { info?: DeviceInfo };
+interface GetLanguageCodeResult extends AvailableResult { languageCode?: string };
 
-export function useDeviceGetInfo(): GetInfoResult {
+const availableFeatures = {
+  getInfo: isFeatureAvailable('Device', 'getInfo'),
+  getLanguageCode: isFeatureAvailable('Device', 'getLanguageCode')
+}
 
-  if(!isFeatureAvailable('Device', 'getInfo')) {
+function useGetInfo(): GetInfoResult {
+  if (!availableFeatures.getInfo) {
     return notAvailable;
   }
-  const { Device } = Plugins;
-  const [info, setInfo] = useState<DeviceInfo>();  
+  const [info, setInfo] = useState<DeviceInfo>();
 
   useEffect(() => {
     async function getInfo() {
@@ -19,7 +24,7 @@ export function useDeviceGetInfo(): GetInfoResult {
       setInfo(data);
     }
     getInfo();
-  }, [Device, setInfo]);  
+  }, [Device, setInfo]);
 
   return {
     info,
@@ -27,11 +32,8 @@ export function useDeviceGetInfo(): GetInfoResult {
   }
 }
 
-interface GetLanguageCodeResult extends AvailableResult { languageCode?: string };
-
-export function useDeviceGetLanguageCode(): GetLanguageCodeResult {
-
-  if(!isFeatureAvailable('Device', 'getLanguageCode')) {
+function useGetLanguageCode(): GetLanguageCodeResult {
+  if (!availableFeatures.getLanguageCode) {
     return notAvailable;
   }
 
@@ -50,5 +52,10 @@ export function useDeviceGetLanguageCode(): GetLanguageCodeResult {
     languageCode,
     isAvailable: true
   };
+}
 
+export const DeviceHooks = {
+  useGetInfo,
+  useGetLanguageCode,
+  availableFeatures
 }

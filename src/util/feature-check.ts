@@ -32,8 +32,7 @@ const featureMap = {
     getPhoto: allTrue
   },
   Clipboard: {
-    read: {...allTrue, web: 'clipboard' in navigator },
-    write: {...allTrue, web: 'clipboard' in navigator }
+    useClipboard: {...allTrue, web: 'clipboard' in navigator },
   },
   Device: {
     getInfo: allTrue,

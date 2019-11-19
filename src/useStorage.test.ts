@@ -1,5 +1,3 @@
-import { CameraOptions, CameraResultType, DeviceInfo, DeviceLanguageCodeResult, Plugins } from '@capacitor/core';
-
 jest.mock('@capacitor/core', () => {
   let data: any = {}
   return {
@@ -32,8 +30,10 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
+import { Plugins } from '@capacitor/core';
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useStorage, useStorageItem } from './useStorage';
+import { StorageHooks } from './useStorage';
+const { useStorage, useStorageItem } = StorageHooks;
 
 it('Gets and sets storage values', async () => {
   const r = renderHook(() => useStorage());
@@ -47,23 +47,23 @@ it('Gets and sets storage values', async () => {
   await act(async () => {
     const result = r.result.current;
 
-    const { get, set, remove, keys, clear } = result;
+    const { get, set, remove, getKeys, clear } = result;
 
-    await set!('name', 'Max');
+    await set('name', 'Max');
 
-    let name = await get!('name');
+    let name = await get('name');
     expect(name).toEqual('Max');
 
-    await remove!('name');
-    name = await get!('name');
+    await remove('name');
+    name = await get('name');
     expect(name).toEqual(undefined);
 
-    await set!('name', 'Max');
-    const knownKeys = await keys!();
+    await set('name', 'Max');
+    const knownKeys = await getKeys();
     expect(knownKeys).toStrictEqual(['name']);
 
-    await clear!();
-    name = await get!('name');
+    await clear();
+    name = await get('name');
     expect(name).toEqual(undefined);
   });
 });
@@ -99,7 +99,7 @@ it('Manages individual item with stored value', async () => {
   
   const storageMock = (Plugins.Storage as any);
   await act(async () => {
-    storageMock.__init({ name: JSON.stringify('Matilda')});
+    storageMock.__init({ name: 'Matilda'});
   });
 
   await act(async () => {

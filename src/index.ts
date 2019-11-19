@@ -5,5 +5,6 @@ export * from './useCamera';
 export * from './useClipboard';
 export * from './useDevice';
 export * from './useGeolocation';
+export * from './usePlatform';
 export * from './useNetwork';
 export * from './useStorage';
