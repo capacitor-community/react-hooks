@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { Plugins, GeolocationPosition, GeolocationOptions } from '@capacitor/core';
 import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
-const { Geolocation } = Plugins;
 
 interface GetCurrentPositionResult extends AvailableResult {
   error?: any,
@@ -23,6 +22,8 @@ const availableFeatures = {
 }
 
 function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
+  const { Geolocation } = Plugins;
+
   if (!availableFeatures.getCurrentPosition) {
     return {
       getPosition: () => { throw new FeatureNotAvailableError() },
@@ -55,6 +56,8 @@ function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionRes
 }
 
 function useWatchPosition(): GeoWatchPositionResult {
+  const { Geolocation } = Plugins;
+  
   if (!availableFeatures.watchPosition) {
     return {
       clearWatch: () => { throw new FeatureNotAvailableError() },

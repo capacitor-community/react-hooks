@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
 import { isFeatureAvailable } from './util/feature-check';
 import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
-const { Accessibility } = Plugins;
 
 interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean; }
 interface SpeakResult extends AvailableResult { speak: typeof Plugins.Accessibility.speak; }
@@ -13,6 +12,7 @@ const availableFeatures = {
 }
 
 function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
+  const { Accessibility } = Plugins;
 
   if(!availableFeatures.isScreenReaderAvailable) {
     return notAvailable;
@@ -37,6 +37,8 @@ function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
 }
 
 function useSpeak(): SpeakResult {
+  const { Accessibility } = Plugins;
+  
   if(!availableFeatures.speak) {
     return {
       speak: () => {throw new FeatureNotAvailableError()},

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Plugins, AppState, AppUrlOpen } from '@capacitor/core';
 import { isFeatureAvailable } from './util/feature-check';
 import { AvailableResult, notAvailable } from './util/models';
-const { App } = Plugins;
 
 interface AppUrlOpenResult extends AvailableResult { appUrlOpen?: string; };
 interface AppStateResult extends AvailableResult { state?: boolean; };
@@ -15,6 +14,7 @@ const availableFeatures = {
 }
 
 function useAppState(): AppStateResult {
+  const { App } = Plugins;
 
   if (!availableFeatures.appState) {
     return notAvailable
@@ -42,6 +42,7 @@ function useAppState(): AppStateResult {
  * which will stay updated.
  */
 function useLaunchUrl(): LaunchUrlResult {
+  const { App } = Plugins;
 
   if (!availableFeatures.getLaunchUrl) {
     return notAvailable;
@@ -64,12 +65,12 @@ function useLaunchUrl(): LaunchUrlResult {
 }
 
 function useAppUrlOpen(): AppUrlOpenResult {
+  const { App } = Plugins;
 
   if (!isFeatureAvailable('App', 'appUrlOpen')) {
     return notAvailable
   }
 
-  const { App } = Plugins;
   const [appUrlOpen, setAppUrl] = useState<string>();
 
   useEffect(() => {

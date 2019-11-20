@@ -2,7 +2,6 @@ import { Plugins, CameraOptions, CameraPhoto } from '@capacitor/core';
 import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
 import { useState } from 'react';
-const { Camera } = Plugins;
 
 interface CameraResult extends AvailableResult { photo?: CameraPhoto, getPhoto: (options: CameraOptions) => void };
 
@@ -11,6 +10,7 @@ const availableFeatures = {
 }
 
 function useCamera(): CameraResult {
+  const { Camera } = Plugins;
 
   const [photo, setPhoto] = useState<CameraPhoto>();
 

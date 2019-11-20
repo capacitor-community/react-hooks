@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Plugins, NetworkStatus } from '@capacitor/core';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
-const { Network } = Plugins;
 
 interface NetworkStatusResult extends AvailableResult { networkStatus?: NetworkStatus }
 
@@ -11,6 +10,8 @@ const availableFeatures = {
 };
 
 function useStatus(): NetworkStatusResult {
+  const { Network } = Plugins;
+  
   if(!availableFeatures.getStatus) {
     return notAvailable;
   }

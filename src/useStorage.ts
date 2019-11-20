@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
-const { Storage } = Plugins;
 
 interface StorageResult extends AvailableResult {
   get: (key: string) => Promise<string | null>;
@@ -24,6 +23,8 @@ const availableFeatures = {
 }
 
 function useStorage(): StorageResult {
+  const { Storage } = Plugins;
+
   if (!availableFeatures.useStorage) {
     return {
       get: () => { throw new FeatureNotAvailableError() },
@@ -63,6 +64,8 @@ function useStorage(): StorageResult {
 }
 
 function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> {
+  const { Storage } = Plugins;
+  
   if (!availableFeatures.useStorage) {
     return [
       undefined,
