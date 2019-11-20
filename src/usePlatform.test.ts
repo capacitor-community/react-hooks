@@ -7,7 +7,8 @@ const mock = {
 
 jest.mock('@capacitor/core', () => mock);
 
-import { usePlatform } from './usePlatform';
+import { PlatformHooks } from './usePlatform';
+const { usePlatform } = PlatformHooks;
 import { renderHook, act } from '@testing-library/react-hooks';
 
 it('Gets platform', async () => {

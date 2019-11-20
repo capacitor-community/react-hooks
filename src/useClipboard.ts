@@ -5,9 +5,9 @@ import { isFeatureAvailable } from './util/feature-check';
 const { Clipboard } = Plugins;
 
 interface ClipboardResult extends AvailableResult {
-  data?: string,
-  getClipboardData: () => void;
-  setClipboardData: (value: string) => void;
+  value?: string,
+  getValue: () => void;
+  setValue: (value: string) => void;
 }
 
 const availableFeatures = {
@@ -17,15 +17,15 @@ const availableFeatures = {
 function useClipboard(): ClipboardResult {
   if (!(availableFeatures.useClipboard)) {
     return {
-      getClipboardData: () => { throw new FeatureNotAvailableError() },
-      setClipboardData: () => { throw new FeatureNotAvailableError() },
+      getValue: () => { throw new FeatureNotAvailableError() },
+      setValue: () => { throw new FeatureNotAvailableError() },
       ...notAvailable
     }
   }
 
   const [data, setData] = useState<string>();
 
-  async function getClipboardData() {
+  async function getValue() {
     const ret = await Clipboard.read({
       type: 'string'
     });
@@ -33,16 +33,16 @@ function useClipboard(): ClipboardResult {
     setData(ret.value);
   }
 
-  async function setClipboardData(value: string) {
+  async function setValue(value: string) {
     await Clipboard.write({
       string: value
     });
   }
 
   return {
-    data,
-    getClipboardData,
-    setClipboardData,
+    value: data,
+    getValue,
+    setValue,
     isAvailable: true
   }
 }

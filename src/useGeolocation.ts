@@ -1,10 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Plugins, GeolocationPosition, GeolocationOptions } from '@capacitor/core';
 import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
 const { Geolocation } = Plugins;
 
-interface GetCurrentPositionResult extends AvailableResult { error?: any, currentPosition?: GeolocationPosition };
+interface GetCurrentPositionResult extends AvailableResult {
+  error?: any,
+  currentPosition?: GeolocationPosition
+  getPosition: (options?: GeolocationOptions) => void
+};
+
 interface GeoWatchPositionResult extends AvailableResult {
   error?: any;
   currentPosition?: GeolocationPosition;
@@ -19,28 +24,32 @@ const availableFeatures = {
 
 function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
   if (!availableFeatures.getCurrentPosition) {
-    return notAvailable;
+    return {
+      getPosition: () => { throw new FeatureNotAvailableError() },
+      ...notAvailable
+    }
   }
 
   const [currentPosition, setCurrentPosition] = useState<GeolocationPosition>();
   const [error, setError] = useState();
 
+  const getPosition = useCallback(async (newOptions?: GeolocationOptions) => {
+    try {
+      const position = await Geolocation.getCurrentPosition(newOptions || options || {});
+      setCurrentPosition(position);
+    } catch (err) {
+      setError(err);
+    }
+  }, [options]);
+
   useEffect(() => {
-
-    (async () => {
-      try {
-        const position = await Geolocation.getCurrentPosition(options || {});
-        setCurrentPosition(position);
-      } catch (err) {
-        setError(err);
-      }
-    })();
-
-  }, [Geolocation, setCurrentPosition, options]);
+    getPosition(options);
+  }, [getPosition, options]);
 
   return {
     error,
     currentPosition,
+    getPosition,
     isAvailable: true
   }
 }

@@ -31,14 +31,14 @@ it('Reads clipboard data', async () => {
 
   await act(async () => {
     const result = r.result;
-    const { getClipboardData, isAvailable } = result.current;
+    const { getValue, isAvailable } = result.current;
     expect(isAvailable).toBe(true);
-    await getClipboardData();
+    await getValue();
   });
 
   await act(async () => {
     const result = r.result;
-    expect(result.current.data).toBe('fake');
+    expect(result.current.value).toBe('fake');
   });
 });
 
@@ -46,18 +46,18 @@ it('Writes clipboard data', async () => {
   const { result } = renderHook(() => useClipboard());
 
   await act(async () => {
-    const { setClipboardData, isAvailable } = result.current;
+    const { setValue, isAvailable } = result.current;
     expect(isAvailable).toBe(true);
-    await setClipboardData('testing');
+    await setValue('testing');
   });
 
   await act(async () => {
-    const { getClipboardData } = result.current;
-    await getClipboardData();
+    const { getValue } = result.current;
+    await getValue();
   });
 
   await act(async () => {
-    const {data} = result.current;
+    const {value: data} = result.current;
     expect(data).toBe('testing');
   });
 });
