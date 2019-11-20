@@ -34,18 +34,32 @@ function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionRes
   const [currentPosition, setCurrentPosition] = useState<GeolocationPosition>();
   const [error, setError] = useState();
 
-  const getPosition = useCallback(async (newOptions?: GeolocationOptions) => {
-    try {
-      const position = await Geolocation.getCurrentPosition(newOptions || options || {});
-      setCurrentPosition(position);
-    } catch (err) {
-      setError(err);
-    }
-  }, [options]);
+  const getPosition = async (newOptions?: GeolocationOptions) => {
+    let called = false;
+
+    // we use watchPosition here and grab the first result because getCurrentPosition currently has some issues
+    const id = Geolocation.watchPosition(newOptions || options || {}, (pos: GeolocationPosition, err) => {
+      // watchPosition will sometimes fire updates quickly, 
+      // so we check here to make sure its only called one per getPosition invocation
+      if (!called) {
+        
+        if (err) {
+          setError(err);
+        }
+
+        setCurrentPosition(pos);
+
+        // run on next tick so id will be defined
+        setTimeout(() => Geolocation.clearWatch({ id }), 0);
+        called = true;
+      }
+    });
+
+  };
 
   useEffect(() => {
     getPosition(options);
-  }, [getPosition, options]);
+  }, [options]);
 
   return {
     error,
@@ -57,7 +71,7 @@ function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionRes
 
 function useWatchPosition(): GeoWatchPositionResult {
   const { Geolocation } = Plugins;
-  
+
   if (!availableFeatures.watchPosition) {
     return {
       clearWatch: () => { throw new FeatureNotAvailableError() },
