@@ -1,5 +1,4 @@
-import { ClipboardHooks } from './useClipboard';
-const { useClipboard } = ClipboardHooks;
+import { useClipboard } from './useClipboard';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 

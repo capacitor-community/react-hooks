@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Plugins, AppState, AppUrlOpen } from '@capacitor/core';
-import { isFeatureAvailable } from './util/feature-check';
-import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable } from '../util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
 
 interface AppUrlOpenResult extends AvailableResult { appUrlOpen?: string; };
 interface AppStateResult extends AvailableResult { state?: boolean; };
 interface LaunchUrlResult extends AvailableResult { launchUrl?: string; };
 
-const availableFeatures = {
+export const availableFeatures = {
   appState: isFeatureAvailable('App', 'state'),
   getLaunchUrl: isFeatureAvailable('App', 'getLaunchUrl'),
   appUrlOpen: isFeatureAvailable('App', 'appUrlOpen')
 }
 
-function useAppState(): AppStateResult {
+export function useAppState(): AppStateResult {
   const { App } = Plugins;
 
   if (!availableFeatures.appState) {
@@ -41,7 +41,7 @@ function useAppState(): AppStateResult {
  * you want to detect future app opens, use `useAppUrlOpen` instead,
  * which will stay updated.
  */
-function useLaunchUrl(): LaunchUrlResult {
+export function useLaunchUrl(): LaunchUrlResult {
   const { App } = Plugins;
 
   if (!availableFeatures.getLaunchUrl) {
@@ -64,7 +64,7 @@ function useLaunchUrl(): LaunchUrlResult {
   }
 }
 
-function useAppUrlOpen(): AppUrlOpenResult {
+export function useAppUrlOpen(): AppUrlOpenResult {
   const { App } = Plugins;
 
   if (!isFeatureAvailable('App', 'appUrlOpen')) {
@@ -84,11 +84,4 @@ function useAppUrlOpen(): AppUrlOpenResult {
     appUrlOpen,
     isAvailable: true
   };
-}
-
-export const AppHooks = {
-  useAppState,
-  useLaunchUrl,
-  useAppUrlOpen,
-  availableFeatures
 }

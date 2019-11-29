@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Plugins, DeviceInfo } from '@capacitor/core';
-import { AvailableResult, notAvailable } from './util/models';
-import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
+import { isFeatureAvailable } from '../util/feature-check';
 
 interface GetInfoResult extends AvailableResult { info?: DeviceInfo };
 interface GetLanguageCodeResult extends AvailableResult { languageCode?: string };
 
-const availableFeatures = {
+export const availableFeatures = {
   getInfo: isFeatureAvailable('Device', 'getInfo'),
   getLanguageCode: isFeatureAvailable('Device', 'getLanguageCode')
 }
 
-function useGetInfo(): GetInfoResult {
+export function useGetInfo(): GetInfoResult {
   const { Device } = Plugins;
 
   if (!availableFeatures.getInfo) {
@@ -33,7 +33,7 @@ function useGetInfo(): GetInfoResult {
   }
 }
 
-function useGetLanguageCode(): GetLanguageCodeResult {
+export function useGetLanguageCode(): GetLanguageCodeResult {
   const { Device } = Plugins;
   
   if (!availableFeatures.getLanguageCode) {
@@ -54,10 +54,4 @@ function useGetLanguageCode(): GetLanguageCodeResult {
     languageCode,
     isAvailable: true
   };
-}
-
-export const DeviceHooks = {
-  useGetInfo,
-  useGetLanguageCode,
-  availableFeatures
 }

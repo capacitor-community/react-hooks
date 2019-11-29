@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Plugins, NetworkStatus } from '@capacitor/core';
-import { AvailableResult, notAvailable } from './util/models';
-import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
+import { isFeatureAvailable } from '../util/feature-check';
 
 interface NetworkStatusResult extends AvailableResult { networkStatus?: NetworkStatus }
 
-const availableFeatures = {
+export const availableFeatures = {
   getStatus: isFeatureAvailable('Network', 'getStatus')
 };
 
-function useStatus(): NetworkStatusResult {
+export function useStatus(): NetworkStatusResult {
   const { Network } = Plugins;
   
   if(!availableFeatures.getStatus) {
@@ -38,9 +38,4 @@ function useStatus(): NetworkStatusResult {
     networkStatus,
     isAvailable: true
   }
-}
-
-export const NetworkHooks = {
-  useStatus,
-  availableFeatures
 }

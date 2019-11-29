@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
-import { isFeatureAvailable } from './util/feature-check';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
+import { isFeatureAvailable } from '../util/feature-check';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
 
 interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean; }
 interface SpeakResult extends AvailableResult { speak: typeof Plugins.Accessibility.speak; }
 
-const availableFeatures = {
+export const availableFeatures = {
   isScreenReaderAvailable: isFeatureAvailable('Accessibility', 'isScreenReaderAvailable'),
   speak: isFeatureAvailable('Accessibility', 'speak')
 }
 
-function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
+export function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
   const { Accessibility } = Plugins;
 
   if(!availableFeatures.isScreenReaderAvailable) {
@@ -36,9 +36,9 @@ function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
   }
 }
 
-function useSpeak(): SpeakResult {
+export function useSpeak(): SpeakResult {
   const { Accessibility } = Plugins;
-  
+  console.log('accessibility balls')
   if(!availableFeatures.speak) {
     return {
       speak: () => {throw new FeatureNotAvailableError()},
@@ -50,10 +50,4 @@ function useSpeak(): SpeakResult {
     speak: Accessibility.speak,
     isAvailable: true
   };
-}
-
-export const AccessibilityHooks = {
-  useIsScreenReaderEnabled,
-  useSpeak,
-  availableFeatures
 }

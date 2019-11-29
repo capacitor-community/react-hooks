@@ -32,8 +32,7 @@ jest.mock('@capacitor/core', () => {
 
 import { Plugins } from '@capacitor/core';
 import { renderHook, act } from '@testing-library/react-hooks'
-import { StorageHooks } from './useStorage';
-const { useStorage, useStorageItem } = StorageHooks;
+import { useStorage, useStorageItem } from './useStorage';
 
 it('Gets and sets storage values', async () => {
   const r = renderHook(() => useStorage());

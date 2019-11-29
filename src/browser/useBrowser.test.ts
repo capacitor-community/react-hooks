@@ -16,9 +16,7 @@ const mock = {
 
 jest.mock('@capacitor/core', () => mock);
 
-import { BrowserHooks } from './useBrowser';
-const {useOpen, useClose, usePrefetch} = BrowserHooks;
-
+import { useOpen, useClose, usePrefetch } from './useBrowser'
 import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Opens url', async () => {

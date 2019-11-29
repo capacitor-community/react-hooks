@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
-import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
+import { isFeatureAvailable } from '../util/feature-check';
 
 interface ClipboardResult extends AvailableResult {
   value?: string,
@@ -9,11 +9,11 @@ interface ClipboardResult extends AvailableResult {
   setValue: (value: string) => void;
 }
 
-const availableFeatures = {
+export const availableFeatures = {
   useClipboard: isFeatureAvailable('Clipboard', 'useClipboard')
 }
 
-function useClipboard(): ClipboardResult {
+export function useClipboard(): ClipboardResult {
   const { Clipboard } = Plugins;
   
   if (!(availableFeatures.useClipboard)) {
@@ -46,9 +46,4 @@ function useClipboard(): ClipboardResult {
     setValue,
     isAvailable: true
   }
-}
-
-export const ClipboardHooks = {
-  useClipboard,
-  availableFeatures
 }

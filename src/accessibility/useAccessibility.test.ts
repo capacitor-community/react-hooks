@@ -25,12 +25,12 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { AccessibilityHooks } from './useAccessibility';
+import { useIsScreenReaderEnabled } from './useAccessibility';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
 it('Gets screen reader status', async () => {
-  const r = renderHook(() => AccessibilityHooks.useIsScreenReaderEnabled());
+  const r = renderHook(() => useIsScreenReaderEnabled());
 
   await act(async function() {
     const result = r.result;

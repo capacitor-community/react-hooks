@@ -34,12 +34,12 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { AppHooks } from './useApp';
+import { useLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
 import { renderHook, act } from '@testing-library/react-hooks'
 import { Plugins } from '@capacitor/core';
 
 it('Gets app launch URL', async () => {
-  const r = renderHook(() => AppHooks.useLaunchUrl());
+  const r = renderHook(() => useLaunchUrl());
   await act(async() => {
     const result = r.result;    
     const {isAvailable} = result.current;
@@ -50,7 +50,7 @@ it('Gets app launch URL', async () => {
 });
 
 it('Gets app open URL', async () => {
-  const r = renderHook(() => AppHooks.useAppUrlOpen());
+  const r = renderHook(() => useAppUrlOpen());
 
   await act(async() => {
     const {appUrlOpen} = r.result.current;
@@ -66,7 +66,7 @@ it('Gets app open URL', async () => {
 });
 
 it('Gets app state', async () => {
-  const r = renderHook(() => AppHooks.useAppState());
+  const r = renderHook(() => useAppState());
   await act(async () => {
     const result = r.result;
 

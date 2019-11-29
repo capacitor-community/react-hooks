@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Plugins, GeolocationPosition, GeolocationOptions } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
-import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
+import { isFeatureAvailable } from '../util/feature-check';
 
 interface GetCurrentPositionResult extends AvailableResult {
   error?: any,
@@ -16,12 +16,12 @@ interface GeoWatchPositionResult extends AvailableResult {
   clearWatch: () => void;
 };
 
-const availableFeatures = {
+export const availableFeatures = {
   getCurrentPosition: isFeatureAvailable('Geolocation', 'getCurrentPosition'),
   watchPosition: isFeatureAvailable('Geolocation', 'watchPosition')
 }
 
-function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
+export function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
   const { Geolocation } = Plugins;
 
   if (!availableFeatures.getCurrentPosition) {
@@ -69,7 +69,7 @@ function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionRes
   }
 }
 
-function useWatchPosition(): GeoWatchPositionResult {
+export function useWatchPosition(): GeoWatchPositionResult {
   const { Geolocation } = Plugins;
 
   if (!availableFeatures.watchPosition) {
@@ -110,10 +110,4 @@ function useWatchPosition(): GeoWatchPositionResult {
     startWatch,
     isAvailable: true
   };
-}
-
-export const GeolocationHooks = {
-  useCurrentPosition,
-  useWatchPosition,
-  availableFeatures
 }

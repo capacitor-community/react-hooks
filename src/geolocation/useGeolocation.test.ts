@@ -57,9 +57,8 @@ jest.mock('@capacitor/core', () => {
 });
 
 import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
-import { GeolocationHooks } from './useGeolocation';
-import { renderHook, act } from '@testing-library/react-hooks'
-const { useWatchPosition, useCurrentPosition } = GeolocationHooks;
+import { useWatchPosition, useCurrentPosition } from './useGeolocation';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 it('Gets current geolocation watch position', async () => {
   const r = renderHook(() => useWatchPosition());

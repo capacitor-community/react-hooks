@@ -1,8 +1,8 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
 import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from './util/models';
-import { isFeatureAvailable } from './util/feature-check';
+import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
+import { isFeatureAvailable } from '../util/feature-check';
 
 interface StorageResult extends AvailableResult {
   get: (key: string) => Promise<string | null>;
@@ -18,11 +18,11 @@ type StorageItemResult<T> = [
   boolean
 ]
 
-const availableFeatures = {
+export const availableFeatures = {
   useStorage: isFeatureAvailable('Storage', 'useStorage')
 }
 
-function useStorage(): StorageResult {
+export function useStorage(): StorageResult {
   const { Storage } = Plugins;
 
   if (!availableFeatures.useStorage) {
@@ -63,7 +63,7 @@ function useStorage(): StorageResult {
   return { get, set, remove, getKeys, clear, isAvailable: true };
 }
 
-function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> {
+export function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> {
   const { Storage } = Plugins;
   
   if (!availableFeatures.useStorage) {
@@ -107,10 +107,4 @@ function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> 
     setValue,
     true
   ];
-}
-
-export const StorageHooks = {
-  useStorageItem,
-  useStorage,
-  availableFeatures
 }

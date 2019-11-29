@@ -16,7 +16,7 @@ jest.mock('@capacitor/core', () => {
             "model": "iPhone",
             "manufacturer": "Apple",
             "uuid": "84AE7AA1-7000-4696-8A74-4FD588A4A5C7",
-            "isVirtual":true
+            "isVirtual": true
           }
         },
         getLanguageCode: async (): Promise<DeviceLanguageCodeResult> => {
@@ -34,21 +34,20 @@ jest.mock('@capacitor/core', () => {
 });
 
 import { renderHook, act } from '@testing-library/react-hooks'
-import { DeviceHooks } from './useDevice';
-const { useGetInfo, useGetLanguageCode } = DeviceHooks;
+import { useGetInfo, useGetLanguageCode } from './useDevice';
 
 it('Gets device info and language code', async () => {
   const r = renderHook(() => useGetInfo());
 
   await act(async () => {
     const result = r.result;
-    const {isAvailable} = result.current;
+    const { isAvailable } = result.current;
     expect(isAvailable).toBe(true);
   });
-  
+
   await act(async () => {
     const result = r.result;
-    const {info} = result.current;
+    const { info } = result.current;
 
     expect(info).toMatchObject({
       "diskFree": 12228108288,
@@ -61,7 +60,7 @@ it('Gets device info and language code', async () => {
       "model": "iPhone",
       "manufacturer": "Apple",
       "uuid": "84AE7AA1-7000-4696-8A74-4FD588A4A5C7",
-      "isVirtual":true
+      "isVirtual": true
     });
   });
 });
@@ -71,13 +70,13 @@ it('Gets device language code', async () => {
 
   await act(async () => {
     const result = r.result;
-    const {isAvailable} = result.current;
+    const { isAvailable } = result.current;
     expect(isAvailable).toBe(true);
   });
-  
+
   await act(async () => {
     const result = r.result;
-    const {languageCode} = result.current;
+    const { languageCode } = result.current;
     expect(languageCode).toBe('en');
   });
 });

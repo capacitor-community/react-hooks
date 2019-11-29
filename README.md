@@ -20,14 +20,12 @@ To start using Ionic React Hooks in your app, install the hooks library:
 npm install @ionic/react-hooks
 ```
 
-Import the hook "namespace" which provides hooks from the main Capacitor plugins.
-EX:
-`import { StorageHooks } from '@ionic/react-hooks'`
+Import the hooks from their own path:
+`import { useStorage } from '@ionic/react-hooks'`
 
 Then use the hooks from that namespace in your app:
 
 ```jsx
-const { useStorageItem } = StorageHooks;
 const [value, setValue] = useStorage('mykey');
 ```
 
@@ -35,10 +33,10 @@ const [value, setValue] = useStorage('mykey');
 
 While Capacitor allows you to write to one API across several platforms, not all features are supported on all platforms. It is encouraged to check if the feature you intend to use is available before using it to avoid any runtime errors.
 
-Each of the hook plugin namespaces exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
+Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
 
 ```jsx
-const { useStorageItem, availableFeatures } = StorageHooks;
+const { useStorageItem, availableFeatures } = `@ionic/react-hooks/storage`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
@@ -48,13 +46,12 @@ if(availableFeatures.useStorage) {
 
 ## Hook Usage
 
-### `AccessibilityHooks`
+### `Accessibility Hooks`
 
 Import:
 
 ```jsx
-import { AccessibilityHooks } from '@ionic/react-hooks';
-const { useIsScreenReaderEnabled, useSpeak, availableFeatures } = AccessibilityHooks;
+import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@ionic/react-hooks/accessibility';
 ```
 
 `useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
@@ -69,13 +66,12 @@ const {speak} = useSpeak();
 speak({value: textToSpeak})
 ```
 
-### `AppStateHooks`
+### `AppState Hooks`
 
 Import:
 
 ```jsx
-import { AppHooks } from '@ionic/react-hooks';
-const { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } = AppHooks;
+import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@ionic/react-hooks/app';
 ```
 
 `useAppState` provides access to App status information, such as whether the app is active or inactive. This value will update dynamically.
@@ -100,13 +96,12 @@ const {launchUrl} = useLaunchUrl();
 const {appUrlOpen} = useAppUrlOpen();
 ```
 
-### `BrowserHooks`
+### `Browser Hooks`
 
 Import: 
 
 ```jsx
-import { BrowserHooks } from '@ionic/react-hooks';
-const { useClose, useOpen, usePrefetch, availableFeatures } = BrowserHooks;
+import { useClose, useOpen, usePrefetch, availableFeatures } from '@ionic/react-hooks/browser';
 ```
 
 `useOpen`, `usePrefetch`, `useClose` provides a way to launch, prefetch, and close an in-app browser for external content:
@@ -119,13 +114,12 @@ useEffect(() => {
 }, [open, close, prefetch]);
 ```
 
-### `CameraHooks`
+### `Camera Hooks`
 
 Import:
 
 ```jsx
-import { CameraHooks } from '@ionic/react-hooks';
-const { useCamera, availableFeatures } = CameraHooks;
+import { useCamera, availableFeatures } from '@ionic/react-hooks/camera';
 ```
 
 `useCamera` provides a way to take a photo:
@@ -146,13 +140,12 @@ const triggerCamera = useCallback(async () => {
 
 See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacitor API for the options expected.
 
-### `ClipboardHooks`
+### `Clipboard Hooks`
 
 Import:
 
 ```jsx
-import { ClipboardHooks } from '@ionic/react-hooks';
-const { useClipboard, availableFeatures } = ClipboardHooks;
+import { useClipboard, availableFeatures } from '@ionic/react-hooks/clipboard';
 ```
 
 `useClipboard` reads and writes clipboard data:
@@ -169,13 +162,12 @@ const copy = useCallback(async () => {
 }, [getValue])
 ```
 
-### `DeviceHooks`
+### `Device Hooks`
 
 Import: 
 
 ```jsx
-import { DeviceHooks } from '@ionic/react-hooks';
-const { useGetInfo, useGetLanguageCode, availableFeatures } = DeviceHooks;
+import { useGetInfo, useGetLanguageCode, availableFeatures } from '@ionic/react-hooks/device';
 ```
 
 `useGetInfo`, `useGetLanguageCode` gives access to device information and device language settings:
@@ -187,13 +179,12 @@ const { languageCode } = useGetLanguageCode();
 
 See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
 
-### `GeolocationHooks`
+### `Geolocation Hooks`
 
 Import:
 
 ```jsx
-import { GeolocationHooks } from '@ionic/react-hooks';
-const { useCurrentPosition, useWatchPosition, availableFeatures } = GeolocationHooks;
+import { useCurrentPosition, useWatchPosition, availableFeatures } from '@ionic/react-hooks/geolocation';
 ```
 
 `useCurrentPosition` returns a single geolocation position using the Geolocation API in Capacitor. The position can be manually updated by calling `getPosition`:
@@ -214,13 +205,12 @@ const { currentPosition, startWatch, clearWatch} = useWatchPosition();
 
 See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
 
-### `NetworkHooks`
+### `Network Hooks`
 
 Import:
 
 ```jsx
-import { NetworkHooks } from '@ionic/react-hooks';
-const { useStatus, availableFeatures } = NetworkHooks;
+import { useStatus, availableFeatures } from '@ionic/react-hooks/network';
 ```
 
 `useStatus` monitors network status and information:
@@ -231,13 +221,12 @@ const { useStatus, availableFeatures } = NetworkHooks;
 
 See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
 
-### `PlatformHooks`
+### `Platform Hooks`
 
 Import:
 
 ```jsx
-import { PlatformHooks } from '@ionic/react-hooks';
-const { usePlatform } = PlatformHooks;
+import { usePlatform } from '@ionic/react-hooks/platform';
 ```
 
 `usePlatform` return the current platform supported by Capacitor. Can be `web`, `ios`, `android`, or `electron`.
@@ -246,13 +235,12 @@ const { usePlatform } = PlatformHooks;
 const { platform } = usePlatform();
 ```
 
-### `StorageHooks`
+### `Storage Hooks`
 
 Import:
 
 ```jsx
-import { StorageHooks } from '@ionic/react-hooks';
-const { useStorage, useStorageItem, availableFeatures } = StorageHooks;
+import { useStorage, useStorageItem, availableFeatures } from '@ionic/react-hooks/storage';
 ```
 
 `useStorage` provides access to Capacitor's storage engine. There is also a helper called `useStorageItem` which makes managing a single item easy if you don't need to access the full Storage API (see below)

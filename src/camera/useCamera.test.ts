@@ -21,8 +21,7 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { CameraHooks } from './useCamera';
-const { useCamera } = CameraHooks;
+import { useCamera } from './useCamera';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 import { CameraOptions } from '@capacitor/core';
