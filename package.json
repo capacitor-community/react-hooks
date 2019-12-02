@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-hooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
   "scripts": {
