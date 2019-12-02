@@ -38,7 +38,6 @@ export function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
 
 export function useSpeak(): SpeakResult {
   const { Accessibility } = Plugins;
-  console.log('accessibility balls')
   if(!availableFeatures.speak) {
     return {
       speak: () => {throw new FeatureNotAvailableError()},
