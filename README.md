@@ -46,7 +46,7 @@ if(availableFeatures.useStorage) {
 
 # Hook Usage
 
-## Accessibility
+## Accessibility Hooks
 
 Import:
 
@@ -62,7 +62,7 @@ const {isScreenReaderEnabled} = useIsScreenReaderEnabled();
 
 `useSpeak` activates a text-to-speech engine (if available) to read spoken text.
 ```jsx
-const {speak} = useSpeak();
+const { speak } = useSpeak();
 speak({value: textToSpeak})
 ```
 
@@ -134,7 +134,7 @@ const triggerCamera = useCallback(async () => {
     })
 }, [getPhoto]);
 
-```
+```jsx
 <div>{photo && <img alt="" src={photo.dataUrl} />}</div>
 ```
 
