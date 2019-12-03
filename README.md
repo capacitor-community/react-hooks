@@ -8,7 +8,7 @@ This is a new project and we'd love your feedback! Is there a hook that we don't
 
 ## Support Status
 
-This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please reach out to [@maxlynch](http://twitter.com/maxlynch) on Twitter.
+This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please file an issue or reach out to the team on Twitter.
 
 This also means the core Ionic React team doesn't guarantee regular updates to this repo, but rather encourages the community to pitch in.
 
