@@ -46,7 +46,7 @@ if(availableFeatures.useStorage) {
 
 ## Hook Usage
 
-### `Accessibility Hooks`
+### Accessibility Hooks
 
 Import:
 
@@ -66,7 +66,7 @@ const {speak} = useSpeak();
 speak({value: textToSpeak})
 ```
 
-## AppState Hooks
+### AppState Hooks
 
 Import:
 
@@ -80,7 +80,7 @@ import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@io
 const {state} = useAppState();
 ```
 
-### `useLaunchUrl`
+#### `useLaunchUrl`
 
 `useLaunchUrl` provides the URL the app was initially launched with. If you'd like to track future inbound URL events, use `useAppUrlOpen` below instead.
 
@@ -88,7 +88,7 @@ const {state} = useAppState();
 const {launchUrl} = useLaunchUrl();
 ```
 
-### `useAppUrlOpen`
+#### `useAppUrlOpen`
 
 `useAppUrlOpen` provides the most recent URL used to activate the app. For example, if the user followed a link in another app that opened your app.
 
@@ -96,7 +96,7 @@ const {launchUrl} = useLaunchUrl();
 const {appUrlOpen} = useAppUrlOpen();
 ```
 
-## Browser Hooks
+### Browser Hooks
 
 Import: 
 
@@ -114,7 +114,7 @@ useEffect(() => {
 }, [open, close, prefetch]);
 ```
 
-## Camera Hooks
+### Camera Hooks
 
 Import:
 
@@ -162,7 +162,7 @@ const copy = useCallback(async () => {
 }, [getValue])
 ```
 
-## Device Hooks
+### Device Hooks
 
 Import: 
 
@@ -179,7 +179,7 @@ const { languageCode } = useGetLanguageCode();
 
 See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
 
-## Geolocation Hooks
+### Geolocation Hooks
 
 Import:
 
@@ -205,7 +205,7 @@ const { currentPosition, startWatch, clearWatch} = useWatchPosition();
 
 See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
 
-## Network Hooks
+### Network Hooks
 
 Import:
 
@@ -221,7 +221,7 @@ import { useStatus, availableFeatures } from '@ionic/react-hooks/network';
 
 See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
 
-## Platform Hooks
+### Platform Hooks
 
 Import:
 
@@ -235,7 +235,7 @@ import { usePlatform } from '@ionic/react-hooks/platform';
 const { platform } = usePlatform();
 ```
 
-## Storage Hooks
+### Storage Hooks
 
 Import:
 
@@ -258,7 +258,7 @@ useEffect(() => {
 }, [ get, set, remove, keys, clear ]);
 ```
 
-### `useStorageItem`
+#### `useStorageItem`
 
 `useStorageItem` tracks a single item and provides a nice way to read and write that item:
 
