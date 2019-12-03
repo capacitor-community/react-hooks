@@ -140,7 +140,7 @@ const triggerCamera = useCallback(async () => {
 
 See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacitor API for the options expected.
 
-## Clipboard Hooks
+### Clipboard Hooks
 
 Import:
 
