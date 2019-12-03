@@ -21,7 +21,7 @@ npm install @ionic/react-hooks
 ```
 
 Import the hooks from their own path:
-`import { useStorage } from '@ionic/react-hooks'`
+`import { useStorage } from '@ionic/react-hooks/storage'`
 
 Then use the hooks from that namespace in your app:
 
