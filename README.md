@@ -134,7 +134,6 @@ const triggerCamera = useCallback(async () => {
     })
 }, [getPhoto]);
 
-```jsx
 <div>{photo && <img alt="" src={photo.dataUrl} />}</div>
 ```
 
