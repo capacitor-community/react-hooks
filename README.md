@@ -85,7 +85,7 @@ const {state} = useAppState();
 `useLaunchUrl` provides the URL the app was initially launched with. If you'd like to track future inbound URL events, use `useAppUrlOpen` below instead.
 
 ```jsx
-const {launchUrl} = useLaunchUrl();
+const { launchUrl } = useLaunchUrl();
 ```
 
 #### `useAppUrlOpen`
@@ -93,7 +93,7 @@ const {launchUrl} = useLaunchUrl();
 `useAppUrlOpen` provides the most recent URL used to activate the app. For example, if the user followed a link in another app that opened your app.
 
 ```jsx
-const {appUrlOpen} = useAppUrlOpen();
+const { appUrlOpen } = useAppUrlOpen();
 ```
 
 ### Browser Hooks
@@ -108,10 +108,10 @@ import { useClose, useOpen, usePrefetch, availableFeatures } from '@ionic/react-
 
 ```jsx
 useEffect(() => {
-  await prefetch(['http://ionicframework.com']);
-  await open('http://ionicframework.com');
-  await close();
-}, [open, close, prefetch]);
+  await usePrefetch(['http://ionicframework.com']);
+  await useOpen('http://ionicframework.com');
+  await useClose();
+}, [useOpen, useClose, usePrefetch]);
 ```
 
 ### Camera Hooks
@@ -200,7 +200,7 @@ const handleRefreshPosition = () => {
 `useWatchPosition` tracks a geolocation position using the `watchPosition` in the Geolocation API in Capacitor. The location will automatically begin updating, and you can use the `clearWatch` and `startWatch` methods to manually stop and restart the watch.
 
 ```jsx
-const { currentPosition, startWatch, clearWatch} = useWatchPosition();
+const { currentPosition, startWatch, clearWatch } = useWatchPosition();
 ```
 
 See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
