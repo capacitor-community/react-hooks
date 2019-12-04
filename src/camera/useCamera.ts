@@ -1,6 +1,6 @@
 import { Plugins, CameraOptions, CameraPhoto } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
-import { isFeatureAvailable } from '../util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
+import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 import { useState } from 'react';
 
 interface CameraResult extends AvailableResult { photo?: CameraPhoto, getPhoto: (options: CameraOptions) => void };
@@ -16,7 +16,7 @@ export function useCamera(): CameraResult {
 
   if(!availableFeatures.getPhoto) {
     return {
-      getPhoto: () => {throw new FeatureNotAvailableError()},
+      getPhoto: featureNotAvailableError,
       ...notAvailable
     }
   }

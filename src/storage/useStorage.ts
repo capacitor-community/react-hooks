@@ -1,8 +1,8 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
 import { useState, useEffect } from 'react';
 import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
-import { isFeatureAvailable } from '../util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
+import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 
 interface StorageResult extends AvailableResult {
   get: (key: string) => Promise<string | null>;
@@ -27,11 +27,11 @@ export function useStorage(): StorageResult {
 
   if (!availableFeatures.useStorage) {
     return {
-      get: () => { throw new FeatureNotAvailableError() },
-      set: () => { throw new FeatureNotAvailableError() },
-      remove: () => { throw new FeatureNotAvailableError() },
-      getKeys: () => { throw new FeatureNotAvailableError() },
-      clear: () => { throw new FeatureNotAvailableError() },
+      get: featureNotAvailableError,
+      set: featureNotAvailableError,
+      remove: featureNotAvailableError,
+      getKeys: featureNotAvailableError,
+      clear: featureNotAvailableError,
       ...notAvailable
     };
   }
@@ -69,7 +69,7 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
   if (!availableFeatures.useStorage) {
     return [
       undefined,
-      () => { throw new FeatureNotAvailableError() },
+      featureNotAvailableError,
       false
     ];
   }

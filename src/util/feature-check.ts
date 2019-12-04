@@ -1,5 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { platform } from 'os';
+import { FeatureNotAvailableError } from './models';
 
 const allTrue = {
   web: true,
@@ -62,4 +63,8 @@ export function isFeatureAvailable<
       return true;
     }
     return false;
+}
+
+export function featureNotAvailableError(): any {
+  throw new FeatureNotAvailableError()
 }
