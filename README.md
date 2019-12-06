@@ -8,7 +8,7 @@ This is a new project and we'd love your feedback! Is there a hook that we don't
 
 ## Support Status
 
-This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please reach out to [@maxlynch](http://twitter.com/maxlynch) on Twitter.
+This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please file an issue or reach out to the team on Twitter.
 
 This also means the core Ionic React team doesn't guarantee regular updates to this repo, but rather encourages the community to pitch in.
 
@@ -21,7 +21,7 @@ npm install @ionic/react-hooks
 ```
 
 Import the hooks from their own path:
-`import { useStorage } from '@ionic/react-hooks'`
+`import { useStorage } from '@ionic/react-hooks/storage'`
 
 Then use the hooks from that namespace in your app:
 
@@ -44,9 +44,9 @@ if(availableFeatures.useStorage) {
 }
 ```
 
-## Hook Usage
+# Hook Usage
 
-### `Accessibility Hooks`
+## Accessibility Hooks
 
 Import:
 
@@ -62,11 +62,11 @@ const {isScreenReaderEnabled} = useIsScreenReaderEnabled();
 
 `useSpeak` activates a text-to-speech engine (if available) to read spoken text.
 ```jsx
-const {speak} = useSpeak();
+const { speak } = useSpeak();
 speak({value: textToSpeak})
 ```
 
-### `AppState Hooks`
+## AppState Hooks
 
 Import:
 
@@ -80,23 +80,23 @@ import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@io
 const {state} = useAppState();
 ```
 
-### `useLaunchUrl`
+#### `useLaunchUrl`
 
 `useLaunchUrl` provides the URL the app was initially launched with. If you'd like to track future inbound URL events, use `useAppUrlOpen` below instead.
 
 ```jsx
-const {launchUrl} = useLaunchUrl();
+const { launchUrl } = useLaunchUrl();
 ```
 
-### `useAppUrlOpen`
+#### `useAppUrlOpen`
 
 `useAppUrlOpen` provides the most recent URL used to activate the app. For example, if the user followed a link in another app that opened your app.
 
 ```jsx
-const {appUrlOpen} = useAppUrlOpen();
+const { appUrlOpen } = useAppUrlOpen();
 ```
 
-### `Browser Hooks`
+## Browser Hooks
 
 Import: 
 
@@ -108,13 +108,13 @@ import { useClose, useOpen, usePrefetch, availableFeatures } from '@ionic/react-
 
 ```jsx
 useEffect(() => {
-  await prefetch(['http://ionicframework.com']);
-  await open('http://ionicframework.com');
-  await close();
-}, [open, close, prefetch]);
+  await usePrefetch(['http://ionicframework.com']);
+  await useOpen('http://ionicframework.com');
+  await useClose();
+}, [useOpen, useClose, usePrefetch]);
 ```
 
-### `Camera Hooks`
+## Camera Hooks
 
 Import:
 
@@ -134,13 +134,12 @@ const triggerCamera = useCallback(async () => {
     })
 }, [getPhoto]);
 
-```
 <div>{photo && <img alt="" src={photo.dataUrl} />}</div>
 ```
 
 See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacitor API for the options expected.
 
-### `Clipboard Hooks`
+## Clipboard Hooks
 
 Import:
 
@@ -162,7 +161,7 @@ const copy = useCallback(async () => {
 }, [getValue])
 ```
 
-### `Device Hooks`
+## Device Hooks
 
 Import: 
 
@@ -179,7 +178,7 @@ const { languageCode } = useGetLanguageCode();
 
 See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
 
-### `Geolocation Hooks`
+## Geolocation Hooks
 
 Import:
 
@@ -200,12 +199,12 @@ const handleRefreshPosition = () => {
 `useWatchPosition` tracks a geolocation position using the `watchPosition` in the Geolocation API in Capacitor. The location will automatically begin updating, and you can use the `clearWatch` and `startWatch` methods to manually stop and restart the watch.
 
 ```jsx
-const { currentPosition, startWatch, clearWatch} = useWatchPosition();
+const { currentPosition, startWatch, clearWatch } = useWatchPosition();
 ```
 
 See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
 
-### `Network Hooks`
+## Network Hooks
 
 Import:
 
@@ -221,7 +220,7 @@ import { useStatus, availableFeatures } from '@ionic/react-hooks/network';
 
 See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
 
-### `Platform Hooks`
+## Platform Hooks
 
 Import:
 
@@ -235,7 +234,7 @@ import { usePlatform } from '@ionic/react-hooks/platform';
 const { platform } = usePlatform();
 ```
 
-### `Storage Hooks`
+## Storage Hooks
 
 Import:
 
@@ -258,7 +257,7 @@ useEffect(() => {
 }, [ get, set, remove, keys, clear ]);
 ```
 
-### `useStorageItem`
+#### `useStorageItem`
 
 `useStorageItem` tracks a single item and provides a nice way to read and write that item:
 
