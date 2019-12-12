@@ -21,7 +21,7 @@ export const availableFeatures = {
   watchPosition: isFeatureAvailable('Geolocation', 'watchPosition')
 }
 
-export function useCurrentPosition(options?: GeolocationOptions): GetCurrentPositionResult {
+export function useCurrentPosition(options?: GeolocationOptions, manual: boolean = false): GetCurrentPositionResult {
   const { Geolocation } = Plugins;
 
   if (!availableFeatures.getCurrentPosition) {
@@ -58,8 +58,8 @@ export function useCurrentPosition(options?: GeolocationOptions): GetCurrentPosi
   };
 
   useEffect(() => {
-    getPosition(options);
-  }, [options]);
+    if(!manual) getPosition(options);
+  }, [options, manual]);
 
   return {
     error,
