@@ -1,8 +1,8 @@
 import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable, FeatureNotAvailableError } from '../util/models';
-import { isFeatureAvailable } from '../util/feature-check';
+import { AvailableResult, notAvailable } from '../util/models';
+import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 
-interface CloseResult extends AvailableResult { close: typeof Plugins.Browser.close }
+interface CloseResult extends AvailableResult { close: typeof Plugins.Browser.close | void }
 interface OpenResult extends AvailableResult { open: typeof Plugins.Browser.open }
 interface PrefetchResult extends AvailableResult { prefetch: typeof Plugins.Browser.prefetch }
 
@@ -17,7 +17,7 @@ export function useClose(): CloseResult {
 
   if (!availableFeatures.open) {
     return {
-      close: () => { throw new FeatureNotAvailableError() },
+      close: featureNotAvailableError,
       ...notAvailable
     }
   } 
@@ -33,7 +33,7 @@ export function useOpen(): OpenResult {
 
   if (!availableFeatures.open) {
     return {
-      open: () => { throw new FeatureNotAvailableError() },
+      open: featureNotAvailableError,
       ...notAvailable
     }
   }
@@ -49,7 +49,7 @@ export function usePrefetch(): PrefetchResult {
   
   if (!availableFeatures.prefetch) {
     return {
-      prefetch: () => { throw new FeatureNotAvailableError() },
+      prefetch: featureNotAvailableError,
       ...notAvailable
     }
   }
