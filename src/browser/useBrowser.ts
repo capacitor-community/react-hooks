@@ -2,7 +2,7 @@ import { Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 
-interface CloseResult extends AvailableResult { close: typeof Plugins.Browser.close | void }
+interface CloseResult extends AvailableResult { close: typeof Plugins.Browser.close }
 interface OpenResult extends AvailableResult { open: typeof Plugins.Browser.open }
 interface PrefetchResult extends AvailableResult { prefetch: typeof Plugins.Browser.prefetch }
 
@@ -15,7 +15,7 @@ export const availableFeatures = {
 export function useClose(): CloseResult {
   const { Browser } = Plugins;
 
-  if (!availableFeatures.open) {
+  if (!availableFeatures.close) {
     return {
       close: featureNotAvailableError,
       ...notAvailable
