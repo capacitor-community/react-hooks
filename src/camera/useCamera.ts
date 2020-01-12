@@ -3,7 +3,10 @@ import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 import { useState } from 'react';
 
-interface CameraResult extends AvailableResult { photo?: CameraPhoto, getPhoto: (options: CameraOptions) => void };
+interface CameraResult extends AvailableResult { 
+  photo?: CameraPhoto, 
+  getPhoto: (options: CameraOptions) => Promise<CameraPhoto> 
+};
 
 export const availableFeatures = {
   getPhoto: isFeatureAvailable('Camera', 'getPhoto')
@@ -21,9 +24,10 @@ export function useCamera(): CameraResult {
     }
   }
 
-  const getPhoto = async (options: CameraOptions) => {
-    const photoObject = await Camera.getPhoto(options);
-    setPhoto(photoObject);
+  async function getPhoto(options: CameraOptions) {
+    const cameraPhoto = await Camera.getPhoto(options);
+    setPhoto(cameraPhoto);
+    return cameraPhoto;
   }
   
   return {

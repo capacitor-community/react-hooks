@@ -178,6 +178,31 @@ const { languageCode } = useGetLanguageCode();
 
 See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
 
+##Filesystem Hooks
+
+import:
+
+```jsx
+import { useFilesystem, base64FromPath, availableFeatures } from '@ionic/react-hooks/filesystem';
+```
+
+`useFilesystem` returns back common methods to gain access to file system apis.
+
+```jsx
+const file = await readFile({
+  path: filepath,
+  directory: FilesystemDirectory.Data
+});
+```
+
+See the [Filesystem](https://capacitor.ionicframework.com/docs/apis/filesystem) Capacitor API for description of all the methods and options.
+
+`base64FromPath` is a helper method that will take in a path to a file and return back the base64 encoded representation of that file.
+
+```jsx
+const base64String = await base64FromPath(path);
+```
+
 ## Geolocation Hooks
 
 Import:

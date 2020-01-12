@@ -1,5 +1,5 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
@@ -36,29 +36,29 @@ export function useStorage(): StorageResult {
     };
   }
 
-  async function get(key: string) {
+  const get = useCallback(async (key: string) => {
     const v = await Storage.get({ key });
     if (v) {
       return v.value;
     }
     return null;
-  }
+  }, []);
 
-  function set(key: string, value: string) {
+  const set = useCallback((key: string, value: string) => {
     return Storage.set({ key, value: value });
-  }
+  }, []);
 
-  function remove(key: string) {
+  const remove = useCallback((key: string) => {
     return Storage.remove({ key });
-  }
+  }, []);
 
-  function getKeys() {
+  const getKeys = useCallback(() => {
     return Storage.keys();
-  }
+  }, []);
 
-  function clear() {
+  const clear = useCallback(() => {
     return Storage.clear();
-  }
+  }, []);
 
   return { get, set, remove, getKeys, clear, isAvailable: true };
 }

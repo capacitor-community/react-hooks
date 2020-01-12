@@ -39,6 +39,9 @@ const featureMap = {
     getInfo: allTrue,
     getLanguageCode: allTrue
   },
+  FileSystem: {
+    useFileSystem: allTrue
+  },
   Geolocation: {
     getCurrentPosition: {...allTrue, web: 'geolocation' in navigator },
     watchPosition: {...allTrue, web: 'geolocation' in navigator }
