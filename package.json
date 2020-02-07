@@ -1,6 +1,18 @@
 {
   "name": "@ionic/react-hooks",
   "version": "0.0.6",
+  "description": "Hooks Ionic React",
+  "keywords": [
+    "ionic",
+    "framework",
+    "react",
+    "capacitor"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic-react-hooks.git"
+  },
   "main": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
   "scripts": {
