@@ -178,7 +178,7 @@ const { languageCode } = useGetLanguageCode();
 
 See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
 
-##Filesystem Hooks
+## Filesystem Hooks
 
 import:
 
