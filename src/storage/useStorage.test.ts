@@ -117,3 +117,39 @@ it('Manages individual item with stored value', async () => {
     setValue('Frank');
   });
 });
+
+it('Sets storage value using previous value', async () => {
+  let r: any;
+  const storageMock = (Plugins.Storage as any);
+  await act(async () => {
+    storageMock.__init({ name: 'Max'});
+  });
+
+  await act(async () => {
+    r = renderHook(() => useStorageItem('name', ''));
+  });
+
+  await act(async () => {
+  });
+
+  await act(async () => {
+    const result = r.result.current;
+
+    const [value, setValue] = result;
+    expect(value).toBe('Max');
+
+    setValue((name: string) => name.toUpperCase());
+  });
+
+  await act(async () => {
+    const result = r.result.current;
+
+    const [value, setValue] = result;
+    expect(value).toBe('MAX');
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'name'});
+    expect(storedValue.value).toBe('MAX');
+  });
+});
