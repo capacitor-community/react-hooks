@@ -78,6 +78,8 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
   const [storedValue, setStoredValue] = useState<T>();
 
   useEffect(() => {
+    if(ready) return;
+
     async function loadValue() {
       try {
         const result = await Storage.get({ key });
@@ -93,7 +95,7 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
       }
     }
     loadValue();
-  }, [Storage, initialValue, key]);
+  }, [Storage, initialValue, key, ready]);
 
   useEffect(() => {
       if(!ready) return;
