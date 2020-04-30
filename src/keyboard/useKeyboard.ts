@@ -11,6 +11,8 @@ export function useKeyboardState(): KeyboardStateResult {
   
   useEffect(() => {
     const showCallback = (ev: any) => {
+      if (typeof (window as any) === 'undefined') { return; }
+
       const { keyboardHeight } = ev.detail;
       setKeyboardState({
         isOpen: true,
