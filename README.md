@@ -229,6 +229,23 @@ const { currentPosition, startWatch, clearWatch } = useWatchPosition();
 
 See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
 
+## Keyboard Hooks
+
+Import:
+
+```jsx
+import { useKeyboardState } from '@ionic/react-hooks/keyboard';
+```
+
+`useKeyboardState` returns whether or not the on-screen keyboard is shown as well as an approximation of the keyboard height in pixels.
+
+```jsx
+const { isOpen, keyboardHeight } = useKeyboardState();
+
+// Use keyboardHeight to translate an input that would otherwise be hidden by the keyboard
+```
+
+
 ## Network Hooks
 
 Import:
