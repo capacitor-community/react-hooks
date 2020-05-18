@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-hooks",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "Hooks Ionic React",
   "keywords": [
     "ionic",
@@ -43,7 +43,7 @@
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "@capacitor/core": "^1.3.0"
+    "@capacitor/core": "~1.3.0"
   },
   "devDependencies": {
     "@capacitor/core": "^1.3.0",
