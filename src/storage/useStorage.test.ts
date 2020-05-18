@@ -153,3 +153,156 @@ it('Sets storage value using previous value', async () => {
     expect(storedValue.value).toBe('MAX');
   });
 });
+
+
+it('Must have correct type on initialization', async () => {
+  let storeNumber: any;
+  let storeBoolean: any;
+  let storeArray: any;
+  let storeObject: any;
+  let storeUndefined: any;
+  const storageMock = (Plugins.Storage as any);
+  await act(async () => {
+    storageMock.__init({});
+  });
+
+  await act(async () => {
+    storeNumber = renderHook(() => useStorageItem('num', 0));
+    storeBoolean = renderHook(() => useStorageItem('bool', true));
+    storeArray = renderHook(() => useStorageItem('array', []));
+    storeObject = renderHook(() => useStorageItem('obj', {}));
+    storeUndefined = renderHook(() => useStorageItem('und'));
+  });
+
+  await act(async () => {
+    const result = storeBoolean.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("boolean");
+    expect(value).toBe(true);
+  });
+  await act(async () => {
+    const result = storeNumber.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("number");
+    expect(value).toBe(0);
+  });
+  await act(async () => {
+    const result = storeArray.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("object");
+    expect(Array.isArray(value)).toBe(true);
+    expect(JSON.stringify(value)).toBe("[]");
+  });
+  await act(async () => {
+    const result = storeObject.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("object");
+    expect(JSON.stringify(value)).toBe("{}");
+  });
+  
+  await act(async () => {
+    const result = storeUndefined.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("undefined");
+    expect(JSON.stringify(value)).toBe(undefined);
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'num'});
+    expect(storedValue.value).toBe("0");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'bool'});
+    expect(storedValue.value).toBe("true");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'array'});
+    expect(storedValue.value).toBe("[]");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'obj'});
+    expect(storedValue.value).toBe("{}");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'und'});
+    expect(storedValue.value).toBe(undefined);
+  });
+});
+
+
+it('Must have correct type when already initiated', async () => {
+  let storeNumber: any;
+  let storeBoolean: any;
+  let storeArray: any;
+  let storeObject: any;
+  let storeUndefined: any;
+  const storageMock = (Plugins.Storage as any);
+  await act(async () => {
+    storageMock.__init({num:'0', bool: 'true', arr: "[]", obj: "{}", und:'undefined'});
+  });
+
+  await act(async () => {
+    storeNumber = renderHook(() => useStorageItem('num'));
+    storeBoolean = renderHook(() => useStorageItem('bool'));
+    storeArray = renderHook(() => useStorageItem('arr'));
+    storeObject = renderHook(() => useStorageItem('obj'));
+    storeUndefined = renderHook(() => useStorageItem('und'));
+  });
+
+  await act(async () => {
+    const result = storeBoolean.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("boolean");
+    expect(value).toBe(true);
+  });
+  await act(async () => {
+    const result = storeNumber.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("number");
+    expect(value).toBe(0);
+  });
+  await act(async () => {
+    const result = storeArray.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("object");
+    expect(Array.isArray(value)).toBe(true);
+    expect(JSON.stringify(value)).toBe("[]");
+  });
+  await act(async () => {
+    const result = storeObject.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("object");
+    expect(JSON.stringify(value)).toBe("{}");
+  });
+  await act(async () => {
+    const result = storeUndefined.result.current;
+    const [value, setValue] = result;
+    expect(typeof value).toBe("undefined");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'num'});
+    expect(storedValue.value).toBe("0");
+  });
+
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'bool'});
+    expect(storedValue.value).toBe("true");
+  });
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'arr'});
+    expect(storedValue.value).toBe("[]");
+  });
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'obj'});
+    expect(storedValue.value).toBe("{}");
+  });
+  await act(async () => {
+    const storedValue = await storageMock.get({key: 'und'});
+    expect(storedValue.value).toBe("undefined");
+  });
+});

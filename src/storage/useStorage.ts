@@ -1,5 +1,5 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
-import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, useCallback, Dispatch, SetStateAction, useRef } from 'react';
 import { Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
@@ -74,6 +74,9 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
     ];
   }
 
+  // We don't want to rerender when initialValue changes so we use ref
+  const initialValueRef = useRef(initialValue)
+
   const [ready, setReady] = useState(false)
   const [storedValue, setStoredValue] = useState<T>();
 
@@ -81,21 +84,25 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
     if(ready) return;
 
     async function loadValue() {
+      const initialValue = initialValueRef.current;
       try {
         const result = await Storage.get({ key });
-        if (result.value == undefined && initialValue != undefined) {
-          result.value = typeof initialValue === "string" ? initialValue : JSON.stringify(initialValue);
-          setStoredValue(result.value as any);
+        if (result.value == undefined && initialValue == undefined) return
+       
+        if (result.value == undefined) {
+          setStoredValue(initialValue);
         } else {
-          setStoredValue(typeof result.value === 'string' ? result.value : JSON.parse(result.value!));
+          setStoredValue(typeof initialValue === 'string' ? result.value : JSON.parse(result.value!));
         }
         setReady(true);
       } catch (e) {
-        return initialValue;
+        // We might have some parse errors
+        setReady(true);
+        return;
       }
     }
     loadValue();
-  }, [Storage, initialValue, key, ready]);
+  }, [Storage, key, ready]);
 
   useEffect(() => {
       if(!ready) return;
