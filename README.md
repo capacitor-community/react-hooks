@@ -1,6 +1,6 @@
 # React Hooks for Capacitor
 
-A set of hooks to help Capacitor developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
+A set of hooks to help Capacitor developers use native [Capacitor APIs](http://capacitorjs.com/).
 
 This is a new project and we'd love your feedback! Is there a hook that we don't have in here you'd like to see? Or maybe a hook that should function differently than it does today? Let us know by filing an issue!
 
