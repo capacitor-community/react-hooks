@@ -1,17 +1,18 @@
 {
   "name": "@capacitor-community/react-hooks",
   "version": "0.0.8",
-  "description": "Hooks Ionic React",
+  "description": "React Hooks for Capacitor apps",
   "keywords": [
-    "ionic",
-    "framework",
     "react",
-    "capacitor"
+    "capacitor",
+    "hooks",
+    "ionic framework",
+    "ionic"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic-react-hooks.git"
+    "url": "https://github.com/capacitor-community/react-hooks.git"
   },
   "main": "dist/esm/index.js",
   "typings": "dist/esm/index.d.ts",
@@ -20,6 +21,7 @@
     "build": "npm run clean && npm run transpile && npm run copy-package",
     "copy-package": "cp ./package.json ./dist/package.json",
     "package": "npm pack ./dist",
+    "deploy": "np",
     "rollup": "rollup --config rollup.config.js",
     "transpile": "tsc --module ES2015 --target es2017 --outDir dist",
     "clean": "rimraf dist",
@@ -53,6 +55,7 @@
     "conventional-changelog": "^3.1.4",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
+    "np": "^6.3.2",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.4",
     "react-test-renderer": "^16.11.0",
