@@ -21,7 +21,7 @@
     "build": "npm run clean && npm run transpile && npm run copy-package",
     "copy-package": "cp ./package.json ./dist/package.json",
     "package": "npm pack ./dist",
-    "deploy": "np",
+    "deploy": "npm run build && npm test && np",
     "rollup": "rollup --config rollup.config.js",
     "transpile": "tsc --module ES2015 --target es2017 --outDir dist",
     "clean": "rimraf dist",
