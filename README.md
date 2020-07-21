@@ -1,27 +1,25 @@
-<img src="./ionic-react-hooks-gh.png" height="156" />
-
 # React Hooks for Capacitor
 
-A set of hooks to help Ionic React developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
+A set of hooks to help Capacitor developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
 
 This is a new project and we'd love your feedback! Is there a hook that we don't have in here you'd like to see? Or maybe a hook that should function differently than it does today? Let us know by filing an issue!
 
 ## Support Status
 
-This is a community-supported add-on to Ionic React. If you'd like to help maintain this repo or have an idea for a hook please file an issue or reach out to the team on Twitter.
+This is a community-supported add-on to Capacitor. If you'd like to help maintain this repo or have an idea for a hook please file an issue or reach out to the team on Twitter.
 
-This also means the core Ionic React team doesn't guarantee regular updates to this repo, but rather encourages the community to pitch in.
+This also means the core Capacitor team doesn't guarantee regular updates to this repo, but rather encourages the community to pitch in.
 
 ## Getting Started
 
-To start using Ionic React Hooks in your app, install the hooks library:
+To start using Capacitor Hooks in your app, install the hooks library:
 
 ```
-npm install @ionic/react-hooks
+npm install @capacitor-community/react-hooks
 ```
 
 Import the hooks from their own path:
-`import { useStorage } from '@ionic/react-hooks/storage'`
+`import { useStorage } from '@capacitor-community/react-hooks/storage'`
 
 Then use the hooks from that namespace in your app:
 
@@ -36,7 +34,7 @@ While Capacitor allows you to write to one API across several platforms, not all
 Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
 
 ```jsx
-const { useStorageItem, availableFeatures } = `@ionic/react-hooks/storage`;
+const { useStorageItem, availableFeatures } = `@capacitor-community/react-hooks/storage`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
@@ -51,7 +49,7 @@ if(availableFeatures.useStorage) {
 Import:
 
 ```jsx
-import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@ionic/react-hooks/accessibility';
+import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/react-hooks/accessibility';
 ```
 
 `useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
@@ -71,7 +69,7 @@ speak({value: textToSpeak})
 Import:
 
 ```jsx
-import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@ionic/react-hooks/app';
+import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@capacitor-community/react-hooks/app';
 ```
 
 `useAppState` provides access to App status information, such as whether the app is active or inactive. This value will update dynamically.
@@ -101,7 +99,7 @@ const { appUrlOpen } = useAppUrlOpen();
 Import: 
 
 ```jsx
-import { useClose, useOpen, usePrefetch, availableFeatures } from '@ionic/react-hooks/browser';
+import { useClose, useOpen, usePrefetch, availableFeatures } from '@capacitor-community/react-hooks/browser';
 ```
 
 `useOpen`, `usePrefetch`, `useClose` provides a way to launch, prefetch, and close an in-app browser for external content:
@@ -119,7 +117,7 @@ useEffect(() => {
 Import:
 
 ```jsx
-import { useCamera, availableFeatures } from '@ionic/react-hooks/camera';
+import { useCamera, availableFeatures } from '@capacitor-community/react-hooks/camera';
 ```
 
 `useCamera` provides a way to take a photo:
@@ -144,7 +142,7 @@ See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacito
 Import:
 
 ```jsx
-import { useClipboard, availableFeatures } from '@ionic/react-hooks/clipboard';
+import { useClipboard, availableFeatures } from '@capacitor-community/react-hooks/clipboard';
 ```
 
 `useClipboard` reads and writes clipboard data:
@@ -166,7 +164,7 @@ const copy = useCallback(async () => {
 Import: 
 
 ```jsx
-import { useGetInfo, useGetLanguageCode, availableFeatures } from '@ionic/react-hooks/device';
+import { useGetInfo, useGetLanguageCode, availableFeatures } from '@capacitor-community/react-hooks/device';
 ```
 
 `useGetInfo`, `useGetLanguageCode` gives access to device information and device language settings:
@@ -183,7 +181,7 @@ See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacito
 import:
 
 ```jsx
-import { useFilesystem, base64FromPath, availableFeatures } from '@ionic/react-hooks/filesystem';
+import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-community/react-hooks/filesystem';
 ```
 
 `useFilesystem` returns back common methods to gain access to file system apis.
@@ -208,7 +206,7 @@ const base64String = await base64FromPath(path);
 Import:
 
 ```jsx
-import { useCurrentPosition, useWatchPosition, availableFeatures } from '@ionic/react-hooks/geolocation';
+import { useCurrentPosition, useWatchPosition, availableFeatures } from '@capacitor-community/react-hooks/geolocation';
 ```
 
 `useCurrentPosition` returns a single geolocation position using the Geolocation API in Capacitor. The position can be manually updated by calling `getPosition`:
@@ -234,7 +232,7 @@ See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation
 Import:
 
 ```jsx
-import { useKeyboardState } from '@ionic/react-hooks/keyboard';
+import { useKeyboardState } from '@capacitor-community/react-hooks/keyboard';
 ```
 
 `useKeyboardState` returns whether or not the on-screen keyboard is shown as well as an approximation of the keyboard height in pixels.
@@ -251,7 +249,7 @@ const { isOpen, keyboardHeight } = useKeyboardState();
 Import:
 
 ```jsx
-import { useStatus, availableFeatures } from '@ionic/react-hooks/network';
+import { useStatus, availableFeatures } from '@capacitor-community/react-hooks/network';
 ```
 
 `useStatus` monitors network status and information:
@@ -267,7 +265,7 @@ See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capaci
 Import:
 
 ```jsx
-import { usePlatform } from '@ionic/react-hooks/platform';
+import { usePlatform } from '@capacitor-community/react-hooks/platform';
 ```
 
 `usePlatform` return the current platform supported by Capacitor. Can be `web`, `ios`, `android`, or `electron`.
@@ -281,7 +279,7 @@ const { platform } = usePlatform();
 Import:
 
 ```jsx
-import { useStorage, useStorageItem, availableFeatures } from '@ionic/react-hooks/storage';
+import { useStorage, useStorageItem, availableFeatures } from '@capacitor-community/react-hooks/storage';
 ```
 
 `useStorage` provides access to Capacitor's storage engine. There is also a helper called `useStorageItem` which makes managing a single item easy if you don't need to access the full Storage API (see below)
