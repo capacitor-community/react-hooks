@@ -1,6 +1,6 @@
 <img src="./ionic-react-hooks-gh.png" height="156" />
 
-# Ionic React Hooks
+# React Hooks for Capacitor
 
 A set of hooks to help Ionic React developers use native [Capacitor APIs](http://capacitor.ionicframework.com/) and various platform APIs available in Ionic Framework.
 
