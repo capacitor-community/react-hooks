@@ -6,6 +6,9 @@ jest.mock('@capacitor/core', () => {
       Device: {
         getInfo: async (): Promise<DeviceInfo> => {
           return {
+            "appName": "Test",
+            "appId": "com.capacitorjs.example",
+            "operatingSystem": "ios",
             "diskFree": 12228108288,
             "appVersion": "1.0.2",
             "appBuild": "123",

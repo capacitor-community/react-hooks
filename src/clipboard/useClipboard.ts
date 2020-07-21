@@ -27,9 +27,7 @@ export function useClipboard(): ClipboardResult {
   const [data, setData] = useState<string>();
 
   async function getValue() {
-    const ret = await Clipboard.read({
-      type: 'string'
-    });
+    const ret = await Clipboard.read();
 
     setData(ret.value);
   }
