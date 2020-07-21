@@ -187,6 +187,8 @@ import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-com
 `useFilesystem` returns back common methods to gain access to file system apis.
 
 ```jsx
+const { readFile } = useFilesystem();
+
 const file = await readFile({
   path: filepath,
   directory: FilesystemDirectory.Data
