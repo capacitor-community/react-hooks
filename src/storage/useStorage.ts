@@ -1,5 +1,5 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Dispatch, SetStateAction, useRef } from 'react';
 import { Plugins } from '@capacitor/core';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
@@ -14,7 +14,7 @@ interface StorageResult extends AvailableResult {
 
 type StorageItemResult<T> = [
   T | undefined,
-  ((value: T) => Promise<void>),
+  Dispatch<SetStateAction<T | undefined>>,
   boolean
 ]
 
@@ -74,37 +74,52 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
     ];
   }
 
+  // We don't want to rerender when initialValue changes so we use ref
+  const initialValueRef = useRef(initialValue)
+
+  const [ready, setReady] = useState(false)
   const [storedValue, setStoredValue] = useState<T>();
 
   useEffect(() => {
+    if(ready) return;
+
     async function loadValue() {
+      const initialValue = initialValueRef.current;
       try {
         const result = await Storage.get({ key });
-        if (result.value == undefined && initialValue != undefined) {
-          result.value = typeof initialValue === "string" ? initialValue : JSON.stringify(initialValue);
-          setValue(result.value as any);
+        if (result.value == undefined && initialValue == undefined) return
+       
+        if (result.value == undefined) {
+          setStoredValue(initialValue);
         } else {
-          setStoredValue(typeof result.value === 'string' ? result.value : JSON.parse(result.value!));
+          setStoredValue(typeof initialValue === 'string' ? result.value : JSON.parse(result.value!));
         }
+        setReady(true);
       } catch (e) {
-        return initialValue;
+        // We might have some parse errors
+        setReady(true);
+        return;
       }
     }
     loadValue();
-  }, [Storage, setStoredValue, initialValue, key]);
+  }, [Storage, key, ready]);
 
-  const setValue = async (value: T) => {
-    try {
-      setStoredValue(value);
-      await Storage.set({ key, value: typeof value === "string" ? value : JSON.stringify(value) });
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  useEffect(() => {
+      if(!ready) return;
+      
+      async function updateValue() {
+        try {
+          await Storage.set({ key, value: typeof storedValue === "string" ? storedValue : JSON.stringify(storedValue) });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      updateValue();
+  }, [ready, storedValue])
 
   return [
     storedValue,
-    setValue,
+    setStoredValue,
     true
   ];
 }
