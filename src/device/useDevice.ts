@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plugins, DeviceInfo } from '@capacitor/core';
+import { Device, DeviceInfo } from '@capacitor/device';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable } from '../util/feature-check';
 
@@ -12,8 +12,6 @@ export const availableFeatures = {
 }
 
 export function useGetInfo(): GetInfoResult {
-  const { Device } = Plugins;
-
   if (!availableFeatures.getInfo) {
     return notAvailable;
   }
@@ -34,8 +32,6 @@ export function useGetInfo(): GetInfoResult {
 }
 
 export function useGetLanguageCode(): GetLanguageCodeResult {
-  const { Device } = Plugins;
-  
   if (!availableFeatures.getLanguageCode) {
     return notAvailable;
   }

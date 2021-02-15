@@ -1,9 +1,8 @@
-jest.mock('@capacitor/core', () => {
+jest.mock('@capacitor/app', () => {
   let appStateListener: any;
   let appUrlOpenListener: any;
   let isActive = true;
   return {
-    Plugins: {
       App: {
         addListener: (eventName: string, cb: any) => {
           switch (eventName) {
@@ -26,22 +25,26 @@ jest.mock('@capacitor/core', () => {
           return { url: 'my-app://awesome' }
         }
       }
-    },
+  }
+});
+
+jest.mock('@capacitor/core', () => {
+  return {
     Capacitor: {
       isPluginAvailable: () => true,
       platform: 'ios'
-    }  
+    }
   }
 });
 
 import { useLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
 import { renderHook, act } from '@testing-library/react-hooks'
-import { Plugins } from '@capacitor/core';
+import { App } from '@capacitor/app';
 
 it('Gets app launch URL', async () => {
   const r = renderHook(() => useLaunchUrl());
   await act(async() => {
-    const result = r.result;    
+    const result = r.result;
     const {isAvailable} = result.current;
     expect(isAvailable).toBe(true);
     await r.waitForNextUpdate();
@@ -56,7 +59,7 @@ it('Gets app open URL', async () => {
     const {appUrlOpen} = r.result.current;
     expect(appUrlOpen).toBeUndefined();
 
-    (Plugins.App as any).__updateAppUrlOpen();
+    (App as any).__updateAppUrlOpen();
   });
 
   await act(async() => {
@@ -72,7 +75,7 @@ it('Gets app state', async () => {
 
     expect(result.current.state).toBe(true);
 
-    (Plugins.App as any).__updateAppState();
+    (App as any).__updateAppState();
   });
 
   await act(async() => {

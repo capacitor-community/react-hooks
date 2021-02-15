@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AvailableResult } from '../util/models';
+import { Keyboard } from "@capacitor/keyboard";
 
 interface KeyboardStateResult extends AvailableResult { isOpen?: boolean; keyboardHeight?: number };
 
@@ -8,7 +9,7 @@ export function useKeyboardState(): KeyboardStateResult {
     isOpen: false,
     keyboardHeight: 0
   });
-  
+
   useEffect(() => {
     const showCallback = (ev: any) => {
       if (typeof (window as any) === 'undefined') { return; }
@@ -25,15 +26,15 @@ export function useKeyboardState(): KeyboardStateResult {
         keyboardHeight: 0
       });
     }
-    window.addEventListener('ionKeyboardDidShow', showCallback);
-    window.addEventListener('ionKeyboardDidHide', hideCallback);
-    
+
+    Keyboard.addListener('keyboardDidShow', showCallback);
+    Keyboard.addListener('keyboardDidHide', hideCallback);
+
     return () => {
-      window.removeEventListener('ionKeyboardDidShow', showCallback);
-      window.removeEventListener('ionKeyboardDidHide', hideCallback);
+      Keyboard.removeAllListeners()
     }
   }, [setKeyboardState]);
-  
+
   return {
     isOpen: state.isOpen,
     keyboardHeight: state.keyboardHeight,

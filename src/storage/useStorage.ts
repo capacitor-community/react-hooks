@@ -1,6 +1,6 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
 import { useState, useEffect, useCallback } from 'react';
-import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage'
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 
@@ -23,8 +23,6 @@ export const availableFeatures = {
 }
 
 export function useStorage(): StorageResult {
-  const { Storage } = Plugins;
-
   if (!availableFeatures.useStorage) {
     return {
       get: featureNotAvailableError,
@@ -64,8 +62,6 @@ export function useStorage(): StorageResult {
 }
 
 export function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> {
-  const { Storage } = Plugins;
-  
   if (!availableFeatures.useStorage) {
     return [
       undefined,

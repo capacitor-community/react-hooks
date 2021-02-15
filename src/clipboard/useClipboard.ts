@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plugins } from '@capacitor/core';
+import { Clipboard } from '@capacitor/clipboard';
 import { AvailableResult, notAvailable } from '../util/models';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 
@@ -14,8 +14,6 @@ export const availableFeatures = {
 }
 
 export function useClipboard(): ClipboardResult {
-  const { Clipboard } = Plugins;
-  
   if (!(availableFeatures.useClipboard)) {
     return {
       getValue: featureNotAvailableError,

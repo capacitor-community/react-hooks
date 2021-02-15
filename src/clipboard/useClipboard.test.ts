@@ -2,22 +2,27 @@ import { useClipboard } from './useClipboard';
 
 import { renderHook, act } from '@testing-library/react-hooks'
 
+jest.mock('@capacitor/clipboard', () => {
+  let text = 'fake';
+
+  return {
+    Clipboard: {
+      text: 'fake',
+      read: async () => {
+        return { value: text }
+      },
+      write: async ({ string }: { string: string }) => {
+        text = string;
+        return {}
+      }
+    }
+  }
+});
+
 jest.mock('@capacitor/core', () => {
   let text = 'fake';
 
   return {
-    Plugins: {
-      Clipboard: {
-        text: 'fake',
-        read: async () => {
-          return { value: text }
-        },
-        write: async ({ string }: { string: string }) => {
-          text = string;
-          return {}
-        }
-      }
-    },
     Capacitor: {
       isPluginAvailable: () => true,
       platform: 'ios'

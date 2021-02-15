@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Plugins, AppState, AppUrlOpen } from '@capacitor/core';
+import { App, AppState, URLOpenListenerEvent } from '@capacitor/app';
 import { isFeatureAvailable } from '../util/feature-check';
 import { AvailableResult, notAvailable } from '../util/models';
 
-interface AppUrlOpenResult extends AvailableResult { appUrlOpen?: string; };
-interface AppStateResult extends AvailableResult { state?: boolean; };
-interface LaunchUrlResult extends AvailableResult { launchUrl?: string; };
+interface URLOpenListenerEventResult extends AvailableResult { appUrlOpen?: string; }
+interface AppStateResult extends AvailableResult { state?: boolean; }
+interface LaunchUrlResult extends AvailableResult { launchUrl?: string; }
 
 export const availableFeatures = {
   appState: isFeatureAvailable('App', 'state'),
@@ -14,8 +14,6 @@ export const availableFeatures = {
 }
 
 export function useAppState(): AppStateResult {
-  const { App } = Plugins;
-
   if (!availableFeatures.appState) {
     return notAvailable
   }
@@ -23,11 +21,12 @@ export function useAppState(): AppStateResult {
   const [state, setAppState] = useState(true);
 
   useEffect(() => {
+
     const listener = App.addListener('appStateChange', async (state: AppState) => {
       setAppState(state.isActive);
     });
 
-    return () => listener.remove();
+    return () => { listener.remove() }
   }, [App, setAppState]);
 
   return {
@@ -42,13 +41,11 @@ export function useAppState(): AppStateResult {
  * which will stay updated.
  */
 export function useLaunchUrl(): LaunchUrlResult {
-  const { App } = Plugins;
-
   if (!availableFeatures.getLaunchUrl) {
     return notAvailable;
   }
 
-  const [launchUrl, setUrl] = useState();
+  const [launchUrl, setUrl] = useState<string | undefined>();
 
   useEffect(() => {
     async function getAppLaunchUrl() {
@@ -64,9 +61,7 @@ export function useLaunchUrl(): LaunchUrlResult {
   }
 }
 
-export function useAppUrlOpen(): AppUrlOpenResult {
-  const { App } = Plugins;
-
+export function useAppUrlOpen(): URLOpenListenerEventResult {
   if (!isFeatureAvailable('App', 'appUrlOpen')) {
     return notAvailable
   }
@@ -74,10 +69,10 @@ export function useAppUrlOpen(): AppUrlOpenResult {
   const [appUrlOpen, setAppUrl] = useState<string>();
 
   useEffect(() => {
-    const listener = App.addListener('appUrlOpen', async (state: AppUrlOpen) => {
+    const listener = App.addListener('appUrlOpen', async (state: URLOpenListenerEvent) => {
       setAppUrl(state.url);
     });
-    return () => listener.remove();
+    return () => { listener.remove() }
   }, [App, setAppUrl]);
 
   return {

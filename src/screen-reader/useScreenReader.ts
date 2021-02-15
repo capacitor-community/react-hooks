@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Plugins } from '@capacitor/core';
+import { ScreenReader } from '@capacitor/screen-reader';
 import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
 import { AvailableResult, notAvailable } from '../util/models';
 
 interface IsScreenReaderEnabledResult extends AvailableResult { isScreenReaderEnabled?: boolean; }
-interface SpeakResult extends AvailableResult { speak: typeof Plugins.Accessibility.speak; }
+interface SpeakResult extends AvailableResult { speak: typeof ScreenReader.speak }
 
 export const availableFeatures = {
-  isScreenReaderAvailable: isFeatureAvailable('Accessibility', 'isScreenReaderAvailable'),
-  speak: isFeatureAvailable('Accessibility', 'speak')
+  isScreenReaderAvailable: isFeatureAvailable('ScreenReader', 'isScreenReaderAvailable'),
+  speak: isFeatureAvailable('ScreenReader', 'speak')
 }
 
 export function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
-  const { Accessibility } = Plugins;
-
   if(!availableFeatures.isScreenReaderAvailable) {
     return notAvailable;
   }
@@ -22,13 +20,13 @@ export function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
 
   useEffect(() => {
     async function checkScreenReader() {
-      const isEnabled = await Accessibility.isScreenReaderEnabled();
+      const isEnabled = await ScreenReader.isEnabled();
       setIsScreenReaderAvailable(isEnabled.value);
     }
     if (availableFeatures.isScreenReaderAvailable) {
     checkScreenReader();
     }
-  }, [Accessibility, setIsScreenReaderAvailable]);
+  }, [ScreenReader, setIsScreenReaderAvailable]);
 
   return {
     isScreenReaderEnabled,
@@ -37,7 +35,6 @@ export function useIsScreenReaderEnabled(): IsScreenReaderEnabledResult {
 }
 
 export function useSpeak(): SpeakResult {
-  const { Accessibility } = Plugins;
   if(!availableFeatures.speak) {
     return {
       speak: featureNotAvailableError,
@@ -46,7 +43,7 @@ export function useSpeak(): SpeakResult {
   }
 
   return {
-    speak: Accessibility.speak,
+    speak: ScreenReader.speak,
     isAvailable: true
   };
 }

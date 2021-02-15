@@ -1,4 +1,4 @@
-jest.mock('@capacitor/core', () => {
+jest.mock('@capacitor/geolocation', () => {
   let watchListener: any;
 
   let positions = [
@@ -11,44 +11,47 @@ jest.mock('@capacitor/core', () => {
   let pos = 0;
 
   return {
-    Plugins: {
-      Geolocation: {
-        positions: positions,
-        __updatePosition: () => {
-          position = positions[++pos % positions.length];
-          watchListener({
-            timestamp: 1573676975,
-            coords: {
-              latitude: position[0],
-              longitude: position[1],
-              accuracy: 1
-            }
-          });
-        },
-        clearWatch: ({ id }: { id: string }) => {
-        },
-        getCurrentPosition: async (options: GeolocationOptions) => (Promise.resolve({
+    Geolocation: {
+      positions: positions,
+      __updatePosition: () => {
+        position = positions[++pos % positions.length];
+        watchListener({
           timestamp: 1573676975,
           coords: {
             latitude: position[0],
-            longitude: position[1]
+            longitude: position[1],
+            accuracy: 1
           }
-        })),
-        watchPosition: async (options: GeolocationOptions, cb: (pos: GeolocationPosition, err: any) => void) => {
-          watchListener = cb;
-          watchListener({
-            timestamp: 1573676975,
-            coords: {
-              latitude: position[0],
-              longitude: position[1],
-              accuracy: 1
-            }
-          });
+        });
+      },
+      clearWatch: ({id}: { id: string }) => {
+      },
+      getCurrentPosition: async (options: PositionOptions) => (Promise.resolve({
+        timestamp: 1573676975,
+        coords: {
+          latitude: position[0],
+          longitude: position[1]
+        }
+      })),
+      watchPosition: async (options: PositionOptions, cb: (pos: Position, err: any) => void) => {
+        watchListener = cb;
+        watchListener({
+          timestamp: 1573676975,
+          coords: {
+            latitude: position[0],
+            longitude: position[1],
+            accuracy: 1
+          }
+        });
 
-          return 'testid';
-        },
+        return 'testid';
       }
-    },
+    }
+  }
+});
+
+jest.mock('@capacitor/core', () => {
+  return {
     Capacitor: {
       isPluginAvailable: () => true,
       platform: 'ios'
@@ -56,15 +59,15 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
+import { Geolocation, PositionOptions, Position } from '@capacitor/geolocation';
 import { useWatchPosition, useCurrentPosition } from './useGeolocation';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 it('Gets current geolocation watch position', async () => {
   const r = renderHook(() => useWatchPosition());
-  const geoMock = (Plugins.Geolocation as any);
+  const geoMock = (Geolocation as any);
 
-  function match(pos: GeolocationPosition, coords: [number, number]) {
+  function match(pos: Position, coords: [number, number]) {
     expect(pos).toMatchObject({
       coords: {
         latitude: coords[0],
@@ -80,34 +83,34 @@ it('Gets current geolocation watch position', async () => {
   await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[0]);
-    (Plugins.Geolocation as any).__updatePosition();
+    (Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[1]);
-    (Plugins.Geolocation as any).__updatePosition();
+    (Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[2]);
-    (Plugins.Geolocation as any).__updatePosition();
+    (Geolocation as any).__updatePosition();
   });
 
   await act(async function () {
     const { currentPosition } = r.result.current;
     match(currentPosition!, geoMock.positions[3]);
-    (Plugins.Geolocation as any).__updatePosition();
+    (Geolocation as any).__updatePosition();
   });
 
 });
 
 it('Gets current geolocation position', async () => {
   const r = renderHook(() => useCurrentPosition());
-  const geoMock = (Plugins.Geolocation as any);
+  const geoMock = (Geolocation as any);
 
-  function match(pos: GeolocationPosition, coords: [number, number]) {
+  function match(pos: Position, coords: [number, number]) {
     expect(pos).toMatchObject({
       coords: {
         latitude: coords[0],

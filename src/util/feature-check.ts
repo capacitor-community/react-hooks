@@ -10,7 +10,7 @@ const allTrue = {
 }
 
 const featureMap = {
-  Accessibility: {
+  ScreenReader: {
     isScreenReaderAvailable: {...allTrue, web: false},
     speak: {
       web: 'speechSynthesis' in window,
@@ -53,7 +53,7 @@ const featureMap = {
     getPlatform: allTrue
   },
   Storage: {
-    useStorage: allTrue,    
+    useStorage: allTrue,
   }
 }
 

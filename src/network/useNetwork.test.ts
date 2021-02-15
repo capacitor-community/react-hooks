@@ -1,25 +1,28 @@
-jest.mock('@capacitor/core', () => {
+jest.mock('@capacitor/network', () => {
   let listener: any;
   const status = {
     "connected": true,
     "connectionType": "wifi"
   };
   return {
-    Plugins: {
-      Network: {
-        __updateStatus: () => {
-          status.connected = false;
-          listener(status);
-        },
-        addListener: (eventName: string, cb: (status: NetworkStatus) => void) => {
-          listener = cb;
-          return { remove: () => { } }
-        },
-        getStatus: async () => {
-          return status;
-        },
-      }
-    },
+    Network: {
+      __updateStatus: () => {
+        status.connected = false;
+        listener(status);
+      },
+      addListener: (eventName: string, cb: (status: ConnectionStatus) => void) => {
+        listener = cb;
+        return { remove: () => { } }
+      },
+      getStatus: async () => {
+        return status;
+      },
+    }
+  }
+});
+
+jest.mock('@capacitor/core', () => {
+  return {
     Capacitor: {
       isPluginAvailable: () => true,
       platform: 'ios'
@@ -27,7 +30,7 @@ jest.mock('@capacitor/core', () => {
   }
 });
 
-import { Plugins, NetworkStatus } from '@capacitor/core';
+import { Network, ConnectionStatus } from '@capacitor/network';
 
 import { useStatus } from './useNetwork';
 import { renderHook, act } from '@testing-library/react-hooks';
@@ -35,7 +38,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 it('Gets current network status', async () => {
   const r = renderHook(() => useStatus());
 
-  const networkMock = (Plugins.Network as any);
+  const networkMock = (Network as any);
 
   await act(async function () {
     const { isAvailable } = r.result.current;
