@@ -34,7 +34,7 @@ While Capacitor allows you to write to one API across several platforms, not all
 Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true:
 
 ```jsx
-const { useStorage, availableFeatures } = `@capacitor-community/react-hooks/storage`;
+const { useStorageItem, availableFeatures } = `@capacitor-community/react-hooks/storage`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
@@ -313,4 +313,3 @@ const updateName = useCallback((n) => {
 ```
 
 `useStorageItem` will use the initial value already in storage, or the one provided if there is no existing value.
-
