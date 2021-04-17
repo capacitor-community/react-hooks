@@ -19,12 +19,12 @@ npm install @capacitor-community/react-hooks
 ```
 
 Import the hooks from their own path:
-`import { useStorage } from '@capacitor-community/react-hooks/storage'`
+`import { useStorageItem } from '@capacitor-community/react-hooks/storage'`
 
 Then use the hooks from that namespace in your app:
 
 ```jsx
-const [value, setValue] = useStorage('mykey');
+const [value, setValue] = useStorageItem('mykey');
 ```
 
 ## Feature Detection
@@ -35,9 +35,9 @@ Each of the hook plugin paths exports an `availableFeatures` object, which conta
 
 ```jsx
 const { useStorageItem, availableFeatures } = `@capacitor-community/react-hooks/storage`;
-const [value, setValue] = useStorage('mykey');
+const [value, setValue] = useStorageItem('mykey');
 ...
-if(availableFeatures.useStorage) {
+if (availableFeatures.useStorage) {
   setValue('cake');
 }
 ```
