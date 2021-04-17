@@ -31,10 +31,10 @@ const [value, setValue] = useStorage('mykey');
 
 While Capacitor allows you to write to one API across several platforms, not all features are supported on all platforms. It is encouraged to check if the feature you intend to use is available before using it to avoid any runtime errors.
 
-Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
+Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true:
 
 ```jsx
-const { useStorageItem, availableFeatures } = `@capacitor-community/react-hooks/storage`;
+const { useStorage, availableFeatures } = `@capacitor-community/react-hooks/storage`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
@@ -151,7 +151,7 @@ import { useClipboard, availableFeatures } from '@capacitor-community/react-hook
 const { value, getValue, setValue } = useClipboard();
 
 const paste = useCallback(async () => {
-  await setValue('http://ionicframework.com/);
+  await setValue('http://ionicframework.com/');
 }, [setValue]);
 
 const copy = useCallback(async () => {
@@ -184,7 +184,7 @@ import:
 import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-community/react-hooks/filesystem';
 ```
 
-`useFilesystem` returns back common methods to gain access to file system apis.
+`useFilesystem` returns back common methods to gain access to file system APIs.
 
 ```jsx
 const { readFile } = useFilesystem();
