@@ -44,8 +44,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "@capacitor/core": "^2.0.0"
+    "@capacitor/core": "^2.0.0",
+    "react": "^16.8.6"
   },
   "devDependencies": {
     "@capacitor/core": "^2.0.0",
@@ -55,6 +55,7 @@
     "conventional-changelog": "^3.1.4",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^0.1.0",
+    "lerna": "^4.0.0",
     "np": "^6.3.2",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.4",
