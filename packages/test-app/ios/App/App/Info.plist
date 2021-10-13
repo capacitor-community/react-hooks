@@ -56,5 +56,11 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>moar pics</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>know where you are at always and now</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>know where you are at now and forever</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>know where you are at always</string>
 </dict>
 </plist>
