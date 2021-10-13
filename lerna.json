@@ -1,5 +1,5 @@
 {
-  "packages": ["packages/screen-reader"],
+  "packages": ["packages/*"],
   "version": "independent",
   "command": {
     "bootstrap": {

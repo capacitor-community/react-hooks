@@ -1,7 +1,7 @@
 jest.mock('@capacitor/core', () => {
   let appStateListener: any;
   let appUrlOpenListener: any;
-  let isActive = true;
+  const isActive = true;
   return {
     Plugins: {
       App: {
@@ -14,7 +14,11 @@ jest.mock('@capacitor/core', () => {
               appUrlOpenListener = cb;
               break;
           }
-          return { remove: () => {} };
+          return {
+            remove: () => {
+              return;
+            },
+          };
         },
         __updateAppState: () => {
           appStateListener && appStateListener({ isActive: !isActive });
@@ -23,26 +27,26 @@ jest.mock('@capacitor/core', () => {
           appUrlOpenListener && appUrlOpenListener({ url: 'my-app://very-legal-very-cool' });
         },
         getLaunchUrl: async () => {
-          return { url: 'my-app://awesome' }
-        }
-      }
+          return { url: 'my-app://awesome' };
+        },
+      },
     },
     Capacitor: {
       isPluginAvailable: () => true,
-      platform: 'ios'
-    }  
-  }
+      platform: 'ios',
+    },
+  };
 });
 
-import { useLaunchUrl, useAppState, useAppUrlOpen } from './useApp';
-import { renderHook, act } from '@testing-library/react-hooks'
+import { useAppState, useAppUrlOpen, useLaunchUrl } from './useApp';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { Plugins } from '@capacitor/core';
 
 it('Gets app launch URL', async () => {
   const r = renderHook(() => useLaunchUrl());
-  await act(async() => {
-    const result = r.result;    
-    const {isAvailable} = result.current;
+  await act(async () => {
+    const result = r.result;
+    const { isAvailable } = result.current;
     expect(isAvailable).toBe(true);
     await r.waitForNextUpdate();
     expect(r.result.current.launchUrl).toBe('my-app://awesome');
@@ -52,15 +56,15 @@ it('Gets app launch URL', async () => {
 it('Gets app open URL', async () => {
   const r = renderHook(() => useAppUrlOpen());
 
-  await act(async() => {
-    const {appUrlOpen} = r.result.current;
+  await act(async () => {
+    const { appUrlOpen } = r.result.current;
     expect(appUrlOpen).toBeUndefined();
 
     (Plugins.App as any).__updateAppUrlOpen();
   });
 
-  await act(async() => {
-    const {appUrlOpen} = r.result.current;
+  await act(async () => {
+    const { appUrlOpen } = r.result.current;
     expect(appUrlOpen).toBe('my-app://very-legal-very-cool');
   });
 });
@@ -75,7 +79,7 @@ it('Gets app state', async () => {
     (Plugins.App as any).__updateAppState();
   });
 
-  await act(async() => {
+  await act(async () => {
     const state = r.result.current;
     expect(state.state).toBe(false);
   });

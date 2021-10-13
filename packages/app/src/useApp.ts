@@ -1,23 +1,33 @@
-import { useState, useEffect } from 'react';
-import { Plugins, AppState, AppUrlOpen } from '@capacitor/core';
-import { isFeatureAvailable } from '../util/feature-check';
-import { AvailableResult, notAvailable } from '../util/models';
+import { App, AppState, URLOpenListenerEvent } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
+import { AvailableResult, notAvailable } from './util/models';
 
-interface AppUrlOpenResult extends AvailableResult { appUrlOpen?: string; };
-interface AppStateResult extends AvailableResult { state?: boolean; };
-interface LaunchUrlResult extends AvailableResult { launchUrl?: string; };
+import { isFeatureAvailable } from './util/feature-check';
+import { useEffect, useState } from 'react';
+
+interface AppUrlOpenResult extends AvailableResult {
+  appUrlOpen?: string;
+}
+interface AppStateResult extends AvailableResult {
+  state?: boolean;
+}
+interface LaunchUrlResult extends AvailableResult {
+  launchUrl?: string;
+}
 
 export const availableFeatures = {
   appState: isFeatureAvailable('App', 'state'),
   getLaunchUrl: isFeatureAvailable('App', 'getLaunchUrl'),
-  appUrlOpen: isFeatureAvailable('App', 'appUrlOpen')
+  appUrlOpen: isFeatureAvailable('App', 'appUrlOpen'),
+};
+
+if (!Capacitor.isPluginAvailable('App')) {
+  console.warn(`The @capacitor/app plugin was not found, did you forget to install it?`);
 }
 
 export function useAppState(): AppStateResult {
-  const { App } = Plugins;
-
   if (!availableFeatures.appState) {
-    return notAvailable
+    return notAvailable;
   }
 
   const [state, setAppState] = useState(true);
@@ -27,12 +37,14 @@ export function useAppState(): AppStateResult {
       setAppState(state.isActive);
     });
 
-    return () => listener.remove();
+    return () => {
+      listener.remove();
+    };
   }, [App, setAppState]);
 
   return {
     state,
-    isAvailable: true
+    isAvailable: true,
   };
 }
 
@@ -42,46 +54,44 @@ export function useAppState(): AppStateResult {
  * which will stay updated.
  */
 export function useLaunchUrl(): LaunchUrlResult {
-  const { App } = Plugins;
-
   if (!availableFeatures.getLaunchUrl) {
     return notAvailable;
   }
 
-  const [launchUrl, setUrl] = useState();
+  const [launchUrl, setUrl] = useState<string>();
 
   useEffect(() => {
     async function getAppLaunchUrl() {
       const ret = await App.getLaunchUrl();
-      setUrl(ret.url);
+      setUrl(ret?.url);
     }
     getAppLaunchUrl();
   }, [App, setUrl]);
 
   return {
     launchUrl,
-    isAvailable: true
-  }
+    isAvailable: true,
+  };
 }
 
 export function useAppUrlOpen(): AppUrlOpenResult {
-  const { App } = Plugins;
-
   if (!isFeatureAvailable('App', 'appUrlOpen')) {
-    return notAvailable
+    return notAvailable;
   }
 
   const [appUrlOpen, setAppUrl] = useState<string>();
 
   useEffect(() => {
-    const listener = App.addListener('appUrlOpen', async (state: AppUrlOpen) => {
+    const listener = App.addListener('appUrlOpen', async (state: URLOpenListenerEvent) => {
       setAppUrl(state.url);
     });
-    return () => listener.remove();
+    return () => {
+      listener.remove();
+    };
   }, [App, setAppUrl]);
 
   return {
     appUrlOpen,
-    isAvailable: true
+    isAvailable: true,
   };
 }
