@@ -48,7 +48,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>to take a pic</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>to look at your pics</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>moar pics</string>
 </dict>
 </plist>

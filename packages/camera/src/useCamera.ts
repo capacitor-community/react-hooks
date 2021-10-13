@@ -1,38 +1,36 @@
-import { Plugins, CameraOptions, CameraPhoto } from '@capacitor/core';
-import { AvailableResult, notAvailable } from '../util/models';
-import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
+import { Camera, ImageOptions, Photo } from '@capacitor/camera';
+import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
 import { useState } from 'react';
 
-interface CameraResult extends AvailableResult { 
-  photo?: CameraPhoto, 
-  getPhoto: (options: CameraOptions) => Promise<CameraPhoto> 
-};
-
-export const availableFeatures = {
-  getPhoto: isFeatureAvailable('Camera', 'getPhoto')
+interface CameraResult extends AvailableResult {
+  photo?: Photo;
+  getPhoto: (options: ImageOptions) => Promise<Photo>;
 }
 
+export const availableFeatures = {
+  getPhoto: isFeatureAvailable('Camera', 'getPhoto'),
+};
+
 export function useCamera(): CameraResult {
-  const { Camera } = Plugins;
+  const [photo, setPhoto] = useState<Photo>();
 
-  const [photo, setPhoto] = useState<CameraPhoto>();
-
-  if(!availableFeatures.getPhoto) {
+  if (!availableFeatures.getPhoto) {
     return {
       getPhoto: featureNotAvailableError,
-      ...notAvailable
-    }
+      ...notAvailable,
+    };
   }
 
-  async function getPhoto(options: CameraOptions) {
+  async function getPhoto(options: ImageOptions) {
     const cameraPhoto = await Camera.getPhoto(options);
     setPhoto(cameraPhoto);
     return cameraPhoto;
   }
-  
+
   return {
     photo,
     getPhoto,
-    isAvailable: true
+    isAvailable: true,
   };
 }

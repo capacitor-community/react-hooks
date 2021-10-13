@@ -1,7 +1,7 @@
 {
-  "name": "@capacitor-community/app-react",
+  "name": "@capacitor-community/camera-react",
   "version": "0.0.1",
-  "description": "React Hooks for Capacitor App Plugin",
+  "description": "React Hooks for Capacitor Camera plugin",
   "keywords": [
     "react",
     "capacitor",
@@ -33,6 +33,7 @@
     "react": "*"
   },
   "devDependencies": {
+    "@capacitor/camera": "^1.1.1",
     "@capacitor/core": "^3.2.4",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.0.2",
