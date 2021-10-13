@@ -26,11 +26,7 @@ const Menu: React.FC<MenuProps> = () => (
     <IonContent>
       <IonList>
         <IonMenuToggle autoHide={false}>
-          <IonItem routerLink="/screen-reader" routerDirection="none">
-            <IonIcon slot="start" icon={star} />
-            <IonLabel>ScreenReader</IonLabel>
-          </IonItem>
-          <IonItem routerLink="/appstate" routerDirection="none">
+          <IonItem routerLink="/app" routerDirection="none">
             <IonIcon slot="start" icon={star} />
             <IonLabel>App</IonLabel>
           </IonItem>
@@ -57,6 +53,10 @@ const Menu: React.FC<MenuProps> = () => (
           <IonItem routerLink="/network" routerDirection="none">
             <IonIcon slot="start" icon={star} />
             <IonLabel>Network</IonLabel>
+          </IonItem>
+          <IonItem routerLink="/screen-reader" routerDirection="none">
+            <IonIcon slot="start" icon={star} />
+            <IonLabel>ScreenReader</IonLabel>
           </IonItem>
           <IonItem routerLink="/storage" routerDirection="none">
             <IonIcon slot="start" icon={star} />

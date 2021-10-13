@@ -43,7 +43,7 @@ const ScreenReaderPage: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Accessibility</IonTitle>
+          <IonTitle>Screen Reader</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

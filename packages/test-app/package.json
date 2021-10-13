@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@capacitor-community/app-react": "0.0.1",
     "@capacitor-community/screen-reader-react": "0.0.1",
     "@capacitor/core": "^3.2.4",
     "@capacitor/ios": "^3.2.4",
+    "@capacitor/app": "^1.0.4",
     "@capacitor/screen-reader": "^1.0.3",
     "@ionic/pwa-elements": "^3.0.2",
     "@ionic/react": "^5.8.4",
@@ -17,8 +19,8 @@
     "@types/react-router": "^5.1.1",
     "@types/react-router-dom": "^5.1.0",
     "ionicons": "^5.5.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "^4.0.3",
@@ -26,8 +28,8 @@
   },
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test",
     "eject": "react-scripts eject"
   },
   "browserslist": {
