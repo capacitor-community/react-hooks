@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "react-ionic-hooks",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}
