@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "@capacitor-community/app-react": "0.0.1",
+    "@capacitor-community/browser-react": "0.0.1",
     "@capacitor-community/screen-reader-react": "0.0.1",
     "@capacitor/core": "^3.2.4",
     "@capacitor/ios": "^3.2.4",
     "@capacitor/app": "^1.0.4",
+    "@capacitor/browser": "^1.0.4",
     "@capacitor/screen-reader": "^1.0.3",
     "@ionic/pwa-elements": "^3.0.2",
     "@ionic/react": "^5.8.4",

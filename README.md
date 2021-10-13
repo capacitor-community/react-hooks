@@ -99,17 +99,16 @@ const { appUrlOpen } = useAppUrlOpen();
 Import: 
 
 ```jsx
-import { useClose, useOpen, usePrefetch, availableFeatures } from '@capacitor-community/react-hooks/browser';
+import { useClose, useOpen, availableFeatures } from '@capacitor-community/react-hooks/browser';
 ```
 
-`useOpen`, `usePrefetch`, `useClose` provides a way to launch, prefetch, and close an in-app browser for external content:
+`useOpen`, `useClose` provides a way to launch, and close an in-app browser for external content:
 
 ```jsx
 useEffect(() => {
-  await usePrefetch(['http://ionicframework.com']);
   await useOpen('http://ionicframework.com');
   await useClose();
-}, [useOpen, useClose, usePrefetch]);
+}, [useOpen, useClose]);
 ```
 
 ## Camera Hooks
