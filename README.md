@@ -261,20 +261,6 @@ import { useStatus, availableFeatures } from '@capacitor-community/react-hooks/n
 
 See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
 
-## Platform Hooks
-
-Import:
-
-```jsx
-import { usePlatform } from '@capacitor-community/react-hooks/platform';
-```
-
-`usePlatform` return the current platform supported by Capacitor. Can be `web`, `ios`, `android`, or `electron`.
-
-```jsx
-const { platform } = usePlatform();
-```
-
 ## Storage Hooks
 
 Import:
