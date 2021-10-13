@@ -28,7 +28,7 @@
     "transpile": "tsc"
   },
   "peerDependencies": {
-    "@capacitor/app": "*",
+    "@capacitor/camera": "*",
     "@capacitor/core": ">=3.0.0",
     "react": "*"
   },
