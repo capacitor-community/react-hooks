@@ -1,7 +1,7 @@
 {
-  "name": "@capacitor-community/app-react",
+  "name": "@capacitor-community/capacitor-react",
   "version": "0.0.1",
-  "description": "React Hooks for Capacitor App plugin",
+  "description": "React Hooks for Capacitor Core APIs",
   "keywords": [
     "react",
     "capacitor",
@@ -33,7 +33,6 @@
     "react": "*"
   },
   "devDependencies": {
-    "@capacitor/app": "^1.0.3",
     "@capacitor/core": "^3.2.4",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.0.2",
