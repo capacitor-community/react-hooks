@@ -5,7 +5,6 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "experimentalDecorators": true,
     "noEmitHelpers": false,
@@ -13,18 +12,14 @@
     "moduleResolution": "node",
     "lib": [
       "dom",
-      "dom.iterable",
-      "esnext"
+      "es2017"
     ],
+    "pretty": true,
     "module": "es2015",
     "noImplicitAny": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "dist",
     "sourceMap": true,
-    "target": "es2015"
+    "target": "es2017"
   },
-  "include": [
-    "src/**/index.ts"
-  ]
 }

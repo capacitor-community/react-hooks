@@ -1,5 +1,4 @@
 import { Capacitor } from '@capacitor/core';
-import { platform } from 'os';
 import { FeatureNotAvailableError } from './models';
 
 const allTrue = {
@@ -10,52 +9,52 @@ const allTrue = {
 }
 
 const featureMap = {
-  Accessibility: {
-    isScreenReaderAvailable: {...allTrue, web: false},
+  ScreenReader: {
+    isEnabled: { ...allTrue, web: false },
     speak: {
       web: 'speechSynthesis' in window,
       ios: true,
       android: true,
-      electron: true
-    }
+      electron: true,
+    },
   },
   App: {
     state: allTrue,
-    getLaunchUrl: {...allTrue, web: false},
-    appUrlOpen: {...allTrue, web: false}
+    getLaunchUrl: { ...allTrue, web: false },
+    appUrlOpen: { ...allTrue, web: false },
   },
   Browser: {
     open: allTrue,
-    prefetch: {...allTrue, web: false},
-    close: {...allTrue, web: false}
+    prefetch: { ...allTrue, web: false },
+    close: { ...allTrue, web: false },
   },
   Camera: {
-    getPhoto: allTrue
+    getPhoto: allTrue,
   },
   Clipboard: {
-    useClipboard: {...allTrue, web: 'clipboard' in navigator },
+    useClipboard: { ...allTrue, web: 'clipboard' in navigator },
   },
   Device: {
     getInfo: allTrue,
-    getLanguageCode: allTrue
+    getLanguageCode: allTrue,
   },
   FileSystem: {
-    useFileSystem: allTrue
+    useFileSystem: allTrue,
   },
   Geolocation: {
-    getCurrentPosition: {...allTrue, web: 'geolocation' in navigator },
-    watchPosition: {...allTrue, web: 'geolocation' in navigator }
+    getCurrentPosition: { ...allTrue, web: 'geolocation' in navigator },
+    watchPosition: { ...allTrue, web: 'geolocation' in navigator },
   },
   Network: {
-    getStatus: allTrue
+    getStatus: allTrue,
   },
   Platform: {
-    getPlatform: allTrue
+    getPlatform: allTrue,
   },
   Storage: {
-    useStorage: allTrue,    
-  }
-}
+    useStorage: allTrue,
+  },
+};
 
 export function isFeatureAvailable<
   T extends typeof featureMap,

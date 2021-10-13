@@ -1,6 +1,6 @@
 {
-  "name": "@capacitor-community/react-hooks",
-  "version": "0.0.10",
+  "name": "capacitor-react-hooks",
+  "private": true,
   "description": "React Hooks for Capacitor apps",
   "keywords": [
     "react",
@@ -14,74 +14,19 @@
     "type": "git",
     "url": "https://github.com/capacitor-community/react-hooks.git"
   },
-  "main": "dist/esm/index.js",
-  "typings": "dist/esm/index.d.ts",
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "npm run clean && npm run transpile && npm run copy-package",
-    "copy-package": "cp ./package.json ./dist/package.json",
-    "package": "npm pack ./dist",
-    "deploy": "npm run build && npm test && np",
-    "rollup": "rollup --config rollup.config.js",
-    "transpile": "tsc --module ES2015 --target es2017 --outDir dist",
-    "clean": "rimraf dist",
-    "build-old": "node scripts/build.js",
-    "test": "jest"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "peerDependencies": {
-    "@capacitor/core": "^2.0.0",
-    "react": "^16.8.6"
+    "build": "lerna run build",
+    "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
-    "@capacitor/core": "^2.0.0",
-    "@testing-library/react-hooks": "^3.2.1",
-    "@types/jest": "^24.0.23",
-    "@types/react-test-renderer": "^16.9.1",
-    "conventional-changelog": "^3.1.4",
-    "jest": "^24.9.0",
-    "jest-environment-jsdom-fourteen": "^0.1.0",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
+    "eslint": "^8.0.0",
     "lerna": "^4.0.0",
-    "np": "^6.3.2",
-    "react": "^16.11.0",
-    "react-app-polyfill": "^1.0.4",
-    "react-test-renderer": "^16.11.0",
-    "replace": "^1.1.0",
-    "rimraf": "^2.6.1",
-    "ts-jest": "^24.1.0",
-    "tslint": "^5.6.0",
-    "tslint-ionic-rules": "0.0.8",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.6.3",
-    "uglify-js": "^3.2.0"
+    "prettier": "^2.4.1"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "dist-transpiled",
-      "dist",
-      "test-app"
-    ],
-    "modulePaths": [
-      "<rootDir>"
-    ]
+  "prettier": "@ionic/prettier-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
   }
 }
