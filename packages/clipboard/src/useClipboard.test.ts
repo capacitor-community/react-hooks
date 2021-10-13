@@ -1,6 +1,6 @@
 import { useClipboard } from './useClipboard';
 
-import { renderHook, act } from '@testing-library/react-hooks'
+import { renderHook, act } from '@testing-library/react-hooks';
 
 jest.mock('@capacitor/core', () => {
   let text = 'fake';
@@ -10,19 +10,19 @@ jest.mock('@capacitor/core', () => {
       Clipboard: {
         text: 'fake',
         read: async () => {
-          return { value: text }
+          return { value: text };
         },
         write: async ({ string }: { string: string }) => {
           text = string;
-          return {}
-        }
-      }
+          return {};
+        },
+      },
     },
     Capacitor: {
       isPluginAvailable: () => true,
-      platform: 'ios'
-    }
-  }
+      platform: 'ios',
+    },
+  };
 });
 
 it('Reads clipboard data', async () => {
@@ -56,7 +56,7 @@ it('Writes clipboard data', async () => {
   });
 
   await act(async () => {
-    const {value: data} = result.current;
+    const { value: data } = result.current;
     expect(data).toBe('testing');
   });
 });

@@ -1,27 +1,25 @@
 import { useState } from 'react';
-import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable } from '../util/models';
-import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
+import { Clipboard } from '@capacitor/clipboard';
+import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
 
 interface ClipboardResult extends AvailableResult {
-  value?: string,
+  value?: string;
   getValue: () => void;
   setValue: (value: string) => void;
 }
 
 export const availableFeatures = {
-  useClipboard: isFeatureAvailable('Clipboard', 'useClipboard')
-}
+  useClipboard: isFeatureAvailable('Clipboard', 'useClipboard'),
+};
 
 export function useClipboard(): ClipboardResult {
-  const { Clipboard } = Plugins;
-  
-  if (!(availableFeatures.useClipboard)) {
+  if (!availableFeatures.useClipboard) {
     return {
       getValue: featureNotAvailableError,
       setValue: featureNotAvailableError,
-      ...notAvailable
-    }
+      ...notAvailable,
+    };
   }
 
   const [data, setData] = useState<string>();
@@ -34,7 +32,7 @@ export function useClipboard(): ClipboardResult {
 
   async function setValue(value: string) {
     await Clipboard.write({
-      string: value
+      string: value,
     });
   }
 
@@ -42,6 +40,6 @@ export function useClipboard(): ClipboardResult {
     value: data,
     getValue,
     setValue,
-    isAvailable: true
-  }
+    isAvailable: true,
+  };
 }

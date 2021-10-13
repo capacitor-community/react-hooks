@@ -28,6 +28,7 @@ import './theme/variables.css';
 import AppPage from './pages/AppPage';
 import BrowserPage from './pages/BrowserPage';
 import CameraPage from './pages/CameraPage';
+import ClipboardPage from './pages/ClipboardPage';
 
 const App: React.FC = () => (
   <IonApp>
@@ -41,8 +42,8 @@ const App: React.FC = () => (
           <Route path="/app" component={AppPage} exact={true} />
           <Route path="/browser" component={BrowserPage} exact={true} />
           <Route path="/camera" component={CameraPage} exact={true} />
-          {/*<Route path="/clipboard" component={ClipboardPage} exact={true} />
-          <Route path="/device" component={DevicePage} exact={true} />
+          <Route path="/clipboard" component={ClipboardPage} exact={true} />
+          {/*<Route path="/device" component={DevicePage} exact={true} />
           <Route path="/geolocation" component={GeolocationPage} exact={true} />
           <Route path="/network" component={NetworkPage} exact={true} />
           <Route path="/storage" component={StoragePage} exact={true} />
