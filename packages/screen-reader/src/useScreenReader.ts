@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ScreenReader, ScreenReaderState } from '@capacitor/screen-reader';
 import { Capacitor } from '@capacitor/core';
-import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
+import { featureNotAvailableError, isFeatureAvailable } from './util/feature-check';
 import { AvailableResult, notAvailable } from './util/models';
 
 interface IsScreenReaderEnabledResult extends AvailableResult {

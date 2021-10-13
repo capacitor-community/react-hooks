@@ -1,7 +1,7 @@
 {
   "name": "@capacitor-community/screen-reader-react",
   "version": "0.0.1",
-  "description": "React Hooks for Capacitor apps",
+  "description": "React Hooks for Capacitor ScreenReader plugin",
   "keywords": [
     "react",
     "capacitor",
@@ -15,34 +15,45 @@
     "url": "https://github.com/capacitor-community/react-hooks.git"
   },
   "files": [
-    "dist/",
-    "types/"
+    "dist/"
   ],
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run clean && npm run transpile",
     "clean": "rimraf dist",
+    "eslint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "lint": "npm run eslint",
+    "lint.fix": "npm run eslint -- --fix",
     "test": "echo tests are in process",
     "transpile": "tsc"
   },
   "peerDependencies": {
-    "@capacitor/core": "^3.0.0",
+    "@capacitor/core": ">=3.0.0",
     "@capacitor/screen-reader": "*",
     "react": "*"
   },
   "devDependencies": {
+    "@capacitor/screen-reader": "^1.0.3",
     "@capacitor/core": "^3.2.4",
-    "@capacitor/screen-reader": "1.0.3",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.0.2",
     "@types/react": "^17.0.29",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.2.5",
     "lerna": "^4.0.0",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-test-renderer": "^17.0.2",
     "rimraf": "^2.6.1",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.4"
+  },
+  "prettier": "../../.prettierrc.json",
+  "eslintConfig": {
+    "extends": "../../.eslintrc.json"
   },
   "jest": {
     "preset": "ts-jest",

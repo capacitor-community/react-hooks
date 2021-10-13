@@ -9,12 +9,15 @@ jest.mock('@capacitor/screen-reader', () => {
         listener && listener({ value });
       },
       isEnabled: async () => {
-        console.log('!!!!!!')
         return { value };
       },
       addListener(_eventName: string, cb: ({ value }: { value: boolean }) => void) {
         listener = cb;
-        return { remove: () => {} };
+        return {
+          remove: () => {
+            return;
+          },
+        };
       },
     },
   };
@@ -30,7 +33,7 @@ it('Gets screen reader status', async () => {
   await act(async function () {
     const result = r.result;
 
-    let { isScreenReaderEnabled, isAvailable } = result.current;
+    const { isScreenReaderEnabled, isAvailable } = result.current;
 
     expect(isScreenReaderEnabled).toBeUndefined();
     expect(isAvailable).toBe(true);

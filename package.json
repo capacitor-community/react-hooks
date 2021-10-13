@@ -16,17 +16,11 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "lint": "lerna run lint",
+    "lint.fix": "lerna run lint.fix",
     "postinstall": "lerna bootstrap"
   },
   "devDependencies": {
-    "@ionic/eslint-config": "^0.3.0",
-    "@ionic/prettier-config": "^2.0.0",
-    "eslint": "^8.0.0",
-    "lerna": "^4.0.0",
-    "prettier": "^2.4.1"
-  },
-  "prettier": "@ionic/prettier-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
+    "lerna": "^4.0.0"
   }
 }

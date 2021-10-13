@@ -3,14 +3,14 @@ export interface AvailableResult {
 }
 
 export const notAvailable = {
-  isAvailable: false
-}
+  isAvailable: false,
+};
 
- 
 export class FeatureNotAvailableError extends Error {
   constructor() {
     super();
-    this.message = 'Feature not available on this platform/device. Check availability before attempting to call this method';
-    this.name = 'FeatreNotAvailableError'
+    this.message =
+      'Feature not available on this platform/device. Check availability before attempting to call this method';
+    this.name = 'FeatreNotAvailableError';
   }
 }
