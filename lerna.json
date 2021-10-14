@@ -4,8 +4,7 @@
   "command": {
     "bootstrap": {
       "hoist": true,
-      "ci": false,
-      "npmClientArgs": ["--no-package-lock"]
+      "ci": true
     },
     "version": {
       "allowBranch": "main",
