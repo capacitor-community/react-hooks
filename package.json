@@ -15,7 +15,8 @@
     "url": "https://github.com/capacitor-community/react-hooks.git"
   },
   "scripts": {
-    "release": "npm run lerna:release"
+    "lerna:version": "lerna version --force-publish --conventional-commits --no-git-tag-version --no-push ",
+    "release": "npm run lerna:version"
   },
   "devDependencies": {
     "@capacitor/browser": "^1.0.4",
