@@ -59,7 +59,6 @@
     "@capacitor-community/network-react": "file:packages/network",
     "@capacitor-community/screen-reader-react": "file:packages/screen-reader",
     "@capacitor-community/storage-react": "file:packages/storage",
-    "@root/util": "file:packages/util",
     "react-ionic-hooks-test-app": "file:packages/test-app"
   }
 }
