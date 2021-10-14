@@ -3,28 +3,28 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor-community/app-react": "0.0.1",
-    "@capacitor-community/browser-react": "0.0.1",
-    "@capacitor-community/camera-react": "0.0.1",
-    "@capacitor-community/clipboard-react": "0.0.1",
-    "@capacitor-community/device-react": "0.0.1",
-    "@capacitor-community/filesystem-react": "0.0.1",
-    "@capacitor-community/geolocation-react": "0.0.1",
-    "@capacitor-community/keyboard-react": "0.0.1",
-    "@capacitor-community/network-react": "0.0.1",
-    "@capacitor-community/screen-reader-react": "0.0.1",
-    "@capacitor-community/storage-react": "0.0.1",
+    "@capacitor-community/app-react": "file:../app",
+    "@capacitor-community/browser-react": "file:../browser",
+    "@capacitor-community/camera-react": "file:../camera",
+    "@capacitor-community/clipboard-react": "file:../clipboard",
+    "@capacitor-community/device-react": "file:../device",
+    "@capacitor-community/filesystem-react": "file:../filesystem",
+    "@capacitor-community/geolocation-react": "file:../geolocation",
+    "@capacitor-community/keyboard-react": "file:../keyboard",
+    "@capacitor-community/network-react": "file:../network",
+    "@capacitor-community/screen-reader-react": "file:../screen-reader",
+    "@capacitor-community/storage-react": "file:../storage",
+    "@capacitor/app": "^1.0.4",
+    "@capacitor/browser": "^1.0.4",
     "@capacitor/camera": "^1.1.1",
     "@capacitor/clipboard": "^1.0.4",
+    "@capacitor/core": "^3.2.4",
     "@capacitor/device": "^1.0.4",
     "@capacitor/filesystem": "^1.0.4",
     "@capacitor/geolocation": "^1.1.0",
+    "@capacitor/ios": "^3.2.4",
     "@capacitor/keyboard": "^1.1.0",
     "@capacitor/network": "^1.0.3",
-    "@capacitor/core": "^3.2.4",
-    "@capacitor/ios": "^3.2.4",
-    "@capacitor/app": "^1.0.4",
-    "@capacitor/browser": "^1.0.4",
     "@capacitor/screen-reader": "^1.0.3",
     "@capacitor/storage": "^1.2.0",
     "@ionic/pwa-elements": "^3.0.2",
@@ -62,8 +62,5 @@
       "last 1 safari version"
     ]
   },
-  "description": "An Ionic project",
-  "devDependencies": {
-    "@capacitor/cli": "^3.2.4"
-  }
+  "description": "An Ionic project"
 }
