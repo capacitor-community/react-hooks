@@ -1,30 +1,24 @@
 // Inspired by useLocalStorage from https://usehooks.com/useLocalStorage/
 import { useState, useEffect, useCallback } from 'react';
-import { Plugins } from '@capacitor/core';
-import { AvailableResult, notAvailable } from '../util/models';
-import { isFeatureAvailable, featureNotAvailableError } from '../util/feature-check';
+import { Storage } from '@capacitor/storage';
+import { AvailableResult, notAvailable } from './util/models';
+import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
 
 interface StorageResult extends AvailableResult {
   get: (key: string) => Promise<string | null>;
   set: (key: string, value: string) => Promise<void>;
   remove: (key: string) => void;
-  getKeys: () => Promise<{ keys: string[]; }>
+  getKeys: () => Promise<{ keys: string[] }>;
   clear: () => Promise<void>;
 }
 
-type StorageItemResult<T> = [
-  T | undefined,
-  ((value: T) => Promise<void>),
-  boolean
-]
+type StorageItemResult<T> = [T | undefined, (value: T) => Promise<void>, boolean];
 
 export const availableFeatures = {
-  useStorage: isFeatureAvailable('Storage', 'useStorage')
-}
+  useStorage: isFeatureAvailable('Storage', 'useStorage'),
+};
 
 export function useStorage(): StorageResult {
-  const { Storage } = Plugins;
-
   if (!availableFeatures.useStorage) {
     return {
       get: featureNotAvailableError,
@@ -32,7 +26,7 @@ export function useStorage(): StorageResult {
       remove: featureNotAvailableError,
       getKeys: featureNotAvailableError,
       clear: featureNotAvailableError,
-      ...notAvailable
+      ...notAvailable,
     };
   }
 
@@ -64,14 +58,8 @@ export function useStorage(): StorageResult {
 }
 
 export function useStorageItem<T>(key: string, initialValue?: T): StorageItemResult<T> {
-  const { Storage } = Plugins;
-  
   if (!availableFeatures.useStorage) {
-    return [
-      undefined,
-      featureNotAvailableError,
-      false
-    ];
+    return [undefined, featureNotAvailableError, false];
   }
 
   const [storedValue, setStoredValue] = useState<T>();
@@ -81,10 +69,17 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
       try {
         const result = await Storage.get({ key });
         if (result.value == undefined && initialValue != undefined) {
-          result.value = typeof initialValue === "string" ? initialValue : JSON.stringify(initialValue);
+          result.value =
+            typeof initialValue === 'string' ? initialValue : JSON.stringify(initialValue);
           setValue(result.value as any);
         } else {
-          setStoredValue(typeof result.value === 'string' ? result.value : JSON.parse(result.value!));
+          if (result.value) {
+            setStoredValue(
+              typeof result.value === 'string' ? result.value : JSON.parse(result.value)
+            );
+          } else {
+            setStoredValue(undefined);
+          }
         }
       } catch (e) {
         return initialValue;
@@ -96,15 +91,11 @@ export function useStorageItem<T>(key: string, initialValue?: T): StorageItemRes
   const setValue = async (value: T) => {
     try {
       setStoredValue(value);
-      await Storage.set({ key, value: typeof value === "string" ? value : JSON.stringify(value) });
+      await Storage.set({ key, value: typeof value === 'string' ? value : JSON.stringify(value) });
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
-  return [
-    storedValue,
-    setValue,
-    true
-  ];
+  return [storedValue, setValue, true];
 }

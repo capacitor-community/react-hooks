@@ -19,6 +19,7 @@ def capacitor_pods
   pod 'CapacitorApp', :path => '../../../../node_modules/@capacitor/app'
   pod 'CapacitorBrowser', :path => '../../../../node_modules/@capacitor/browser'
   pod 'CapacitorScreenReader', :path => '../../../../node_modules/@capacitor/screen-reader'
+  pod 'CapacitorStorage', :path => '../../../../node_modules/@capacitor/storage'
 end
 
 target 'App' do

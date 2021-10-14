@@ -1,5 +1,5 @@
 jest.mock('@capacitor/core', () => {
-  let data: any = {}
+  let data: any = {};
   return {
     Plugins: {
       Storage: {
@@ -9,7 +9,7 @@ jest.mock('@capacitor/core', () => {
         get: async ({ key }: { key: string }) => {
           return { value: data[key] };
         },
-        set: async ({ key, value }: { key: string, value: string }): Promise<void> => {
+        set: async ({ key, value }: { key: string; value: string }): Promise<void> => {
           data[key] = value;
         },
         remove: async ({ key }: { key: string }) => {
@@ -20,18 +20,18 @@ jest.mock('@capacitor/core', () => {
         },
         clear: async () => {
           data = {};
-        }
-      }
+        },
+      },
     },
     Capacitor: {
       isPluginAvailable: () => true,
-      platform: 'ios'
-    }
-  }
+      platform: 'ios',
+    },
+  };
 });
 
 import { Plugins } from '@capacitor/core';
-import { renderHook, act } from '@testing-library/react-hooks'
+import { renderHook, act } from '@testing-library/react-hooks';
 import { useStorage, useStorageItem } from './useStorage';
 
 it('Gets and sets storage values', async () => {
@@ -74,6 +74,7 @@ it('Manages individual item', async () => {
   });
 
   await act(async () => {
+    return;
   });
 
   await act(async () => {
@@ -88,17 +89,17 @@ it('Manages individual item', async () => {
   await act(async () => {
     const result = r.result.current;
 
-    const [value, setValue] = result;
+    const [value] = result;
     expect(value).toBe('Frank');
   });
 });
 
 it('Manages individual item with stored value', async () => {
   let r: any;
-  
-  const storageMock = (Plugins.Storage as any);
+
+  const storageMock = Plugins.Storage as any;
   await act(async () => {
-    storageMock.__init({ name: 'Matilda'});
+    storageMock.__init({ name: 'Matilda' });
   });
 
   await act(async () => {
@@ -106,6 +107,7 @@ it('Manages individual item with stored value', async () => {
   });
 
   await act(async () => {
+    return;
   });
 
   await act(async () => {
