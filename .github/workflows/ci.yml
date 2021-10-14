@@ -19,7 +19,7 @@ jobs:
           node-version: 14.x
           cache: 'npm'
           cache-dependency-path: '**/package.json'
-      - run: npm install
+      - run: npm ci
       - run: npx lerna run lint
   # lint:
   #   runs-on: ubuntu-latest
