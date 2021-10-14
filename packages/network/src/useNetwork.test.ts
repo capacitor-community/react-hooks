@@ -1,8 +1,8 @@
 jest.mock('@capacitor/core', () => {
   let listener: any;
   const status = {
-    "connected": true,
-    "connectionType": "wifi"
+    connected: true,
+    connectionType: 'wifi',
   };
   return {
     Plugins: {
@@ -11,23 +11,27 @@ jest.mock('@capacitor/core', () => {
           status.connected = false;
           listener(status);
         },
-        addListener: (eventName: string, cb: (status: NetworkStatus) => void) => {
+        addListener: (eventName: string, cb: (status: ConnectionStatus) => void) => {
           listener = cb;
-          return { remove: () => { } }
+          return {
+            remove: () => {
+              return;
+            },
+          };
         },
         getStatus: async () => {
           return status;
         },
-      }
+      },
     },
     Capacitor: {
       isPluginAvailable: () => true,
-      platform: 'ios'
-    }
-  }
+      platform: 'ios',
+    },
+  };
 });
 
-import { Plugins, NetworkStatus } from '@capacitor/core';
+import { Network, ConnectionStatus } from '@capacitor/network';
 
 import { useStatus } from './useNetwork';
 import { renderHook, act } from '@testing-library/react-hooks';
@@ -35,7 +39,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 it('Gets current network status', async () => {
   const r = renderHook(() => useStatus());
 
-  const networkMock = (Plugins.Network as any);
+  const networkMock = Network as any;
 
   await act(async function () {
     const { isAvailable } = r.result.current;
@@ -45,19 +49,19 @@ it('Gets current network status', async () => {
   await act(async function () {
     const { networkStatus } = r.result.current;
     expect(networkStatus).toMatchObject({
-      "connected": true,
-      "connectionType": "wifi"
+      connected: true,
+      connectionType: 'wifi',
     });
 
     networkMock.__updateStatus();
   });
 
   await act(async function () {
-    const {networkStatus} = r.result.current;
+    const { networkStatus } = r.result.current;
 
     expect(networkStatus).toMatchObject({
-      "connected": false,
-      "connectionType": "wifi"
+      connected: false,
+      connectionType: 'wifi',
     });
   });
 });
