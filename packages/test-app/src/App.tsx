@@ -31,6 +31,7 @@ import CameraPage from './pages/CameraPage';
 import ClipboardPage from './pages/ClipboardPage';
 import DevicePage from './pages/DevicePage';
 import GeolocationPage from './pages/GeolocationPage';
+import KeyboardPage from './pages/KeyboardPage';
 
 const App: React.FC = () => (
   <IonApp>
@@ -47,6 +48,7 @@ const App: React.FC = () => (
           <Route path="/clipboard" component={ClipboardPage} exact={true} />
           <Route path="/device" component={DevicePage} exact={true} />
           <Route path="/geolocation" component={GeolocationPage} exact={true} />
+          <Route path="/keyboard" component={KeyboardPage} exact={true} />
           {/*<Route path="/network" component={NetworkPage} exact={true} />
           <Route path="/storage" component={StoragePage} exact={true} />
           <Route path="/" render={() => <Redirect to="/home" /> } exact={true} /> */}

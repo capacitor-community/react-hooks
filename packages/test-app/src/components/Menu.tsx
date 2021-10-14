@@ -50,6 +50,10 @@ const Menu: React.FC<MenuProps> = () => (
             <IonIcon slot="start" icon={star} />
             <IonLabel>Geolocation</IonLabel>
           </IonItem>
+          <IonItem routerLink="/keyboard" routerDirection="none">
+            <IonIcon slot="start" icon={star} />
+            <IonLabel>Keyboard</IonLabel>
+          </IonItem>
           <IonItem routerLink="/network" routerDirection="none">
             <IonIcon slot="start" icon={star} />
             <IonLabel>Network</IonLabel>

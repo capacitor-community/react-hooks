@@ -1,42 +1,38 @@
 import { useState, useEffect } from 'react';
-import { AvailableResult } from '../util/models';
+import { Keyboard, KeyboardInfo, KeyboardPlugin } from '@capacitor/keyboard';
+import { AvailableResult } from './util/models';
+interface KeyboardStateResult extends AvailableResult {
+  isOpen: boolean;
+  keyboardHeight: number;
+  keyboard: KeyboardPlugin;
+}
 
-interface KeyboardStateResult extends AvailableResult { isOpen?: boolean; keyboardHeight?: number };
+export function useKeyboard(): KeyboardStateResult {
+  const [isOpen, setIsOpen] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-export function useKeyboardState(): KeyboardStateResult {
-  const [state, setKeyboardState] = useState({
-    isOpen: false,
-    keyboardHeight: 0
-  });
-  
   useEffect(() => {
-    const showCallback = (ev: any) => {
-      if (typeof (window as any) === 'undefined') { return; }
-
-      const { keyboardHeight } = ev.detail;
-      setKeyboardState({
-        isOpen: true,
-        keyboardHeight
-      });
-    }
+    const showCallback = (ki: KeyboardInfo) => {
+      const keyboardHeight = ki.keyboardHeight;
+      setIsOpen(true);
+      setKeyboardHeight(keyboardHeight);
+    };
     const hideCallback = () => {
-      setKeyboardState({
-        isOpen: false,
-        keyboardHeight: 0
-      });
-    }
-    window.addEventListener('ionKeyboardDidShow', showCallback);
-    window.addEventListener('ionKeyboardDidHide', hideCallback);
-    
+      setIsOpen(false);
+      setKeyboardHeight(0);
+    };
+    Keyboard.addListener('keyboardDidShow', showCallback);
+    Keyboard.addListener('keyboardDidHide', hideCallback);
+
     return () => {
-      window.removeEventListener('ionKeyboardDidShow', showCallback);
-      window.removeEventListener('ionKeyboardDidHide', hideCallback);
-    }
-  }, [setKeyboardState]);
-  
+      Keyboard.removeAllListeners();
+    };
+  }, [setIsOpen, setKeyboardHeight]);
+
   return {
-    isOpen: state.isOpen,
-    keyboardHeight: state.keyboardHeight,
-    isAvailable: true
+    isOpen,
+    keyboardHeight,
+    isAvailable: true,
+    keyboard: Keyboard,
   };
 }
