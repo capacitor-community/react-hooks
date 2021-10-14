@@ -22,6 +22,7 @@
     "build": "npm run clean && npm run transpile",
     "clean": "rimraf dist",
     "eslint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "lerna:release": "",
     "lint": "npm run eslint",
     "lint.fix": "npm run eslint -- --fix",
     "test": "echo tests are in process",

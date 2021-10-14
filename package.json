@@ -15,10 +15,7 @@
     "url": "https://github.com/capacitor-community/react-hooks.git"
   },
   "scripts": {
-    "build": "lerna run build",
-    "lint": "lerna run lint",
-    "lint.fix": "lerna run lint.fix",
-    "postinstall": "lerna bootstrap"
+    "release": "npm run lerna:release"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
