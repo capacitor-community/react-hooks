@@ -11,8 +11,8 @@ interface SpeakResult extends AvailableResult {
   speak: typeof ScreenReader.speak;
 }
 
-if (!Capacitor.isPluginAvailable('Screenreader')) {
-  console.warn('The @capacitor/screenreader plugin was not found, did you forget to install it?');
+if (!Capacitor.isPluginAvailable('ScreenReader')) {
+  console.warn('The @capacitor/screen-reader plugin was not found, did you forget to install it?');
 }
 
 export const availableFeatures = {

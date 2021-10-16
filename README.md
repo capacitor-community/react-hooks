@@ -331,13 +331,13 @@ See the [Network](https://capacitorjs.com/docs/apis/network) Capacitor Plugin do
 Installation:
 
 ```bash
-npm install @capacitor-community/screenreader-react
+npm install @capacitor-community/screen-reader-react
 ```
 
 Usage:
 
 ```jsx
-import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/screenreader-react';
+import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/screen-reader-react';
 ```
 
 `useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
