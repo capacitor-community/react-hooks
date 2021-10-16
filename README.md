@@ -25,19 +25,21 @@
 
 ## Getting Started
 
-To start using Capacitor Hooks in your app, you install the React Hook package along with the Capacitor plugin you want to use:
+To start using Capacitor Hooks in your app, you install the React Hook package along with the Capacitor plugin you want to use. Here is an example of using the Storage plugin along with it's React hook:
 
 ```bash
-// Install the Capacitor Plugin
+# Install the Capacitor Plugin
 npm install @capacitor/storage 
-// And then the React hook package:
+# And then the React hook package:
 npm install @capacitor-community/react-storage
 ```
 
-Import the hooks:
+Import the hooks:\
+```jsx
 `import { useStorage } from '@capacitor-community/storage-react'`
+```
 
-Then use the hooks from that namespace in your app:
+Then use the hooks in your app:
 
 ```jsx
 const [value, setValue] = useStorage('mykey');
@@ -47,13 +49,14 @@ const [value, setValue] = useStorage('mykey');
 
 While Capacitor allows you to write to one API across several platforms, not all features are supported on all platforms. It is encouraged to check if the feature you intend to use is available before using it to avoid any runtime errors.
 
-Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
+Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true:
 
 ```jsx
 const { useStorageItem, availableFeatures } = `@capacitor-community/storage-react`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
+  // Storage is available, feel free to use it!
   setValue('cake');
 }
 ```
@@ -62,9 +65,9 @@ if(availableFeatures.useStorage) {
 
 # Upgrading from Capacitor 2 React Hooks
 
-In Capacitor 3, all the plugins were separated into their own packages. All the React hooks plugins were also put into their own package, so you will need to install the hook for each plugin you use. 
+In Capacitor 3, all the plugins were separated into their own packages. Likewise, the new React hooks plugins were also put into their own package, so you will need to install the hook for each plugin you use. 
 
-Any deprecated API'S from Capacitor 2 to 3 were also removed, so you might need to make some changes to account for that. See the [Capacitor Plugin API for](https://capacitorjs.com/docs/plugins) the plugins you use to learn more.
+Any deprecated API'S from Capacitor 2 to 3 were also removed and updated, so you might need to make some modifications to account for API changes. See the [Capacitor Plugin API for](https://capacitorjs.com/docs/plugins) to learn more.
 
 # Hook Usage
 
@@ -396,3 +399,7 @@ const updateName = useCallback((n) => {
 `useStorageItem` will use the initial value already in storage, or the one provided if there is no existing value.
 
 See the [Storage](https://capacitorjs.com/docs/apis/storage) Capacitor Plugin docs for more info on the plugin API.
+
+# Other Hooks
+
+This is an evolving project and not all of the Capacitor Plugins are supported yet. If there is one you need, feel free top open an issue for it, or better yet, submit a PR!
