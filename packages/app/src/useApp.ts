@@ -22,7 +22,7 @@ export const availableFeatures = {
 };
 
 if (!Capacitor.isPluginAvailable('App')) {
-  console.warn(`The @capacitor/app plugin was not found, did you forget to install it?`);
+  console.warn('The @capacitor/app plugin was not found, did you forget to install it?');
 }
 
 export function useAppState(): AppStateResult {

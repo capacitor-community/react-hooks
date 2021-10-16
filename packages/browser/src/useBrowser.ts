@@ -10,14 +10,14 @@ interface OpenResult extends AvailableResult {
   open: typeof Browser.open;
 }
 
+if (!Capacitor.isPluginAvailable('Browser')) {
+  console.warn('The @capacitor/browser plugin was not found, did you forget to install it?');
+}
+
 export const availableFeatures = {
   close: isFeatureAvailable('Browser', 'close'),
   open: isFeatureAvailable('Browser', 'open'),
 };
-
-if (!Capacitor.isPluginAvailable('App')) {
-  console.warn(`The @capacitor/app plugin was not found, did you forget to install it?`);
-}
 
 export function useClose(): CloseResult {
   if (!availableFeatures.close) {

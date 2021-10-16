@@ -1,25 +1,41 @@
-# React Hooks for Capacitor
+<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
+<h3 align="center">Capacitor React Hooks</h3>
 
-A set of hooks to help Capacitor developers use native [Capacitor APIs](http://capacitorjs.com/).
+<p align="center">
+  A set of hooks to help Capacitor developers use native <a href="http://capacitorjs.com/" target="_blank"
+  >Capacitor APIs</a>.
+</p>
 
-This is a new project and we'd love your feedback! Is there a hook that we don't have in here you'd like to see? Or maybe a hook that should function differently than it does today? Let us know by filing an issue!
+<p align="center">
+  <img src="https://img.shields.io/maintenance/yes/2021?style=flat-square" />
+  <a href="https://github.com/capacitor-community/react-hooks/actions?query=workflow%CI"><img src="https://img.shields.io/github/workflow/status/capacitor-community/react-hooks/CI?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@capacitor-community/react-hooks"><img src="https://img.shields.io/npm/l/@capacitor-community/react-hooks?style=flat-square" /></a>
+<br>
+ <img src="https://img.shields.io/badge/capacitor%20v3%20support-yes-brightgreen?logo=Capacitor&style=flat-square" />
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<a href="#contributors-"><img src="https://img.shields.io/badge/all%20contributors-6-orange?style=flat-square" /></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
 
-## Support Status
+## Maintainers
 
-This is a community-supported add-on to Capacitor. If you'd like to help maintain this repo or have an idea for a hook please file an issue or reach out to the team on Twitter.
-
-This also means the core Capacitor team doesn't guarantee regular updates to this repo, but rather encourages the community to pitch in.
+| Maintainer   | GitHub                                        | Social                                          |
+| ------------ | --------------------------------------------- | ----------------------------------------------- |
+| Ely Lucas   | [elylucas](https://github.com/elylucas)           | [@elylucas](https://twitter.com/elylucas)       |
 
 ## Getting Started
 
-To start using Capacitor Hooks in your app, install the hooks library:
+To start using Capacitor Hooks in your app, you install the React Hook package along with the Capacitor plugin you want to use:
 
-```
-npm install @capacitor-community/react-hooks
+```bash
+// Install the Capacitor Plugin
+npm install @capacitor/storage 
+// And then the React hook package:
+npm install @capacitor-community/react-storage
 ```
 
-Import the hooks from their own path:
-`import { useStorage } from '@capacitor-community/react-hooks/storage'`
+Import the hooks:
+`import { useStorage } from '@capacitor-community/storage-react'`
 
 Then use the hooks from that namespace in your app:
 
@@ -34,7 +50,7 @@ While Capacitor allows you to write to one API across several platforms, not all
 Each of the hook plugin paths exports an `availableFeatures` object, which contains a list features for that plugin. If the feature is supported for the current platform the app is running on, that feature will be true.:
 
 ```jsx
-const { useStorageItem, availableFeatures } = `@capacitor-community/react-hooks/storage`;
+const { useStorageItem, availableFeatures } = `@capacitor-community/storage-react`;
 const [value, setValue] = useStorage('mykey');
 ...
 if(availableFeatures.useStorage) {
@@ -42,34 +58,28 @@ if(availableFeatures.useStorage) {
 }
 ```
 
+> These docs are for Capacitor 3 plugins. For docs that target v2 plugins, see the [capv2](https://github.com/capacitor-community/react-hooks/tree/capv2) branch.
+
+# Upgrading from Capacitor 2 React Hooks
+
+In Capacitor 3, all the plugins were separated into their own packages. All the React hooks plugins were also put into their own package, so you will need to install the hook for each plugin you use. 
+
+Any deprecated API'S from Capacitor 2 to 3 were also removed, so you might need to make some changes to account for that. See the [Capacitor Plugin API for](https://capacitorjs.com/docs/plugins) the plugins you use to learn more.
+
 # Hook Usage
 
-## Accessibility Hooks
+## @capacitor/app Hooks
 
-Import:
+Installation:
 
-```jsx
-import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/react-hooks/accessibility';
+```bash
+npm install @capacitor-community/app-react
 ```
 
-`useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
+Usage:
 
 ```jsx
-const {isScreenReaderEnabled} = useIsScreenReaderEnabled();
-```
-
-`useSpeak` activates a text-to-speech engine (if available) to read spoken text.
-```jsx
-const { speak } = useSpeak();
-speak({value: textToSpeak})
-```
-
-## AppState Hooks
-
-Import:
-
-```jsx
-import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@capacitor-community/react-hooks/app';
+import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@capacitor-community/app-react';
 ```
 
 `useAppState` provides access to App status information, such as whether the app is active or inactive. This value will update dynamically.
@@ -94,12 +104,20 @@ const { launchUrl } = useLaunchUrl();
 const { appUrlOpen } = useAppUrlOpen();
 ```
 
-## Browser Hooks
+See the [App](https://capacitorjs.com/docs/apis/app) Capacitor Plugin docs for more info on the plugin API.
 
-Import: 
+## @capcitor/browser Hooks
+
+Installation:
+
+```bash
+npm install @capacitor-community/browser-react
+```
+
+Usage: 
 
 ```jsx
-import { useClose, useOpen, availableFeatures } from '@capacitor-community/react-hooks/browser';
+import { useClose, useOpen, availableFeatures } from '@capacitor-community/browser-react';
 ```
 
 `useOpen`, `useClose` provides a way to launch, and close an in-app browser for external content:
@@ -111,9 +129,17 @@ useEffect(() => {
 }, [useOpen, useClose]);
 ```
 
-## Camera Hooks
+See the [Browser](https://capacitorjs.com/docs/apis/browser) Capacitor Plugin docs for more info on the plugin API.
 
-Import:
+## @capacitor/camera Hooks
+
+Installation:
+
+```bash
+npm install @capacitor-community/camera-react
+```
+
+Usage:
 
 ```jsx
 import { useCamera, availableFeatures } from '@capacitor-community/react-hooks/camera';
@@ -134,14 +160,20 @@ const triggerCamera = useCallback(async () => {
 <div>{photo && <img alt="" src={photo.dataUrl} />}</div>
 ```
 
-See the [Camera](https://capacitor.ionicframework.com/docs/apis/camera) Capacitor API for the options expected.
+See the [Camera](https://capacitorjs.com/docs/apis/camera) Capacitor Plugin docs for more info on the plugin API.
 
 ## Clipboard Hooks
 
-Import:
+Installation:
+
+```bash
+npm install @capacitor-community/clipboard-react
+```
+
+Usage:
 
 ```jsx
-import { useClipboard, availableFeatures } from '@capacitor-community/react-hooks/clipboard';
+import { useClipboard, availableFeatures } from '@capacitor-community/clipboard-react';
 ```
 
 `useClipboard` reads and writes clipboard data:
@@ -158,12 +190,20 @@ const copy = useCallback(async () => {
 }, [getValue])
 ```
 
+See the [Clipboard](https://capacitorjs.com/docs/apis/clipboard) Capacitor Plugin docs for more info on the plugin API.
+
 ## Device Hooks
 
-Import: 
+Installation:
+
+```bash
+npm install @capacitor-community/device-react
+```
+
+Usage: 
 
 ```jsx
-import { useGetInfo, useGetLanguageCode, availableFeatures } from '@capacitor-community/react-hooks/device';
+import { useGetInfo, useGetLanguageCode, availableFeatures } from '@capacitor-community/device-react';
 ```
 
 `useGetInfo`, `useGetLanguageCode` gives access to device information and device language settings:
@@ -173,14 +213,20 @@ const { info } = useGetInfo();
 const { languageCode } = useGetLanguageCode();
 ```
 
-See the [Device](https://capacitor.ionicframework.com/docs/apis/device) Capacitor API for the return type information.
+See the [Device](https://capacitorjs.com/docs/apis/device) Capacitor Plugin docs for more info on the plugin API.
 
 ## Filesystem Hooks
 
-import:
+Installation:
+
+```bash
+npm install @capacitor-community/filesystem-react
+```
+
+Usage:
 
 ```jsx
-import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-community/react-hooks/filesystem';
+import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-community/filesystem-react';
 ```
 
 `useFilesystem` returns back common methods to gain access to file system apis.
@@ -194,9 +240,9 @@ const file = await readFile({
 });
 ```
 
-See the [Filesystem](https://capacitor.ionicframework.com/docs/apis/filesystem) Capacitor API for description of all the methods and options.
-
 `base64FromPath` is a helper method that will take in a path to a file and return back the base64 encoded representation of that file.
+
+See the [Filesystem](https://capacitorjs.com/docs/apis/filesystem) Capacitor Plugin docs for more info on the plugin API.
 
 ```jsx
 const base64String = await base64FromPath(path);
@@ -204,10 +250,16 @@ const base64String = await base64FromPath(path);
 
 ## Geolocation Hooks
 
-Import:
+Installation:
+
+```bash
+npm install @capacitor-community/geolocation-react
+```
+
+Usage:
 
 ```jsx
-import { useCurrentPosition, useWatchPosition, availableFeatures } from '@capacitor-community/react-hooks/geolocation';
+import { useCurrentPosition, useWatchPosition, availableFeatures } from '@capacitor-community/geolocation-react';
 ```
 
 `useCurrentPosition` returns a single geolocation position using the Geolocation API in Capacitor. The position can be manually updated by calling `getPosition`:
@@ -226,31 +278,42 @@ const handleRefreshPosition = () => {
 const { currentPosition, startWatch, clearWatch } = useWatchPosition();
 ```
 
-See the [Geolocation](https://capacitor.ionicframework.com/docs/apis/geolocation) Capacitor API for the options expected.
-
+See the [Geolocation](https://capacitorjs.com/docs/apis/geolocation) Capacitor Plugin docs for more info on the plugin API.
 ## Keyboard Hooks
 
-Import:
+Installation:
 
-```jsx
-import { useKeyboardState } from '@capacitor-community/react-hooks/keyboard';
+```bash
+npm install @capacitor-community/keyboard-react
 ```
 
-`useKeyboardState` returns whether or not the on-screen keyboard is shown as well as an approximation of the keyboard height in pixels.
+Usage:
 
 ```jsx
-const { isOpen, keyboardHeight } = useKeyboardState();
+import { useKeyboardState } from '@capacitor-community/keyboard';
+```
 
+`useKeyboard` returns whether or not the on-screen keyboard is shown as well as an approximation of the keyboard height in pixels.
+
+```jsx
+const { isOpen, keyboardHeight } = useKeyboard();
 // Use keyboardHeight to translate an input that would otherwise be hidden by the keyboard
 ```
 
+See the [Keyboard](https://capacitorjs.com/docs/apis/keyboard) Capacitor Plugin docs for more info on the plugin API.
 
 ## Network Hooks
 
-Import:
+Installation:
+
+```bash
+npm install @capacitor-community/network-react
+```
+
+Usage:
 
 ```jsx
-import { useStatus, availableFeatures } from '@capacitor-community/react-hooks/network';
+import { useStatus, availableFeatures } from '@capacitor-community/network-react';
 ```
 
 `useStatus` monitors network status and information:
@@ -259,14 +322,47 @@ import { useStatus, availableFeatures } from '@capacitor-community/react-hooks/n
  const { networkStatus } = useStatus();
 ```
 
-See the [Network](https://capacitor.ionicframework.com/docs/apis/network) Capacitor API for the type of `status`.
+See the [Network](https://capacitorjs.com/docs/apis/network) Capacitor Plugin docs for more info on the plugin API.
+## ScreenReader Hooks
+
+Installation:
+
+```bash
+npm install @capacitor-community/screenreader-react
+```
+
+Usage:
+
+```jsx
+import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/screenreader-react';
+```
+
+`useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
+
+```jsx
+const {isScreenReaderEnabled} = useIsScreenReaderEnabled();
+```
+
+`useSpeak` activates a text-to-speech engine (if available) to read spoken text.
+```jsx
+const { speak } = useSpeak();
+speak({value: textToSpeak})
+```
+
+See the [ScreenReader](https://capacitorjs.com/docs/apis/screenreader) Capacitor Plugin docs for more info on the plugin API.
 
 ## Storage Hooks
 
-Import:
+Installation:
+
+```bash
+npm install @capacitor-community/storage-react
+```
+
+Usage:
 
 ```jsx
-import { useStorage, useStorageItem, availableFeatures } from '@capacitor-community/react-hooks/storage';
+import { useStorage, useStorageItem, availableFeatures } from '@capacitor-community/storage-react';
 ```
 
 `useStorage` provides access to Capacitor's storage engine. There is also a helper called `useStorageItem` which makes managing a single item easy if you don't need to access the full Storage API (see below)
@@ -299,3 +395,4 @@ const updateName = useCallback((n) => {
 
 `useStorageItem` will use the initial value already in storage, or the one provided if there is no existing value.
 
+See the [Storage](https://capacitorjs.com/docs/apis/storage) Capacitor Plugin docs for more info on the plugin API.

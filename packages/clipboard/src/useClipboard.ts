@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Clipboard } from '@capacitor/clipboard';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
+import { Capacitor } from '@capacitor/core';
 
 interface ClipboardResult extends AvailableResult {
   value?: string;
@@ -9,6 +10,9 @@ interface ClipboardResult extends AvailableResult {
   setValue: (value: string) => void;
 }
 
+if (!Capacitor.isPluginAvailable('Clipboard')) {
+  console.warn('The @capacitor/clipboard plugin was not found, did you forget to install it?');
+}
 export const availableFeatures = {
   useClipboard: isFeatureAvailable('Clipboard', 'useClipboard'),
 };

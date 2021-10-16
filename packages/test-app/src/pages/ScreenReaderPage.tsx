@@ -15,7 +15,6 @@ import {
   IonInput,
   IonButton,
 } from '@ionic/react';
-// import { usePlatform } from '@ionic/react-hooks/platform';
 import {
   useIsScreenReaderEnabled,
   availableFeatures,
@@ -23,7 +22,6 @@ import {
 } from '@capacitor-community/screen-reader-react';
 
 const ScreenReaderPage: React.FC = () => {
-  // const { platform } = usePlatform();
   const platform = Capacitor.getPlatform();
 
   const { speak } = useSpeak();

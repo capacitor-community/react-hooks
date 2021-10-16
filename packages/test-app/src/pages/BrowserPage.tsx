@@ -15,7 +15,7 @@ import {
   IonButton,
   IonInput,
 } from '@ionic/react';
-// import { usePlatform } from '@ionic/react-hooks/platform';
+
 import { useClose, useOpen, availableFeatures } from '@capacitor-community/browser-react';
 
 const BrowserPage: React.FC = () => {

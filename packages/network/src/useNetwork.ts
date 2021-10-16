@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Network, ConnectionStatus } from '@capacitor/network';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable } from './util/feature-check';
+import { Capacitor } from '@capacitor/core';
 
 interface NetworkStatusResult extends AvailableResult {
   networkStatus?: ConnectionStatus;
@@ -10,6 +11,10 @@ interface NetworkStatusResult extends AvailableResult {
 export const availableFeatures = {
   getStatus: isFeatureAvailable('Network', 'getStatus'),
 };
+
+if (!Capacitor.isPluginAvailable('Network')) {
+  console.warn('The @capacitor/network plugin was not found, did you forget to install it?');
+}
 
 export function useStatus(): NetworkStatusResult {
   if (!availableFeatures.getStatus) {

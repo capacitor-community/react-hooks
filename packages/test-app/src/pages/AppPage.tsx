@@ -12,7 +12,6 @@ import {
   IonCardTitle,
   IonCardContent,
 } from '@ionic/react';
-// import { usePlatform } from '@ionic/react-hooks/platform';
 import { Capacitor } from '@capacitor/core';
 import {
   useAppState,

@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Keyboard, KeyboardInfo, KeyboardPlugin } from '@capacitor/keyboard';
 import { AvailableResult } from './util/models';
-interface KeyboardStateResult extends AvailableResult {
+import { Capacitor } from '@capacitor/core';
+interface KeyboardResult extends AvailableResult {
   isOpen: boolean;
   keyboardHeight: number;
   keyboard: KeyboardPlugin;
 }
 
-export function useKeyboard(): KeyboardStateResult {
+if (!Capacitor.isPluginAvailable('Keyboard')) {
+  console.warn('The @capacitor/keyboard plugin was not found, did you forget to install it?');
+}
+
+export function useKeyboard(): KeyboardResult {
   const [isOpen, setIsOpen] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 

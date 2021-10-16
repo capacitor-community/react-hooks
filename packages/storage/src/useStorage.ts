@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Storage } from '@capacitor/storage';
 import { AvailableResult, notAvailable } from './util/models';
 import { isFeatureAvailable, featureNotAvailableError } from './util/feature-check';
+import { Capacitor } from '@capacitor/core';
 
 interface StorageResult extends AvailableResult {
   get: (key: string) => Promise<string | null>;
@@ -13,6 +14,10 @@ interface StorageResult extends AvailableResult {
 }
 
 type StorageItemResult<T> = [T | undefined, (value: T) => Promise<void>, boolean];
+
+if (!Capacitor.isPluginAvailable('Storage')) {
+  console.warn('The @capacitor/storage plugin was not found, did you forget to install it?');
+}
 
 export const availableFeatures = {
   useStorage: isFeatureAvailable('Storage', 'useStorage'),
