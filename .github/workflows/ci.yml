@@ -51,6 +51,7 @@ jobs:
       - run: npx lerna run build
   deploy:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/v3support' && startsWith(github.event.head_commit.message, 'chore(release):')
     timeout-minutes: 30
     needs:
       - setup
@@ -64,86 +65,5 @@ jobs:
           cache-dependency-path: '**/package.json'
       - run: npm ci
       - run: npx lerna run build
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
-  #   steps:
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
-  #     - uses: actions/checkout@v2
-  #     - name: Restore Dependency Cache
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-  #     - run: npm install
-  #     - run: npm run lint
-  # test-cli:
-  #   runs-on: macos-latest
-  #   timeout-minutes: 30
-  #   needs:
-  #     - setup
-  #     - lint
-  #   steps:
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
-  #     - uses: actions/checkout@v2
-  #     - name: Restore Dependency Cache
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-  #     - run: npm install
-  #     - run: npm run build
-  #       working-directory: ./cli
-  #     - run: npm test
-  #       working-directory: ./cli
-  # test-core:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
-  #   needs:
-  #     - setup
-  #     - lint
-  #   steps:
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
-  #     - uses: actions/checkout@v2
-  #     - name: Restore Dependency Cache
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-  #     - run: npm install
-  #     - run: npm run build
-  #       working-directory: ./core
-  #     - run: npm test
-  #       working-directory: ./core
-  # deploy-latest:
-  #   runs-on: macos-latest
-  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'Release') && (!contains(github.event.head_commit.message, 'rc') && !contains(github.event.head_commit.message, 'beta') && !contains(github.event.head_commit.message, 'alpha'))
-  #   timeout-minutes: 30
-  #   needs:
-  #     - setup
-  #     - lint
-  #     - test-cli
-  #     - test-core
-  #     - test-ios
-  #     - test-android
-  #   steps:
-  #     - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 14.x
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-  #     - name: Restore Dependency Cache
-  #       uses: actions/cache@v1
-  #       with:
-  #         path: ~/.npm
-  #         key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-  #     - run: npm install
-  #     - run: npm run lerna:publish:latest || true
+      - run: npm run lerna:publish || true
+  
