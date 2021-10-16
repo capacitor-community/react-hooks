@@ -9,7 +9,6 @@
     "version": {
       "allowBranch": "main",
       "conventionalCommits": true,
-      "createRelease": "github",
       "message": "chore(release): Release %s",
       "tagVersionPrefix": ""
     }
