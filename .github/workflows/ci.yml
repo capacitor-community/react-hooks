@@ -37,7 +37,15 @@ jobs:
           node-version: 14.x
           cache: 'npm'
           cache-dependency-path: '**/package.json'
+      - name: Setup npm auth
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          npm whoami
+        env: 
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm ci
       - run: npx lerna run build
       - run: npm run lerna:publish || true
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   
