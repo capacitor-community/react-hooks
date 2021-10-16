@@ -9,7 +9,7 @@
     "version": {
       "allowBranch": "main",
       "conventionalCommits": true,
-      "message": "chore(release): Release %s",
+      "message": "chore(release): Release",
       "tagVersionPrefix": ""
     }
   }
