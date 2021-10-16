@@ -39,7 +39,7 @@ jobs:
           cache-dependency-path: '**/package.json'
       - name: Setup npm auth
         run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
           npm whoami
         env: 
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
