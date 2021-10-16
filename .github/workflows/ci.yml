@@ -9,22 +9,9 @@ on:
       - '**'
 
 jobs:
-  setup:
+  verify:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-          cache: 'npm'
-          cache-dependency-path: '**/package.json'
-      - run: npm ci
-  lint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs:
-      - setup
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -34,28 +21,13 @@ jobs:
           cache-dependency-path: '**/package.json'
       - run: npm ci
       - run: npx lerna run lint
-  build:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/v3support' && !startsWith(github.event.head_commit.message, 'chore(release):')
-    timeout-minutes: 30
-    needs:
-      - setup
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-          cache: 'npm'
-          cache-dependency-path: '**/package.json'
-      - run: npm ci
       - run: npx lerna run build
   deploy:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/v3support' && startsWith(github.event.head_commit.message, 'chore(release):')
     timeout-minutes: 30
     needs:
-      - setup
-      - lint
+      - verify
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
