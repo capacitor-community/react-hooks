@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/screen-reader-react",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "React Hooks for Capacitor ScreenReader plugin",
   "keywords": [
     "react",

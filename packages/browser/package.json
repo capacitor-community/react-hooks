@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/browser-react",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "React Hooks for Capacitor Browser plugin",
   "keywords": [
     "react",
