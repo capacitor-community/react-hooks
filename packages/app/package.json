@@ -1,0 +1,52 @@
+{
+  "name": "@capacitor-community/app-react",
+  "version": "0.0.3",
+  "description": "React Hooks for Capacitor App Plugin",
+  "keywords": [
+    "react",
+    "capacitor",
+    "hooks",
+    "ionic framework",
+    "ionic"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/capacitor-community/react-hooks.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm run clean && npm run transpile",
+    "clean": "rimraf dist",
+    "eslint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "lerna:release": "",
+    "lint": "npm run eslint",
+    "lint.fix": "npm run eslint -- --fix",
+    "test": "echo tests are in process",
+    "transpile": "tsc"
+  },
+  "peerDependencies": {
+    "@capacitor/app": "*",
+    "@capacitor/core": ">=3.0.0",
+    "react": "*"
+  },
+  "prettier": "../../.prettierrc.json",
+  "eslintConfig": {
+    "extends": "../../.eslintrc.json"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "dist-transpiled",
+      "dist",
+      "test-app"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  }
+}

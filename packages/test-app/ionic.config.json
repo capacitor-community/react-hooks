@@ -1,0 +1,7 @@
+{
+  "name": "react-ionic-hooks",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

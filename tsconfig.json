@@ -5,26 +5,18 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "experimentalDecorators": true,
     "noEmitHelpers": false,
     "importHelpers": false,
     "moduleResolution": "node",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "es2017"],
+    "pretty": true,
     "module": "es2015",
     "noImplicitAny": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": "dist",
     "sourceMap": true,
-    "target": "es2015"
-  },
-  "include": [
-    "src/**/index.ts"
-  ]
+    "target": "es2017"
+  }
 }

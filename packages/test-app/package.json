@@ -1,0 +1,66 @@
+{
+  "name": "react-ionic-hooks-test-app",
+  "version": "0.0.3",
+  "private": true,
+  "dependencies": {
+    "@capacitor-community/app-react": "file:../app",
+    "@capacitor-community/browser-react": "file:../browser",
+    "@capacitor-community/camera-react": "file:../camera",
+    "@capacitor-community/clipboard-react": "file:../clipboard",
+    "@capacitor-community/device-react": "file:../device",
+    "@capacitor-community/filesystem-react": "file:../filesystem",
+    "@capacitor-community/geolocation-react": "file:../geolocation",
+    "@capacitor-community/keyboard-react": "file:../keyboard",
+    "@capacitor-community/network-react": "file:../network",
+    "@capacitor-community/screen-reader-react": "file:../screen-reader",
+    "@capacitor-community/storage-react": "file:../storage",
+    "@capacitor/app": "^1.0.4",
+    "@capacitor/browser": "^1.0.4",
+    "@capacitor/camera": "^1.1.1",
+    "@capacitor/clipboard": "^1.0.4",
+    "@capacitor/core": "^3.2.4",
+    "@capacitor/device": "^1.0.4",
+    "@capacitor/filesystem": "^1.0.4",
+    "@capacitor/geolocation": "^1.1.0",
+    "@capacitor/ios": "^3.2.4",
+    "@capacitor/keyboard": "^1.1.0",
+    "@capacitor/network": "^1.0.3",
+    "@capacitor/screen-reader": "^1.0.3",
+    "@capacitor/storage": "^1.2.0",
+    "@ionic/pwa-elements": "^3.0.2",
+    "@ionic/react": "^5.8.4",
+    "@ionic/react-router": "^5.8.4",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "@types/react": "^17.0.29",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router": "^5.1.1",
+    "@types/react-router-dom": "^5.1.0",
+    "ionicons": "^5.5.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-router": "^5.1.0",
+    "react-router-dom": "^5.1.0",
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.4.4"
+  },
+  "scripts": {
+    "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
+    "build": "CI=false SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "An Ionic project"
+}
