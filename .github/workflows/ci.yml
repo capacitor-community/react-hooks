@@ -24,7 +24,7 @@ jobs:
       - run: npx lerna run build
   deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/v3support' && startsWith(github.event.head_commit.message, 'chore(release):')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'chore(release):')
     timeout-minutes: 30
     needs:
       - verify
