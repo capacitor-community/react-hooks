@@ -11,6 +11,9 @@
       "conventionalCommits": true,
       "message": "chore(release): Release",
       "tagVersionPrefix": ""
+    },
+    "publish": {
+      "verifyAccess": false
     }
   }
 }
