@@ -23,6 +23,7 @@
 | ------------ | --------------------------------------------- | ----------------------------------------------- |
 | Ely Lucas   | [elylucas](https://github.com/elylucas)           | [@elylucas](https://twitter.com/elylucas)       |
 
+> These docs are for Capacitor 3 plugins. For docs that target v2 plugins, see the [capv2](https://github.com/capacitor-community/react-hooks/tree/capv2) branch.
 ## Getting Started
 
 To start using Capacitor Hooks in your app, you install the React Hook package along with the Capacitor plugin you want to use. Here is an example of using the Storage plugin along with it's React hook:
@@ -34,7 +35,7 @@ npm install @capacitor/storage
 npm install @capacitor-community/react-storage
 ```
 
-Import the hooks:\
+Import the hooks:
 ```jsx
 `import { useStorage } from '@capacitor-community/storage-react'`
 ```
@@ -60,8 +61,6 @@ if(availableFeatures.useStorage) {
   setValue('cake');
 }
 ```
-
-> These docs are for Capacitor 3 plugins. For docs that target v2 plugins, see the [capv2](https://github.com/capacitor-community/react-hooks/tree/capv2) branch.
 
 # Upgrading from Capacitor 2 React Hooks
 
