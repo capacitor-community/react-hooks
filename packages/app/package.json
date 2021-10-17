@@ -25,7 +25,6 @@
     "lerna:release": "",
     "lint": "npm run eslint",
     "lint.fix": "npm run eslint -- --fix",
-    "prepublishOnly": "npm run build",
     "test": "echo tests are in process",
     "transpile": "tsc"
   },

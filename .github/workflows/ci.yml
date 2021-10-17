@@ -45,7 +45,5 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm ci
       - run: npx lerna run build
-      - run: |
-          npm whoami
-          npm run lerna:publish || true
+      - run: npm run lerna:publish || true
   
