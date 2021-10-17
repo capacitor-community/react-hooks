@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/clipboard-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Hooks for Capacitor Clipboard plugin",
   "keywords": [
     "react",

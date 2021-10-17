@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/camera-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Hooks for Capacitor Camera plugin",
   "keywords": [
     "react",
