@@ -37,7 +37,7 @@ npm install @capacitor-community/react-storage
 
 Import the hooks:
 ```jsx
-`import { useStorage } from '@capacitor-community/storage-react'`
+import { useStorage } from '@capacitor-community/storage-react'
 ```
 
 Then use the hooks in your app:
