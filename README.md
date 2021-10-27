@@ -32,7 +32,7 @@ To start using Capacitor Hooks in your app, you install the React Hook package a
 # Install the Capacitor Plugin
 npm install @capacitor/storage 
 # And then the React hook package:
-npm install @capacitor-community/react-storage
+npm install @capacitor-community/storage-react
 ```
 
 Import the hooks:
