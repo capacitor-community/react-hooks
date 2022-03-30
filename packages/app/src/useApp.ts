@@ -38,7 +38,7 @@ export function useAppState(): AppStateResult {
     });
 
     return () => {
-      listener.remove();
+      listener.remove().catch(() => {});
     };
   }, [App, setAppState]);
 
@@ -86,7 +86,7 @@ export function useAppUrlOpen(): AppUrlOpenResult {
       setAppUrl(state.url);
     });
     return () => {
-      listener.remove();
+      listener.remove().catch(() => {});
     };
   }, [App, setAppUrl]);
 
