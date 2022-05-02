@@ -132,8 +132,7 @@ open({ url: 'http://ionicframework.com' });
 
 // Close url in browser
 const { close } = useClose();
-useClose()
-
+useClose();
 ```
 
 See the [Browser](https://capacitorjs.com/docs/apis/browser) Capacitor Plugin docs for more info on the plugin API.
