@@ -125,10 +125,15 @@ import { useClose, useOpen, availableFeatures } from '@capacitor-community/brows
 `useOpen`, `useClose` provides a way to launch, and close an in-app browser for external content:
 
 ```jsx
-useEffect(() => {
-  await useOpen('http://ionicframework.com');
-  await useClose();
-}, [useOpen, useClose]);
+// Open url in browser
+const { open } = useOpen();
+
+open({ url: 'http://ionicframework.com' });
+
+// Close url in browser
+const { close } = useClose();
+useClose()
+
 ```
 
 See the [Browser](https://capacitorjs.com/docs/apis/browser) Capacitor Plugin docs for more info on the plugin API.
