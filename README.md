@@ -148,7 +148,7 @@ npm install @capacitor-community/camera-react
 Usage:
 
 ```jsx
-import { useCamera, availableFeatures } from '@capacitor-community/react-hooks/camera';
+import { useCamera, availableFeatures } from '@capacitor-community/camera-react';
 ```
 
 `useCamera` provides a way to take a photo:
