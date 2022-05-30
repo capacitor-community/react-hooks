@@ -38,7 +38,8 @@ export function useAppState(): AppStateResult {
     });
 
     return () => {
-      listener.remove();
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      listener && listener.remove && listener.remove().catch(() => {});
     };
   }, [App, setAppState]);
 
@@ -86,7 +87,8 @@ export function useAppUrlOpen(): AppUrlOpenResult {
       setAppUrl(state.url);
     });
     return () => {
-      listener.remove();
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      listener && listener.remove && listener.remove().catch(() => {});
     };
   }, [App, setAppUrl]);
 
