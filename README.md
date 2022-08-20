@@ -19,25 +19,27 @@
 
 ## Maintainers
 
-| Maintainer   | GitHub                                        | Social                                          |
-| ------------ | --------------------------------------------- | ----------------------------------------------- |
-| Ely Lucas   | [elylucas](https://github.com/elylucas)           | [@elylucas](https://twitter.com/elylucas)       |
+| Maintainer | GitHub                                  | Social                                    |
+| ---------- | --------------------------------------- | ----------------------------------------- |
+| Ely Lucas  | [elylucas](https://github.com/elylucas) | [@elylucas](https://twitter.com/elylucas) |
 
 > These docs are for Capacitor 3 plugins. For docs that target v2 plugins, see the [capv2](https://github.com/capacitor-community/react-hooks/tree/capv2) branch.
+
 ## Getting Started
 
 To start using Capacitor Hooks in your app, you install the React Hook package along with the Capacitor plugin you want to use. Here is an example of using the Storage plugin along with it's React hook:
 
 ```bash
 # Install the Capacitor Plugin
-npm install @capacitor/storage 
+npm install @capacitor/storage
 # And then the React hook package:
 npm install @capacitor-community/storage-react
 ```
 
 Import the hooks:
+
 ```jsx
-import { useStorage } from '@capacitor-community/storage-react'
+import { useStorage } from '@capacitor-community/storage-react';
 ```
 
 Then use the hooks in your app:
@@ -64,7 +66,7 @@ if(availableFeatures.useStorage) {
 
 # Upgrading from Capacitor 2 React Hooks
 
-In Capacitor 3, all the plugins were separated into their own packages. Likewise, the new React hooks plugins were also put into their own package, so you will need to install the hook for each plugin you use. 
+In Capacitor 3, all the plugins were separated into their own packages. Likewise, the new React hooks plugins were also put into their own package, so you will need to install the hook for each plugin you use.
 
 Any deprecated API'S from Capacitor 2 to 3 were also removed and updated, so you might need to make some modifications to account for API changes. See the [Capacitor Plugin API for](https://capacitorjs.com/docs/plugins) to learn more.
 
@@ -81,13 +83,18 @@ npm install @capacitor-community/app-react
 Usage:
 
 ```jsx
-import { useAppState, useAppUrlOpen, useLaunchUrl, availableFeatures } from '@capacitor-community/app-react';
+import {
+  useAppState,
+  useAppUrlOpen,
+  useLaunchUrl,
+  availableFeatures,
+} from '@capacitor-community/app-react';
 ```
 
 `useAppState` provides access to App status information, such as whether the app is active or inactive. This value will update dynamically.
 
 ```jsx
-const {state} = useAppState();
+const { state } = useAppState();
 ```
 
 #### `useLaunchUrl`
@@ -116,7 +123,7 @@ Installation:
 npm install @capacitor-community/browser-react
 ```
 
-Usage: 
+Usage:
 
 ```jsx
 import { useClose, useOpen, availableFeatures } from '@capacitor-community/browser-react';
@@ -157,13 +164,13 @@ import { useCamera, availableFeatures } from '@capacitor-community/camera-react'
 const { photo, getPhoto } = useCamera();
 const triggerCamera = useCallback(async () => {
   getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl
-    })
+    quality: 100,
+    allowEditing: false,
+    resultType: CameraResultType.DataUrl,
+  });
 }, [getPhoto]);
 
-<div>{photo && <img alt="" src={photo.dataUrl} />}</div>
+<div>{photo && <img alt="" src={photo.dataUrl} />}</div>;
 ```
 
 See the [Camera](https://capacitorjs.com/docs/apis/camera) Capacitor Plugin docs for more info on the plugin API.
@@ -192,7 +199,7 @@ const paste = useCallback(async () => {
 }, [setValue]);
 
 const copy = useCallback(async () => {
-  getValue(); 
+  getValue();
 }, [getValue])
 ```
 
@@ -206,10 +213,14 @@ Installation:
 npm install @capacitor-community/device-react
 ```
 
-Usage: 
+Usage:
 
 ```jsx
-import { useGetInfo, useGetLanguageCode, availableFeatures } from '@capacitor-community/device-react';
+import {
+  useGetInfo,
+  useGetLanguageCode,
+  availableFeatures,
+} from '@capacitor-community/device-react';
 ```
 
 `useGetInfo`, `useGetLanguageCode` gives access to device information and device language settings:
@@ -232,7 +243,11 @@ npm install @capacitor-community/filesystem-react
 Usage:
 
 ```jsx
-import { useFilesystem, base64FromPath, availableFeatures } from '@capacitor-community/filesystem-react';
+import {
+  useFilesystem,
+  base64FromPath,
+  availableFeatures,
+} from '@capacitor-community/filesystem-react';
 ```
 
 `useFilesystem` returns back common methods to gain access to file system apis.
@@ -242,7 +257,7 @@ const { readFile } = useFilesystem();
 
 const file = await readFile({
   path: filepath,
-  directory: FilesystemDirectory.Data
+  directory: FilesystemDirectory.Data,
 });
 ```
 
@@ -265,7 +280,11 @@ npm install @capacitor-community/geolocation-react
 Usage:
 
 ```jsx
-import { useCurrentPosition, useWatchPosition, availableFeatures } from '@capacitor-community/geolocation-react';
+import {
+  useCurrentPosition,
+  useWatchPosition,
+  availableFeatures,
+} from '@capacitor-community/geolocation-react';
 ```
 
 `useCurrentPosition` returns a single geolocation position using the Geolocation API in Capacitor. The position can be manually updated by calling `getPosition`:
@@ -275,7 +294,7 @@ const { currentPosition, getPosition } = useCurrentPosition();
 
 const handleRefreshPosition = () => {
   getPosition();
-}
+};
 ```
 
 `useWatchPosition` tracks a geolocation position using the `watchPosition` in the Geolocation API in Capacitor. The location will automatically begin updating, and you can use the `clearWatch` and `startWatch` methods to manually stop and restart the watch.
@@ -285,6 +304,7 @@ const { currentPosition, startWatch, clearWatch } = useWatchPosition();
 ```
 
 See the [Geolocation](https://capacitorjs.com/docs/apis/geolocation) Capacitor Plugin docs for more info on the plugin API.
+
 ## Keyboard Hooks
 
 Installation:
@@ -325,10 +345,11 @@ import { useStatus, availableFeatures } from '@capacitor-community/network-react
 `useStatus` monitors network status and information:
 
 ```jsx
- const { networkStatus } = useStatus();
+const { networkStatus } = useStatus();
 ```
 
 See the [Network](https://capacitorjs.com/docs/apis/network) Capacitor Plugin docs for more info on the plugin API.
+
 ## ScreenReader Hooks
 
 Installation:
@@ -340,19 +361,24 @@ npm install @capacitor-community/screen-reader-react
 Usage:
 
 ```jsx
-import { useIsScreenReaderEnabled, useSpeak, availableFeatures } from '@capacitor-community/screen-reader-react';
+import {
+  useIsScreenReaderEnabled,
+  useSpeak,
+  availableFeatures,
+} from '@capacitor-community/screen-reader-react';
 ```
 
 `useIsScreenReaderEnabled` provides access to detecting and responding to a screen reading device or OS setting being enabled:
 
 ```jsx
-const {isScreenReaderEnabled} = useIsScreenReaderEnabled();
+const { isScreenReaderEnabled } = useIsScreenReaderEnabled();
 ```
 
 `useSpeak` activates a text-to-speech engine (if available) to read spoken text.
+
 ```jsx
 const { speak } = useSpeak();
-speak({value: textToSpeak})
+speak({ value: textToSpeak });
 ```
 
 See the [ScreenReader](https://capacitorjs.com/docs/apis/screenreader) Capacitor Plugin docs for more info on the plugin API.
@@ -383,25 +409,83 @@ useEffect(() => {
     const allKeys = await getKeys();
     await clear();
   }
-}, [ get, set, remove, keys, clear ]);
+}, [get, set, remove, keys, clear]);
 ```
 
-#### `useStorageItem`
+### `useStorageItem`
 
 `useStorageItem` tracks a single item and provides a nice way to read and write that item:
 
 ```jsx
-const [ name , setName ] = useStorageItem('name', 'Max');
+const [name, setName] = useStorageItem('name', 'Max');
 
 // Example:
-const updateName = useCallback((n) => {
-  setName(n);
-}, [ setName ]);
+const updateName = useCallback(
+  (n) => {
+    setName(n);
+  },
+  [setName]
+);
 ```
 
 `useStorageItem` will use the initial value already in storage, or the one provided if there is no existing value.
 
 See the [Storage](https://capacitorjs.com/docs/apis/storage) Capacitor Plugin docs for more info on the plugin API.
+
+## Preferences Hooks
+
+:warning: **Capacitor v4**: requires `"@capacitor/core": ">=4.0.0"` , because `@capacitor/preferences` replaces `@capacitor/storage` , should not be used as the same time as `@capacitor-community/storage-react`
+
+Installation:
+
+```bash
+npm install @capacitor-community/preferences-react
+```
+
+Usage:
+
+```jsx
+import {
+  usePreferences,
+  usePreferencesItem,
+  availableFeatures,
+} from '@capacitor-community/preferences-react';
+```
+
+`usePreferences` provides access to Capacitor's preferences engine. There is also a helper called `usePreferencesItem` which makes managing a single item easy if you don't need to access the full Preferences API (see below)
+
+```jsx
+const { get, set, remove, getKeys, clear } = usePreferences();
+useEffect(() => {
+  async function example() {
+    const value = await get('theme');
+    await set('theme', 'Dark');
+    await remove('theme');
+    const allKeys = await getKeys();
+    await clear();
+  }
+}, [get, set, remove, keys, clear]);
+```
+
+### `usePreferencesItem`
+
+`usePreferencesItem` tracks a single item and provides a nice way to read and write that item:
+
+```jsx
+const [theme, setTheme] = usePreferencesItem('theme', 'System');
+
+// Example:
+const updateTheme = useCallback(
+  (n) => {
+    setTheme(n);
+  },
+  [setTheme]
+);
+```
+
+`usePreferencesItem` will use the initial value already in preferences, or the one provided if there is no existing value.
+
+See the [Preferences](https://capacitorjs.com/docs/apis/preferences) Capacitor Plugin docs for more info on the plugin API.
 
 # Other Hooks
 
